@@ -25,7 +25,13 @@ const Group = new Schema(
                 taskName: { type: String, required: true }
              }],
              required: false
-        },  
+        },
+        StudentsInTheGroup: {
+            type:[{
+                studentCode: { type: int, required: true },
+            }],
+            required: true
+       },    
     },    
     { timestamps: true },
 )
@@ -33,24 +39,4 @@ const Group = new Schema(
 module.exports = mongoose.model('groups', Group)
 
 
-required:[
-"lesson","StudentsInTheGroup"],
-properties:{
-  
- 
 
-    lesson:{
-        required:["lessonCode","lessonDate","taskCode"],
-        properties:{
-           lessonCode:{bsonType:"int"},
-           lessonDate:{bsonType:"date"},
-           taskCode:{bsonType:"int"},
-           remarks:{bsonType:"string"}
-        }
-    },
-    StudentsInTheGroup{
-        required:["studentCode"],
-        properties:{
-             studentCode:{bsonType:"int"}
-        }
-    }

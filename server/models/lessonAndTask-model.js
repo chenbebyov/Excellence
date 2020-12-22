@@ -4,10 +4,10 @@ const Schema = mongoose.Schema
 const LessonAndTask = new Schema(
     {
         lessonSubject: { type: String, required: true },
-        lesson: {
+        filesToLesson: {
             type:[{
-               linkToLesson: { type: String, required: true },
-               lessonName: { type: String, required: true }
+                linkToFile: { type: String, required: true },
+                fileName: { type: String, required: true }
             }],
             required: true
        }, 
