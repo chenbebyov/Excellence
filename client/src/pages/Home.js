@@ -1,13 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
+import {connect} from 'react-redux';
 
-class Home extends Component {
-    render() {
-        return (
-            <div>
-                
-            </div>
-        );
-    }
+function Home(props) {
+
+    const {user} = props;
+
+    return (
+        <div>
+            <h1>connected user {user.name}</h1>
+        </div>
+    );
 }
 
-export default Home;
+export default connect(
+    (state) => {
+        return {
+            user : state.user
+        }
+    },
+    null
+)(Home);
