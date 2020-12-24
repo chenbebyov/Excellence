@@ -10,22 +10,14 @@ const Group = new Schema(
         lessonDayOfTheWeek: { type: String, enum:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday night'], required: true, default:'Sunday'},
         fromAnHour: { type: date, required: true },
         toAnHour: { type: date, required: true },
-
-
         lesson: {
             type:[{
-               linkToLesson: { type: String, required: true },
-               lessonName: { type: String, required: true }
+                lessonCode: { type: int, required: true },
+                lessonDate: { type: date, required: true },
+                remarks: { type: String, required: true }
             }],
             required: true
        }, 
-        taskToLesson: {
-             type:[{
-                linkToTask: { type: String, required: true },
-                taskName: { type: String, required: true }
-             }],
-             required: false
-        },
         StudentsInTheGroup: {
             type:[{
                 studentCode: { type: int, required: true },
