@@ -15,7 +15,7 @@ function Home(props) {
 export default connect(
     (state) => {
         return {
-            user : state.user
+            user : state.userReducer.user
         }
     },
     null

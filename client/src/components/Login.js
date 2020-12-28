@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {setUserName} from '../redux/action';
+import {setUserName} from '../redux/actions/user.actions';
 import {connect} from 'react-redux';
 // import Form from 'antd/lib/form/Form';
 // import { Button } from 'antd';

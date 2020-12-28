@@ -17,7 +17,8 @@ const Group = new Schema(
         lesson: {
             type:[{
                 Code: { type: int, required: true },
-                remarks: { type: String, required: false }
+                remarks: { type: String, required: false },
+                date: { type: date, required: true }
             }],
             required: true
        }, 
