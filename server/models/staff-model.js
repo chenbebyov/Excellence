@@ -3,16 +3,16 @@ const Schema = mongoose.Schema
 
 const Staff = new Schema(
     {
-        workerCode: { type: String, required: true },
-        workerName: { type: String, required: true },
+        email: {pattern:"^([_A-Za-z0-9-.]*@([A-Za-z0-9-]*)+((\\.com)|(\\.co.il)|(\\.net))$)", required: true },
+        firstName: { type: String, required: true },
+        lastName: { type: String, required: true },
         password: { type: String, required: true },
         cellPhone: { type: String, required: true },
         city: { type: String, required: true },
         role: { type: String, enum:['administr','teacher','secretary'], required: true, default:'administr' },
         messages: {
             type:[{
-                codeMessage: { type: int, required: true },
-                messageSubject: { type: String, required: true },
+                Subject: { type: String, required: true },
                 detailsOfTheMessage: { type: String, required: true },
                 dateMessage: { type: date, required: true }
             }],

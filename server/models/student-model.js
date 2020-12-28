@@ -3,8 +3,9 @@ const Schema = mongoose.Schema
 
 const Student = new Schema(
     {
-        studentCode: { type: String, required: true },
-        studentName: { type: String, required: true },
+        email: {pattern:"^([_A-Za-z0-9-.]*@([A-Za-z0-9-]*)+((\\.com)|(\\.co.il)|(\\.net))$)", required: true },
+        firstName: { type: String, required: true },
+        lastName: { type: String, required: true },
         password: { type: String, required: true },
         cellPhone: { type: String, required: true },
         city: { type: String, required: true },
@@ -12,7 +13,8 @@ const Student = new Schema(
         groupCode: { type: int, required: true },
         attendance: {
             type:[{
-                attendanceDate: { type: date, required: true }
+                date: { type: date, required: true },
+                present:{ type: Boolean, required: true }
             }],
             required: true
         }, 
@@ -35,8 +37,7 @@ const Student = new Schema(
         }, 
         messages: {
             type:[{
-                codeMessage: { type: int, required: true },
-                messageSubject: { type: String, required: true },
+                Subject: { type: String, required: true },
                 detailsOfTheMessage: { type: String, required: true },
                 dateMessage: { type: date, required: true }
             }],
