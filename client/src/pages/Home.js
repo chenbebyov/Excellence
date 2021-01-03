@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Login from '../components/Login';
 import Register from '../components/Register';
+// import AttendanceJournal from '../components/AttendanceJournal';
 
 function Home(props) {
 
@@ -14,6 +15,7 @@ function Home(props) {
             </div>
             <Login/>
             <Register/>
+            {/* <AttendanceJournal/> */}
         </>
     );
 }

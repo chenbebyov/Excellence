@@ -7,4 +7,7 @@ server/cert.pem
 
 
 client/node_modules
+
+# cache
 client/.eslintcache
+client/.cache

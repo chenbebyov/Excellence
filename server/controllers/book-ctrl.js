@@ -19,7 +19,7 @@ createBook = (req, res) => {
     book
         .save()
         .then(() => {
-            return res.status(201).json({
+            return res.status(200).json({
                 success: true,
                 id: book._id,
                 message: 'Book created!',

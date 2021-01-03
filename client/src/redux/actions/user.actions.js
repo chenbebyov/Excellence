@@ -1,21 +1,19 @@
-import axios from 'axios';
+import {addUser} from '../../services/user.service';
+export const SET_USER = 'SET USER'
 
-const api = axios.create({
-    baseURL: 'https://localhost:3000/api'
-})
-
-export const SET_NAME = 'SET NAME'
-
-export const setUserName = (newUserName) => {
+export const setUser = (user) => {
     return {
-        type: SET_NAME,
-        payload: newUserName
+        type: SET_USER,
+        payload: user
     };
 };
 
-export const createUser = (user) => api.post('/user',user).then(response => {
-    if(response.success){
-        setUserName(response.user);
+export const createUser = (user) => {
+    return (dispatch) => {
+        addUser(user).then(response => {
+            if(response.data.success){
+                dispatch(setUser(response.data.user));
+            }
+        })
     }
-});
-
+}

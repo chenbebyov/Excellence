@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import {setUserName} from '../redux/actions/user.actions';
 import {connect} from 'react-redux';
 import { createUser } from '../redux/actions/user.actions';
 
@@ -24,13 +23,11 @@ const tailLayout = {
 
 const Register = (props) => {
 
-    const {updateUserName} = props;
-    const [name,setName] = useState('');
+    const {createUser} = props;
     
     const save = (values) => {
-        console.log('Success:', values);
-        console.log(name);
-        updateUserName(name);
+        console.log('Success:', values); 
+        createUser(values);       
     }
     
     const onFinishFailed = (errorInfo) => {
@@ -91,8 +88,8 @@ const Register = (props) => {
 
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">
-                        Submit
-                </Button>
+                        Save
+                    </Button>
                 </Form.Item>
             </Form>
         </>
@@ -101,11 +98,5 @@ const Register = (props) => {
 
 export default connect(
     null,
-    (dispatch) => {
-        return {
-            updateUserName : function(newName){
-                dispatch(setUserName(newName))
-            }
-        }
-    }
+    {createUser}
 )(Register);

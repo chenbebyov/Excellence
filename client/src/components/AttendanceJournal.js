@@ -1,27 +1,13 @@
 import React, { useState } from 'react';
-import { Table, Radio, Divider } from 'antd';
+import { Table } from 'antd';
 
 const columns = [
   {
     title: 'Name',
-    dataIndex: 'name',
-    render: text => <a>{text}</a>,
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-  },
-];
-const data = [
-  {
-    key: '?',
-    name: '?',
+    dataIndex: 'name'
   }
 ];
+
 
 // rowSelection object indicates the need for row selection
 const rowSelection = {
@@ -34,33 +20,32 @@ const rowSelection = {
   }),
 };
 
-const Demo = () => {
-  const [selectionType, setSelectionType] = useState('checkbox');
+const AttendanceJournal = () => {
+
+  const [students,setStudents] = useState([]);
+
+  // fetch().then(students =>{
+  //   let arr = students.map(student => {
+  //     return ({
+  //       name: student.firstName +' ' + student.lastName,
+  //       key: student._id
+  //     });
+  //   });
+  //   setStudents(arr);
+  // })
 
   return (
     <div>
-      <Radio.Group
-        onChange={({ target: { value } }) => {
-          setSelectionType(value);
-        }}
-        value={selectionType}
-      >
-        <Radio value="checkbox">Checkbox</Radio>
-        <Radio value="radio">radio</Radio>
-      </Radio.Group>
-
-      <Divider />
-
       <Table
         rowSelection={{
-          type: selectionType,
+          type: 'checkbox',
           ...rowSelection,
         }}
         columns={columns}
-        dataSource={data}
+        dataSource={students}
       />
     </div>
   );
 };
 
-ReactDOM.render(<Demo />, mountNode);
+export default AttendanceJournal;

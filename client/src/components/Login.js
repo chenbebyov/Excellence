@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {setUserName} from '../redux/actions/user.actions';
+import {setUser} from '../redux/actions/user.actions';
 import {connect} from 'react-redux';
 
 import { Form, Input, Button, Checkbox } from 'antd';
@@ -85,7 +85,7 @@ export default connect(
     (dispatch) => {
         return {
             updateUserName : function(newName){
-                dispatch(setUserName(newName))
+                dispatch(setUser(newName))
             }
         }
     }

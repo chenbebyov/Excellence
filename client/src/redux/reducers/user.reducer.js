@@ -1,4 +1,4 @@
-import {SET_NAME} from '../actions/user.actions'
+import {SET_USER} from '../actions/user.actions'
 
 const InitialSatate = {
     user: {'name': 'test'}
@@ -6,8 +6,8 @@ const InitialSatate = {
 
 export default function reducer(state = InitialSatate, action){
     switch (action.type) {
-        case SET_NAME:
-            return {...state, user : {name: action.payload}};
+        case SET_USER:
+            return {...state, user : action.payload};
     
         default:
             return state;

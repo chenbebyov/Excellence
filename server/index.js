@@ -3,6 +3,7 @@ const https = require('https');
 const fs = require('fs');
 const bodyParser = require('body-parser')
 const bookRouter = require('./routes/book-router');
+const userRouter = require('./routes/user-router');
 const cors = require('cors')
 const apiPort = 3000
 
@@ -20,6 +21,7 @@ app.use(bodyParser.json())
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.use('/api', bookRouter);
+app.use('/api', userRouter);
 
 https.createServer({
     key: fs.readFileSync('./key.pem'),
