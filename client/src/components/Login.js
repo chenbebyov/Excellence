@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {setUser} from '../redux/actions/user.actions';
+import { enterUser } from '../redux/actions/user.actions';
 import {connect} from 'react-redux';
 
 import { Form, Input, Button, Checkbox } from 'antd';
@@ -22,13 +22,11 @@ const tailLayout = {
 
 const Login = (props) => {
 
-    const {updateUserName} = props;
-    const [name,setName] = useState('');
+    const {enterUser} = props;
 
     const save = (values) => {
         console.log('Success:', values);
-        console.log(name);
-        updateUserName(name);
+        enterUser(values.email, values.password);
     }
     
     const onFinishFailed = (errorInfo) => {
@@ -82,11 +80,5 @@ const Login = (props) => {
 
 export default connect(
     null,
-    (dispatch) => {
-        return {
-            updateUserName : function(newName){
-                dispatch(setUser(newName))
-            }
-        }
-    }
+    {enterUser}
 )(Login);

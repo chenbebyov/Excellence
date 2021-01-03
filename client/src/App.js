@@ -8,8 +8,8 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        <Library />
         <Home/>
+        <Library />
       </div>
     </Provider>
    

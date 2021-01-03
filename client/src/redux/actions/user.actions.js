@@ -1,4 +1,4 @@
-import {addUser} from '../../services/user.service';
+import {addUser, getUser} from '../../services/user.service';
 export const SET_USER = 'SET USER'
 
 export const setUser = (user) => {
@@ -13,6 +13,17 @@ export const createUser = (user) => {
         addUser(user).then(response => {
             if(response.data.success){
                 dispatch(setUser(response.data.user));
+            }
+        })
+    }
+}
+
+export const enterUser = (email, password) => {
+    return (dispatch) => {
+        getUser(email,password).then(response => {
+            if(response.success){
+                console.log(response.data);
+                dispatch(setUser(response.data));
             }
         })
     }

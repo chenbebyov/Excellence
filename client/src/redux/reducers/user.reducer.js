@@ -1,7 +1,7 @@
 import {SET_USER} from '../actions/user.actions'
 
 const InitialSatate = {
-    user: {'name': 'test'}
+    user: {}
 }
 
 export default function reducer(state = InitialSatate, action){

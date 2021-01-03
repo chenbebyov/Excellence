@@ -10,12 +10,8 @@ function Home(props) {
 
     return (
         <>
-            <div>
-                <h1>connected user {user.name}</h1>
-            </div>
-            <Login/>
-            <Register/>
-            {/* <AttendanceJournal/> */}
+            {user.firstName && <h1>connected user: {user.firstName}</h1>}
+            {!user.firstName && <><Login/><Register/></>}
         </>
     );
 }

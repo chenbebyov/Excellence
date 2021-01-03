@@ -3,35 +3,35 @@ const Schema = mongoose.Schema
 
 const Student = new Schema(
     {
-        email: {pattern:"^([_A-Za-z0-9-.]*@([A-Za-z0-9-]*)+((\\.com)|(\\.co.il)|(\\.net))$)", required: true },
+        email: { type:String, pattern:"^([_A-Za-z0-9-.]*@([A-Za-z0-9-]*)+((\\.com)|(\\.co.il)|(\\.net))$)", required: true },
         firstName: { type: String, required: true },
         lastName: { type: String, required: true },
         password: { type: String, required: true },
         cellPhone: { type: String, required: true },
         city: { type: String, required: true },
-        bornDate: { type: date, required: true },
-        groupCode: { type: int, required: true },
+        bornDate: { type: Date, required: true },
+        groupCode: { type: Number, required: true },
         attendance: {
             type:[{
-                date: { type: date, required: true },
+                date: { type: Date, required: true },
                 present:{ type: Boolean, required: true }
             }],
             required: true
         }, 
         taskSubmission: {
             type:[{
-               taskCodeStudent: { type: int, required: true },
+               taskCodeStudent: { type: Number, required: true },
                linkToFile: { type: String, required: true },
-               dateSubmission: { type: date, required: true }
+               dateSubmission: { type: Date, required: true }
             }],
             required: true
         }, 
         borrowingBooks: {
             type:[{
-                codeBorrowe: { type: int, required: true },
+                codeBorrowe: { type: Number, required: true },
                 booksCode: { type: String, required: true },
-                dateBorrowe: { type: date, required: true },
-                endDateBorrowing: { type: date, required: true }
+                dateBorrowe: { type: Date, required: true },
+                endDateBorrowing: { type: Date, required: true }
             }],
             required: true
         }, 
@@ -39,7 +39,7 @@ const Student = new Schema(
             type:[{
                 Subject: { type: String, required: true },
                 detailsOfTheMessage: { type: String, required: true },
-                dateMessage: { type: date, required: true }
+                dateMessage: { type: Date, required: true }
             }],
             required: false
         }, 

@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const Staff = new Schema(
     {
-        email: {pattern:"^([_A-Za-z0-9-.]*@([A-Za-z0-9-]*)+((\\.com)|(\\.co.il)|(\\.net))$)", required: true },
+        email: { type:String, pattern:"^([_A-Za-z0-9-.]*@([A-Za-z0-9-]*)+((\\.com)|(\\.co.il)|(\\.net))$)", required: true },
         firstName: { type: String, required: true },
         lastName: { type: String, required: true },
         password: { type: String, required: true },
@@ -14,7 +14,7 @@ const Staff = new Schema(
             type:[{
                 Subject: { type: String, required: true },
                 detailsOfTheMessage: { type: String, required: true },
-                dateMessage: { type: date, required: true }
+                dateMessage: { type: Date, required: true }
             }],
             required: false
        }, 
@@ -22,5 +22,5 @@ const Staff = new Schema(
     { timestamps: true },
 )
 
-module.exports = mongoose.model('staffs', Staff)
+module.exports = mongoose.model('staff', Staff)
 
