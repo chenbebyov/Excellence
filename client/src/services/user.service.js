@@ -1,3 +1,4 @@
+import Password from 'antd/lib/input/Password';
 import axios from 'axios';
 
 const api = axios.create({
@@ -5,12 +6,15 @@ const api = axios.create({
 })
 
 export const getAllUsers = () => api.get('/users');
-export const addUser = (user) => api.post(`/user`, user);
+export const addUser = (user) => api.post('/user', user);
+export const getDetails=(email,password)=>api.get('/users',user);
 
 const apis = {
     getAllUsers,
     addUser
 }
+
+
 
 
 export default apis;
