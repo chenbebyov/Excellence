@@ -5,7 +5,7 @@ const Group = new Schema(
     {
         groupName: { type: String, required: true },
         teacherCode: { type: int, required: true },
-        LevelOfLearning: { type: int, enum:['level a','level b','level c'],required: true,default:'level a' },
+        LevelOfLearning: { type: int, enum:['level a','level b','level c'],required: true },
         timeLesson: {
             type:[{
                 date: { type: date, required: true },

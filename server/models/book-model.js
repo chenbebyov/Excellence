@@ -6,7 +6,7 @@ const Book = new Schema(
         bookCode: { type: String, required: true },
         bookName: { type: String, required: true },
         writerName: { type: String, required: true },
-        status: { type: String, enum:['not borrowed','borrowed','in binding'], required: true, default:'not borrowed' },
+        status: { type: String, enum:['not borrowed','borrowed','in binding'], required: true },
     },
     { timestamps: true },
 )
