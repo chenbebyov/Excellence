@@ -36,7 +36,6 @@ const Register = (props) => {
 
     return (
         <>
-            <h1>Register</h1>
             <Form {...layout} name="login" initialValues={{ remember: true }} onFinish={save} onFinishFailed={onFinishFailed} >
                 <Form.Item
                     label="first name"

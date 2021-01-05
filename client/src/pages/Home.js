@@ -1,66 +1,72 @@
-import React from 'react';
-import {connect} from 'react-redux';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import Login from '../components/Login';
 import Register from '../components/Register';
-import { Modal, Button ,Layout} from 'antd';
+import { Modal, Button, Layout, Tabs } from 'antd';
+
+const TabPane = Tabs.TabPane;
 
 function Home(props) {
 
-    const {user} = props;
+  const { user } = props;
 
-    return (
-        <>
-            {user.firstName && <h1>connected user: {user.firstName}</h1>}
-            {!user.firstName && <><Login/><Register/></>}
-        </>
-    );
-}
+  //     return (
+  //         <>
+  //             {user.firstName && <h1>connected user: {user.firstName}</h1>}
+  //             {!user.firstName && <><Login/><Register/></>}
+  //         </>
+  //     );
+  // }
 
-state = {loading: false,visible: false};
+  const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
 
-showModal = () => {this.setState({visible: true});};
+  const showModal = () => {
+    setVisible(true);
+  };
 
-handleOk = () => {
-  this.setState({ loading: true });
-  setTimeout(() => {
-    this.setState({ loading: false, visible: false });
-  }, 3000);
-};
+  const handleOk = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setVisible(false);
+      setLoading(false);
+    }, 3000);
+  };
 
-handleCancel = () => {this.setState({ visible: false });};
+  const handleCancel = () => {
+    setVisible(false);
+  };
 
-render()
-  const { visible, loading } = this.state;
   return (
     <>
-      <Button type="primary" onClick={this.showModal}>Sign in</Button>
+      <Button type="primary" onClick={showModal}>Sign in</Button>
       <Modal
         visible={visible}
         title="Login/Register"
-        onOk={this.handleOk}
-        onCancel={this.handleCancel}
+        onOk={handleOk}
+        onCancel={handleCancel}
         footer={[
-          <Button key="back" onClick={this.handleCancel}> Return </Button>,
-          <Button key="submit" type="primary" loading={loading} onClick={this.handleOk}> Submit</Button> ]} 
+          // <Button key="back" onClick={handleCancel}> Return </Button>,
+          // <Button key="submit" type="primary" loading={loading} onClick={handleOk}> Submit</Button>
+        ]}
       >
-
-      <Layout>
-         <Login></Login>
-         <Register></Register>
-      </Layout>
-
+        {/* <Layout theme="light"> */}
+          <Tabs defaultActiveKey="1" size="large">
+            <TabPane tab="Login" key="1"><Login/></TabPane>
+            <TabPane tab="Register" key="2"><Register/></TabPane>
+            
+          </Tabs>
+        {/* </Layout> */}
       </Modal>
     </>
   );
 }
 
-  export default ReactDOM.render(<Home />, mountNode);
-
-// export default connect(
-//     (state) => {
-//         return {
-//             user : state.userReducer.user
-//         }
-//     },
-//     null
-// )(Home);
+export default connect(
+  (state) => {
+    return {
+      user: state.userReducer.user
+    }
+  },
+  null
+)(Home);

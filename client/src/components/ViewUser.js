@@ -3,13 +3,7 @@ import api from '../services/user.service';
 
 const ViewUser = (props) => {
 
-    const [userList, setUserList] = useState([]);
-
-    useEffect(() => {
-        api.getAllUsers().then(users => {
-            setUserList(users.data.data);
-        },[])
-    },[]);
+    const {userList} = props;
 
     return (
         <div>

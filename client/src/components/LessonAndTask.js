@@ -1,0 +1,1 @@
+//gets array of lesson/tasks and display them

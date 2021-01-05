@@ -22,10 +22,12 @@ const tailLayout = {
 
 const Login = (props) => {
 
-    const {enterUser} = props;
+    const {enterUser,user} = props;
+    const [loading, setLoading] = useState(false);
 
     const save = (values) => {
         console.log('Success:', values);
+        setLoading(true);
         enterUser(values.email, values.password);
     }
     
@@ -35,7 +37,6 @@ const Login = (props) => {
 
     return (
         <>
-            <h1>Login</h1>
             <Form {...layout} name="login" initialValues={{ remember: true }} onFinish={save} onFinishFailed={onFinishFailed} >
                 <Form.Item
                     label="Email"
@@ -69,7 +70,7 @@ const Login = (props) => {
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" loading={loading}>
                         Submit
                     </Button>
                 </Form.Item>
@@ -79,6 +80,10 @@ const Login = (props) => {
 }
 
 export default connect(
-    null,
+    (state) => {
+        return {
+          user: state.userReducer.user
+        }
+    },
     {enterUser}
 )(Login);
