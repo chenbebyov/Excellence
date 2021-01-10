@@ -1,42 +1,55 @@
 import React, { useState } from 'react';
 import { enterUser } from '../redux/actions/user.actions';
-import {connect} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, Alert } from 'antd';
 
 const layout = {
     labelCol: {
-      span: 8,
+        span: 8,
     },
     wrapperCol: {
-      span: 16,
+        span: 16,
     },
 };
 
 const tailLayout = {
-  wrapperCol: {
-    offset: 8,
-    span: 16,
-  },
+    wrapperCol: {
+        offset: 8,
+        span: 16,
+    },
 };
 
 const Login = (props) => {
 
-    const {enterUser,user} = props;
+    const { message } = useSelector(state => state.messageReducer);
+    const dispatch = useDispatch();
+
     const [loading, setLoading] = useState(false);
 
     const save = (values) => {
-        console.log('Success:', values);
         setLoading(true);
-        enterUser(values.email, values.password);
+
+        dispatch(enterUser(values.email, values.password))
+        .then(()=>{
+            setLoading(false);
+        }).catch(error => {
+            setLoading(false);
+        });
     }
-    
+
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
 
     return (
         <>
+            {message && <Alert
+                message="Error"
+                description={message}
+                type="error"
+                showIcon
+            />}
             <Form {...layout} name="login" initialValues={{ remember: true }} onFinish={save} onFinishFailed={onFinishFailed} >
                 <Form.Item
                     label="Email"
@@ -79,11 +92,4 @@ const Login = (props) => {
     )
 }
 
-export default connect(
-    (state) => {
-        return {
-          user: state.userReducer.user
-        }
-    },
-    {enterUser}
-)(Login);
+export default Login;

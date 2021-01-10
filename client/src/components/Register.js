@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {connect} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createUser } from '../redux/actions/user.actions';
 
 import { Form, Input, Button, Checkbox } from 'antd';
@@ -23,11 +23,11 @@ const tailLayout = {
 
 const Register = (props) => {
 
-    const {createUser} = props;
+    const dispatch = useDispatch();
     
     const save = (values) => {
         console.log('Success:', values); 
-        createUser(values);       
+        dispatch(createUser(values));       
     }
     
     const onFinishFailed = (errorInfo) => {
@@ -95,7 +95,4 @@ const Register = (props) => {
     )
 }
 
-export default connect(
-    null,
-    {createUser}
-)(Register);
+export default Register;

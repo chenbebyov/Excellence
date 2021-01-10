@@ -1,52 +1,55 @@
-// import { Modal, Button,Layout } from 'antd';
-// import Login from '../components/Login';
-// import Register from '../components/Register';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import Login from '../components/Login';
+import Register from '../components/Register';
+import { Modal, Button, Layout, Tabs } from 'antd';
 
-// class App extends React.Component {
-//   state = {loading: false,visible: false};
+const TabPane = Tabs.TabPane;
 
-//   showModal = () => {this.setState({visible: true});};
+function SignIn(props) {
 
-//   handleOk = () => {
-//     this.setState({ loading: true });
-//     setTimeout(() => {
-//       this.setState({ loading: false, visible: false });
-//     }, 3000);
-//   };
+  const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
 
-//   handleCancel = () => {this.setState({ visible: false });};
+  const showModal = () => {
+    setVisible(true);
+  };
 
-//   render() {
-//     const { visible, loading } = this.state;
-//     return (
-//       <>
-//         <Button type="primary" onClick={this.showModal}>Sign in</Button>
-//         <Modal
-//           visible={visible}
-//           title="Login/Register"
-//           onOk={this.handleOk}
-//           onCancel={this.handleCancel}
-//           footer={[
-//             <Button key="back" onClick={this.handleCancel}> Return </Button>,
-//             <Button key="submit" type="primary" loading={loading} onClick={this.handleOk}> Submit</Button> ]} 
-//         >
-//         ReactDOM.render(
-//         <Layout>
-//            <Login></Login>
-//            <Register></Register>
-//         </Layout>,
-//         mountNode,
-//         );
-//         </Modal>
-//       </>
-//     );
-//   }
-// }
+  const handleOk = () => {
+    // setLoading(true);
+    // setTimeout(() => {
+    //   setVisible(false);
+    //   setLoading(false);
+    // }, 3000);
+  };
 
-// ReactDOM.render(<App />, mountNode);
+  const handleCancel = () => {
+    setVisible(false);
+  };
 
+  return (
+    <>
+      <Button type="primary" onClick={showModal}>Sign in</Button>
+      <Modal
+        visible={visible}
+        title="Login/Register"
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={[
+          // <Button key="back" onClick={handleCancel}> Return </Button>,
+          // <Button key="submit" type="primary" loading={loading} onClick={handleOk}> Submit</Button>
+        ]}
+      >
+        {/* <Layout theme="light"> */}
+          <Tabs defaultActiveKey="1" size="large">
+            <TabPane tab="Login" key="1"><Login/></TabPane>
+            <TabPane tab="Register" key="2"><Register/></TabPane>
+            
+          </Tabs>
+        {/* </Layout> */}
+      </Modal>
+    </>
+  );
+}
 
-
-
-// // const {  } = Layout;
-
+export default SignIn;
