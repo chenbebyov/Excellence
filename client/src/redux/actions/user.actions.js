@@ -29,8 +29,9 @@ export const createUser = (user) => {
 export const enterUser = (email, password) => (dispatch) => {
     return getUser(email, password).then(response => {
         if (response.success) {
-            response.data.role = 'User';
-            dispatch(setUser(response.data));
+            dispatch(setUser(response.data.user));
+            debugger
+            localStorage.setItem('access-token', response.data.accessToken);
             return Promise.resolve();
         }
     }).catch(error => {

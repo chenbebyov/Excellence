@@ -17,13 +17,16 @@ function App(props) {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
+    localStorage.removeItem('access-token');
     dispatch(logout());
   }
+
+
 
   return (
     <>
      <PermissionsProvider
-          permissions={[user.role]}
+          permissions={user? [user.role] : 'guest'}
           authorizationStrategy={permissionsStrategy}
       >
       <Router>
@@ -48,10 +51,10 @@ function App(props) {
         </nav>
    
       <Switch>
-        <AuthorizedRoute path="/lessons" requires={'Admin'}>
+        <AuthorizedRoute path="/lessons" requires={'admin'}>
         {({ isAuthorized }) => (isAuthorized ? <LessonAndTask /> : <Redirect to="/"/>)}
         </AuthorizedRoute>
-        <AuthorizedRoute path="/Library" requires={'User'}>    
+        <AuthorizedRoute path="/Library" requires={'teacher'}>    
         {({ isAuthorized }) => (isAuthorized ? <Library /> : <Redirect to="/"/>)}
         </AuthorizedRoute>
         <Route path="/">
