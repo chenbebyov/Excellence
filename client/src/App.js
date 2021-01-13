@@ -55,7 +55,9 @@ function App(props) {
                                     <li>
                                         <Link to="/users">Users</Link>
                                     </li>
-                                    <li onClick={handleLogout}>logout</li>
+                                    <li onClick={handleLogout}>
+                                        <Link to="/">logout</Link>
+                                    </li>
                                 </>
                             }
                         </ul>
