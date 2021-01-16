@@ -73,6 +73,9 @@ function App(props) {
                         <AuthorizedRoute path="/users" requires={'teacher'}>
                             {({ isAuthorized }) => (isAuthorized ? <ViewUsers userList={userList} /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
+                        {/* <Route path="/users/:id">
+                            <ViewUsers />
+                        </Route> */}
                         <Route path="/">
                             <Home />
                         </Route>
