@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import Login from '../components/Login';
-import Register from '../components/Register';
+import Login from '../components/sign-in/Login';
+import Register from '../components/sign-in/Register';
 import { Modal, Button, Layout, Tabs } from 'antd';
 
 const TabPane = Tabs.TabPane;

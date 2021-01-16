@@ -30,7 +30,6 @@ export const enterUser = (email, password) => (dispatch) => {
     return getUser(email, password).then(response => {
         if (response.success) {
             dispatch(setUser(response.data.user));
-            debugger
             localStorage.setItem('access-token', response.data.accessToken);
             return Promise.resolve();
         }

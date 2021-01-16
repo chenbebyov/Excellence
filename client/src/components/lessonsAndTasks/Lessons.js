@@ -1,10 +1,10 @@
 //gets array of lesson/tasks and display them
 import React from 'react';
 
-const LessonAndTask = () => {
+const Lessons = () => {
     return (
         <>Lesson And Task Component!</>
     )
 }
 
-export default LessonAndTask;
+export default Lessons;

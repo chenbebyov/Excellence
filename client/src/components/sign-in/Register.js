@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createUser } from '../redux/actions/user.actions';
+import { createUser } from '../../redux/actions/user.actions';
 
 import { Form, Input, Button, Checkbox } from 'antd';
 
