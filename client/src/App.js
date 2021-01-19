@@ -15,7 +15,7 @@ const permissionsStrategy = (currentRoles, requirement) => {
     return currentRoles.find(role => role === requirement);
 };
 
-function App(props) {
+function App (props) {
 
     const { loggedIn, user } = useSelector(state => state.userReducer);
     const dispatch = useDispatch();
@@ -30,13 +30,16 @@ function App(props) {
     const handleLogout = () => {
         localStorage.removeItem('access-token');
         dispatch(logout());
-    }
+    };
 
+    const getRoles =() =>{
+        return user ? [user.role] : 'guest';
+    };
 
     return (
         <>
             <PermissionsProvider
-                permissions={user ? [user.role] : 'guest'}
+                permissions={getRoles}
                 authorizationStrategy={permissionsStrategy}
             >
                 <Router>
@@ -69,7 +72,7 @@ function App(props) {
                     </nav>
 
                     <Switch>
-                        <AuthorizedRoute path="/lessons/add" requires={'teacher'}>
+                        <AuthorizedRoute path="/lessons/add"  requires={'teacher'}>
                             {({ isAuthorized }) => (isAuthorized ? <CreateLessonOrTask /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/lessons" requires={'admin'}>
@@ -84,7 +87,7 @@ function App(props) {
                         <AuthorizedRoute path="/users" requires={'teacher'}>
                             {({ isAuthorized }) => (isAuthorized ? <ViewUsers userList={userList} /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        <Route exact path="/" component={Home}>
+                        <Route path="/" component={Home}>
                             <Home />
                         </Route>
                     </Switch>
