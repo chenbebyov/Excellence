@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Library from './pages/Library';
-import LessonAndTask from './components/lessonsAndTasks/Lessons';
+import Lessons from './components/lessonsAndTasks/Lessons';
 import Home from './pages/Home';
 import ViewUsers from './components/users/ViewUsers';
 import api from './services/user.service';
@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { PermissionsProvider, AuthorizedRoute, AuthorizedSection } from '@tshio/react-router-permissions';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import UserDetails from './components/users/UserDetails';
-import CreateLessonOrTask from './components/lessonsAndTasks/CreateLesson';
+import CreateLesson from './components/lessonsAndTasks/CreateLesson';
 
 const permissionsStrategy = (currentRoles, requirement) => {
     return currentRoles.find(role => role === requirement);
@@ -73,10 +73,10 @@ function App (props) {
 
                     <Switch>
                         <AuthorizedRoute path="/lessons/add"  requires={'teacher'}>
-                            {({ isAuthorized }) => (isAuthorized ? <CreateLessonOrTask /> : <Redirect to="/" />)}
+                            {({ isAuthorized }) => (isAuthorized ? <CreateLesson /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/lessons" requires={'admin'}>
-                            {({ isAuthorized }) => (isAuthorized ? <LessonAndTask /> : <Redirect to="/" />)}
+                            {({ isAuthorized }) => (isAuthorized ? <Lessons /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/library" requires={'teacher'}>
                             {({ isAuthorized }) => (isAuthorized ? <Library /> : <Redirect to="/" />)}
