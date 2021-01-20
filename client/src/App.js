@@ -32,14 +32,14 @@ function App (props) {
         dispatch(logout());
     };
 
-    const getRoles =() =>{
-        return user ? [user.role] : 'guest';
-    };
+    // const getRoles =() =>{
+    //     return user ? [user.role] : 'guest';
+    // };
 
     return (
         <>
             <PermissionsProvider
-                permissions={getRoles}
+                permissions={user ? [user.role] : 'guest'}
                 authorizationStrategy={permissionsStrategy}
             >
                 <Router>

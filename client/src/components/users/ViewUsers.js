@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { List, message, Avatar, Spin, Card } from 'antd';
+import { List, message, Avatar, Spin, Card, Button , Modal} from 'antd';
 import { useHistory,Link } from 'react-router-dom';
 
 
@@ -23,6 +23,22 @@ const ViewUsers = (props) => {
         });
     }
 
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const showModal = (e) => {
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();
+        setIsModalVisible(true);
+    };
+
+    const handleOk = () => {
+        setIsModalVisible(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
+
     return (
         <Card type="inner" title="User List">
             <List
@@ -37,7 +53,14 @@ const ViewUsers = (props) => {
                             }
                             title={`${item.firstName} ${item.lastName}`}
                             description={item.email}
+
                             />
+                            <Button type="primary" onClick={showModal}>Activate User</Button>
+                            <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                                <p>Some contents...</p>
+                                <p>Some contents...</p>
+                                <p>Some contents...</p>
+                            </Modal>
                     </List.Item>
                 )}
             >

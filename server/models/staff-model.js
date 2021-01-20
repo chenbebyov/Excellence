@@ -9,7 +9,7 @@ const Staff = new Schema(
         password: { type: String, required: true },
         cellPhone: { type: String, required: true },
         city: { type: String, required: true },
-        role: { type: String, enum:['administr','teacher','secretary'], required: true },
+        role: { type: String, enum:['admin','teacher','secretary'], required: true },
         messages: {
             type:[{
                 Subject: { type: String, required: true },
