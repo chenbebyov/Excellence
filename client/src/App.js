@@ -11,8 +11,8 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-ro
 import UserDetails from './components/users/UserDetails';
 import CreateLesson from './components/lessonsAndTasks/CreateLesson';
 
-const permissionsStrategy = (currentRoles, requirement) => {
-    return currentRoles.find(role => role === requirement);
+const permissionsStrategy = (currentRole, requirement) => {
+    return requirement.find(role => role === currentRole);
 };
 
 function App (props) {
@@ -39,7 +39,7 @@ function App (props) {
     return (
         <>
             <PermissionsProvider
-                permissions={user ? [user.role] : 'guest'}
+                permissions={user ? user.role : 'guest'}
                 authorizationStrategy={permissionsStrategy}
             >
                 <Router>
@@ -72,20 +72,24 @@ function App (props) {
                     </nav>
 
                     <Switch>
-                        <AuthorizedRoute path="/lessons/add"  requires={'teacher'}>
+                        <AuthorizedRoute path="/lessons/add"  requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <CreateLesson /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        <AuthorizedRoute path="/lessons" requires={'admin'}>
+                        <AuthorizedRoute path="/lessons" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <Lessons /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        <AuthorizedRoute path="/library" requires={'teacher'}>
+                        <AuthorizedRoute path="/library" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <Library /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        <AuthorizedRoute path="/users/:id" requires={'teacher'}>
+                        <AuthorizedRoute path="/users/:id" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <UserDetails /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        <AuthorizedRoute path="/users" requires={'teacher'}>
-                            {({ isAuthorized }) => (isAuthorized ? <ViewUsers userList={userList} /> : <Redirect to="/" />)}
+                        <AuthorizedRoute path="/users" requires={['teacher','admin']}>
+                            {({ isAuthorized }) => 
+                                (isAuthorized ? 
+                                <ViewUsers userList={userList} /> 
+                                : <Redirect to="/" />)
+                                }
                         </AuthorizedRoute>
                         <Route path="/" component={Home}>
                             <Home />

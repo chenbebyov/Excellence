@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const bookRouter = require('./routes/book-router');
 const userRouter = require('./routes/user-router');
 const lessonRouter = require('./routes/lesson-router');
+const studentAndStaff = require('./routes/studentAndStaff-router');
 const cors = require('cors')
 const apiPort = 3000
 
@@ -30,6 +31,7 @@ app.get('/', (req, res) => {
 app.use('/api', bookRouter);
 app.use('/api', userRouter);
 app.use('/api', lessonRouter);
+app.use('/api', studentAndStaff);
 
 https.createServer({
     key: fs.readFileSync('./key.pem'),

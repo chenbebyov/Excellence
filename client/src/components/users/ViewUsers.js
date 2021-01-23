@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { List, message, Avatar, Spin, Card, Button , Modal} from 'antd';
 import { useHistory,Link } from 'react-router-dom';
+import SetUserRole from './SetUserRole';
 
 
 const ViewUsers = (props) => {
@@ -44,7 +45,8 @@ const ViewUsers = (props) => {
             <List
                 dataSource={userList}
                 renderItem={item => (
-                    <List.Item key={item._id} onClick={()=> navigate(item)}>
+                    // <List.Item key={item._id} onClick={()=> navigate(item)}>
+                    <List.Item key={item._id}>
                         <List.Item.Meta 
                             avatar={
                                 <Avatar style={{ backgroundColor: getRandomColor(),textTransform: 'uppercase', verticalAlign: 'middle' }} size="large">
@@ -56,10 +58,8 @@ const ViewUsers = (props) => {
 
                             />
                             <Button type="primary" onClick={showModal}>Activate User</Button>
-                            <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                                <p>Some contents...</p>
-                                <p>Some contents...</p>
-                                <p>Some contents...</p>
+                            <Modal title="Set Role" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                                <SetUserRole id={item._id}></SetUserRole>
                             </Modal>
                     </List.Item>
                 )}

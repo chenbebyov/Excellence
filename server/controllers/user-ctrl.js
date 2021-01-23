@@ -37,36 +37,6 @@ createUser = (req, res) => {
         })
 }
 
-createStaff = (req, res) => {
-    const body = req.body
-
-    if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'Failed to create user, details are empty.',
-        })
-    }
-
-    const staff = new Staff(body)
-
-    if (!staff) {
-        return res.status(400).json({ success: false, error: staff })
-    }
-
-    staff.save().then(() => {
-            return res.status(200).json({
-                success: true,
-                staff: staff,
-                message: 'User created!',
-            })
-        })
-        .catch(error => {
-            return res.status(400).json({
-                error,
-                message: 'User not created!',
-        })
-    })
-}
 
 getAccessToken = (userId) => {
 
@@ -110,22 +80,6 @@ login = async (req, res) => {
     
 }
 
-getStaff = async (req, res) => {
-    // console.log(req);
-    await Staff.find({}, (err, books) => {
-
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
-        if (!books.length) {
-            return res
-                .status(404)
-                .json({ success: false, error: `mmmm` })
-        }
-        return res.status(200).json({ success: true, data: books })
-    }).catch(err => console.log(err))
-}
-
 getUsers = async (req, res) => {
     await User.find({}, (err, books) => {
         if (err) {
@@ -143,7 +97,5 @@ getUsers = async (req, res) => {
 module.exports = {
     createUser,
     getUsers,
-    login,
-    getStaff,
-    createStaff
+    login
 }
