@@ -81,21 +81,40 @@ login = async (req, res) => {
 }
 
 getUsers = async (req, res) => {
-    await User.find({}, (err, books) => {
+    await User.find({}, (err, users) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        if (!books.length) {
+        if (!users.length) {
             return res
                 .status(404)
                 .json({ success: false, error: `User not found` })
         }
-        return res.status(200).json({ success: true, data: books })
+        return res.status(200).json({ success: true, data: users })
     }).catch(err => console.log(err))
+}
+
+getUserById = ( id ) => {
+    return User.findOne({_id : id })
+}
+
+getUser = async (req, res) => {
+    getUserById(req.params.id).then(user => {
+        console.log(user);
+        if (!user) {
+            return res
+                .status(404)
+                .json({ success: false, error: `User not found` })
+        }
+        return res.status(200).json({ success: true, data: user })
+        
+    }).catch(err => res.status(400).json({ success: false, error: err }));
 }
 
 module.exports = {
     createUser,
     getUsers,
-    login
+    login,
+    getUser,
+    getUserById
 }

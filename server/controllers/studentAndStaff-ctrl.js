@@ -1,9 +1,47 @@
 const Staff = require('../models/staff-model');
 const Student = require('../models/student-model');
+const { getUserById } = require('../controllers/user-ctrl');
 const config = require("../config/auth.config");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
+
+setUserRole = (req, res) => {
+    const { body } = req;
+    
+    if(!body){
+        return res.status(400).json({
+            success: false,
+            error: 'Failed to set user role, details are empty.',
+        })
+    }
+
+    const { role , userId } = body;
+
+    getUserById(userId).then(user => {
+
+        if(!user){
+            return res
+            .status(404)
+            .json({ success: false, error: `User not found` })
+        }
+
+        if(role == 'student') {
+            createStudent(user).then(student => {
+                return res.status(200).json({
+                    success: true,
+                    student: student,
+                    message: 'student created!',
+                })
+            })
+        }
+        else {
+            //TODO: change createStaff function like createStudent
+        }
+
+
+    }).catch(err => res.status(400).json({ success: false, error: 'user id not found' }));
+}
 
 createStaff = (req, res) => {
     const body = req.body
@@ -36,36 +74,15 @@ createStaff = (req, res) => {
     })
 }
 
-createStudent = (req, res) => {
-    const body = req.body
+createStudent = (user) => {
 
-    if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'Failed to create user, details are empty.',
-        })
-    }
-
-    const student = new Student(body)
-
-    if (!student) {
-        return res.status(400).json({ success: false, error: student })
-    }
-
-    student.save().then(() => {
-            return res.status(200).json({
-                success: true,
-                student: student,
-                message: 'User created!',
-            })
-        })
-        .catch(error => {
-            return res.status(400).json({
-                error,
-                message: 'User not created!',
-        })
-    })
-}
+    const student = new Student();
+    student.email = user.email;
+    student.firstName = user.firstName;
+    student.lastName = user.lastName;
+    student.password = '1234';
+    return student.save();
+};
 
 
 getStudent = async (req, res) => {
@@ -101,8 +118,7 @@ getStaff = async (req, res) => {
 
 
 module.exports = {
-    createStudent,
     getStudent,
     getStaff,
-    createStaff
+    setUserRole
 }

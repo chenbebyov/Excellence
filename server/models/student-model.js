@@ -7,16 +7,16 @@ const Student = new Schema(
         firstName: { type: String, required: true },
         lastName: { type: String, required: true },
         password: { type: String, required: true },
-        cellPhone: { type: String, required: true },
-        city: { type: String, required: true },
-        bornDate: { type: Date, required: true },
-        groupCode: { type: Number, required: true },
+        cellPhone: { type: String, required: false },
+        city: { type: String, required: false },
+        bornDate: { type: Date, required: false },
+        groupCode: { type: Number, required: false },
         attendance: {
             type:[{
                 date: { type: Date, required: true },
                 present:{ type: Boolean, required: true }
             }],
-            required: true
+            required: false
         }, 
         taskSubmission: {
             type:[{
@@ -24,7 +24,7 @@ const Student = new Schema(
                linkToFile: { type: String, required: true },
                dateSubmission: { type: Date, required: true }
             }],
-            required: true
+            required: false
         }, 
         borrowingBooks: {
             type:[{
@@ -33,7 +33,7 @@ const Student = new Schema(
                 dateBorrowe: { type: Date, required: true },
                 endDateBorrowing: { type: Date, required: true }
             }],
-            required: true
+            required: false
         }, 
         messages: {
             type:[{
