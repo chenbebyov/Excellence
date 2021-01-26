@@ -17,6 +17,13 @@ const SetUserRole = (props) => {
     setRole(e.target.value);
   };
 
+  const dispatch = useDispatch();
+    
+  const save = (values) => {
+      console.log('Success:', values); 
+      dispatch(setUserRole(values));       
+  }
+
     return (
         <Radio.Group onChange={onChange}>
         <Radio value={'student'}>student</Radio>

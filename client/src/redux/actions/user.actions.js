@@ -25,6 +25,15 @@ export const createUser = (user) => {
         })
     }
 }
+// export const setUserRole = (user) => {
+//     return (dispatch) => {
+//         addUser(user).then(response => {
+//             if(response.data.success){
+//                 dispatch(setUser(response.data.user));
+//             }
+//         })
+//     }
+// }
 
 export const enterUser = (email, password) => (dispatch) => {
     return getUser(email, password).then(response => {
