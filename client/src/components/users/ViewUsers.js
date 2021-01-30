@@ -57,7 +57,7 @@ const ViewUsers = (props) => {
                             description={item.email}
 
                             />
-                            <Button type="primary" onClick={showModal}>Activate User</Button>
+                            <Button type="primary" onClick={showModal}>Set User Role</Button>
                             <Modal title="Set Role" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
                                 <SetUserRole id={item._id}></SetUserRole>
                             </Modal>

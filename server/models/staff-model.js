@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const ObjectId = require('mongoose/lib/types/objectid')
 const Schema = mongoose.Schema
 
 const Staff = new Schema(
@@ -7,9 +8,10 @@ const Staff = new Schema(
         firstName: { type: String, required: true },
         lastName: { type: String, required: true },
         password: { type: String, required: true },
-        cellPhone: { type: String, required: true },
-        city: { type: String, required: true },
+        cellPhone: { type: String, required: false },
+        city: { type: String, required: false },
         role: { type: String, enum:['admin','teacher','secretary'], required: true },
+        userId : { type: ObjectId , required : true },
         messages: {
             type:[{
                 Subject: { type: String, required: true },

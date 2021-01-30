@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const ObjectId = require('mongoose/lib/types/objectid')
 const Schema = mongoose.Schema
 
 const Student = new Schema(
@@ -11,6 +12,7 @@ const Student = new Schema(
         city: { type: String, required: false },
         bornDate: { type: Date, required: false },
         groupCode: { type: Number, required: false },
+        userId : { type: ObjectId , required : true },
         attendance: {
             type:[{
                 date: { type: Date, required: true },

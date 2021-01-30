@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import { Radio } from 'antd';
-
+import { Form, Input, Radio, Button } from 'antd';
+import {setUserRole} from '../../redux/actions/user.actions';
 
 
 const SetUserRole = (props) => {
@@ -19,12 +19,19 @@ const SetUserRole = (props) => {
 
   const dispatch = useDispatch();
     
-  const save = (values) => {
-      console.log('Success:', values); 
-      dispatch(setUserRole(values));       
+  const save = () => {
+      dispatch(setUserRole(id, role));       
+  }
+
+  const onFinishFailed = () => {
+    alert('Failed to set user role');
   }
 
     return (
+      <>
+      <Form onFinish={save} onFinishFailed={onFinishFailed} >
+
+      <Form.Item>
         <Radio.Group onChange={onChange}>
         <Radio value={'student'}>student</Radio>
         <br />
@@ -36,6 +43,16 @@ const SetUserRole = (props) => {
           <Radio value={'admin'}>admin</Radio>
         }
         </Radio.Group>
+      </Form.Item>
+
+      <Form.Item>
+          <Button type="primary" htmlType="submit">
+              Save
+          </Button>
+      </Form.Item>
+      </Form>
+      
+        </>
     )
 }
 

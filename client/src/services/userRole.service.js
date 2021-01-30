@@ -5,13 +5,13 @@ const api = axios.create({
 })
 
 export const getAllUsers = () => api.get('/users');
-export const addUser = (user) => api.post('/user', user);
-export const getUser = (email,password) => api.get(`/user/${email}/${password}`).then(response => response.data);
+// export const addUser = (user) => api.post('/user', user);
+// export const getUser = (email,password) => api.get(`/user/${email}/${password}`).then(response => response.data);
+export const setRole = (userId, role) => api.post(`/user/role`, {userId, role}).then(response => response.data);
 
 const apis = {
     getAllUsers,
-    addUser,
-    getUser
+    setRole
 }
 
 export default apis;

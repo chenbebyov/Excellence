@@ -4,6 +4,7 @@ const { getUserById } = require('../controllers/user-ctrl');
 const config = require("../config/auth.config");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+var generator = require('generate-password');
 
 
 setUserRole = (req, res) => {
@@ -74,13 +75,21 @@ createStaff = (req, res) => {
     })
 }
 
+getRandomPassword = () => {
+    return generator.generate({
+        length: 10,
+        numbers: true
+    });
+}
+
 createStudent = (user) => {
 
     const student = new Student();
     student.email = user.email;
     student.firstName = user.firstName;
     student.lastName = user.lastName;
-    student.password = '1234';
+    student.password = getRandomPassword();
+    student.userId = user._id;
     return student.save();
 };
 
