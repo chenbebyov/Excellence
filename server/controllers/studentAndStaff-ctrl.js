@@ -37,7 +37,13 @@ setUserRole = (req, res) => {
             })
         }
         else {
-            //TODO: change createStaff function like createStudent
+            createStaff(user).then(staff => {
+                return res.status(200).json({
+                    success: true,
+                    staff: staff,
+                    message: 'staff created!',
+                })
+            })
         }
 
 
