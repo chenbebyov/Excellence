@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const ObjectId = require('mongoose/lib/types/objectid')
 const Schema = mongoose.Schema
 
 const Layer = new Schema(
@@ -6,34 +7,34 @@ const Layer = new Schema(
         name: { type: String, required: true },
         grade: {
             type: [{
-                name: { type: String, required: true },
+                name: { type: String, required: false },
                 levels: {
                     type: [{
-                        name: { type: String, required: true },
+                        name: { type: String, required: false },
                         groups: {
                             type: [{
-                                teacherCode: { type: int, required: true },
+                                teacherCode: { type: String, required: false },
                                 timeLesson: {
                                     type: [{
-                                        date: { type: date, required: true },
-                                        fromAnHour: { type: date, required: true },
-                                        toAnHour: { type: date, required: true },
+                                        date: { type: Date, required: true },
+                                        fromAnHour: { type: Date, required: true },
+                                        toAnHour: { type: Date, required: true },
                                     }],
-                                    required: true
+                                    required: false
                                 },
                                 lesson: {
                                     type: [{
-                                        Code: { type: int, required: true },
+                                        Code: { type: ObjectId, required: true },
                                         remarks: { type: String, required: false },
-                                        date: { type: date, required: true }
+                                        date: { type: Date, required: true }
                                     }],
-                                    required: true
+                                    required: false
                                 },
                                 StudentsInTheGroup: {
                                     type: [{
-                                        studentCode: { type: int, required: true },
+                                        studentCode: { type: ObjectId, required: true },
                                     }],
-                                    required: true
+                                    required: false
                                 },
                             }], required: false
                         }
