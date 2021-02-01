@@ -1,5 +1,25 @@
 import React, { useState } from 'react';
-import { Table } from 'antd';
+import { Table,Input, Space } from 'antd';
+import { AudioOutlined } from '@ant-design/icons';
+
+const { Search } = Input;
+const suffix = (
+  <AudioOutlined
+    style={{
+      fontSize: 16,
+      color: '#1890ff',
+    }}
+  />
+);
+const onSearch = value => console.log(value);
+<Space direction="vertical">
+    <Search placeholder="enter a group name" onSearch={onSearch} enterButton />
+    <Select>
+        <Option value="group1">group1</Option>
+        <Option value="group2">group2</Option>
+        <Option value="group3">group3</Option>
+     </Select>
+</Space>
 
 const columns = [
   {
@@ -8,14 +28,12 @@ const columns = [
   }
 ];
 
-
-// rowSelection object indicates the need for row selection
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
   },
   getCheckboxProps: record => ({
-    disabled: record.name === 'Disabled User', // Column configuration not to be checked
+    disabled: record.name === 'Disabled User', 
     name: record.name,
   }),
 };
@@ -23,16 +41,6 @@ const rowSelection = {
 const AttendanceJournal = () => {
 
   const [students,setStudents] = useState([]);
-
-  // fetch().then(students =>{
-  //   let arr = students.map(student => {
-  //     return ({
-  //       name: student.firstName +' ' + student.lastName,
-  //       key: student._id
-  //     });
-  //   });
-  //   setStudents(arr);
-  // })
 
   return (
     <div>

@@ -3,7 +3,6 @@ import { List, message, Avatar, Spin, Card, Button , Modal} from 'antd';
 import { useHistory,Link } from 'react-router-dom';
 import SetUserRole from './SetUserRole';
 
-
 const ViewUsers = (props) => {
 
     const {userList} = props;
