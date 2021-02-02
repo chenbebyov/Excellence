@@ -1,10 +1,7 @@
-const User = require('../models/user-model');
-const Staff = require('../models/staff-model');
-const Student = require('../models/student-model');
+const Layer = require('../models/layer-model');
 const config = require("../config/auth.config");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
-const Layer = require('../models/layer-model');
 
 
 createLayer = (req, res) => {
@@ -38,8 +35,41 @@ createLayer = (req, res) => {
     })
 }
 
-//TODO: getAllLayers function
+getAllLayers = async (req, res) => {
+    await Layer.find({}, (err, layers) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!layers.length) {
+            return res
+                .status(404)
+                .json({ success: false, error: `There are no existing layers in the system` })
+        }
+        return res.status(200).json({ success: true, data: layers })
+    }).catch(err => console.log(err))
+}
+
+getLayerById = ( id ) => {
+    return Layer.findOne({_id : id })
+}
+
+getLayer = async (req, res) => {
+    getLayerById(req.params.id).then(layer => {
+        console.log(layer);
+        if (!layer) {
+            return res
+                .status(404)
+                .json({ success: false, error: `This layer does not exist in the system` })
+        }
+        return res.status(200).json({ success: true, data: layer })
+        
+    }).catch(err => res.status(400).json({ success: false, error: err }));
+}
+
+
 
 module.exports = {
-    createLayer
+    createLayer,
+    getAllLayers,
+    getLayer
 }
