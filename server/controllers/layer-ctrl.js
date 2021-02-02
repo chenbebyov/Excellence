@@ -49,12 +49,8 @@ getAllLayers = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getLayerById = ( id ) => {
-    return Layer.findOne({_id : id })
-}
-
 getLayer = async (req, res) => {
-    getLayerById(req.params.id).then(layer => {
+    Layer.findOne({_id : req.params.id }).then(layer => {
         console.log(layer);
         if (!layer) {
             return res

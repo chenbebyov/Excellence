@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post('/layer', LayerCtrl.createLayer);
 router.get('/layers', LayerCtrl.getAllLayers);
-router.get('/layer', LayerCtrl.getLayer);
+router.get('/layer/:id', LayerCtrl.getLayer);
 
 module.exports = router;

@@ -1,22 +1,13 @@
-import {addUser, getUser} from '../../services/user.service';
-import {setRole} from '../../services/userRole.service';
-import {setMessage} from './message.action';
-export const SET_USER = 'SET USER'
-export const LOGOUT = 'LOGOUT'
+export const SET_LAYERS = 'SET LAYERS'
 
-export const setUser = (user) => {
+export const setLayers = (layersList) => {
     return {
-        type: SET_USER,
-        payload: user
+        type: SET_LAYERS,
+        payload: layersList
     };
 };
 
-export const logout = () => {
-    return {
-        type: LOGOUT
-    }
-}
-
+/*
 export const createUser = (user) => {
     return (dispatch) => {
         addUser(user).then(response => {
@@ -51,3 +42,4 @@ export const enterUser = (email, password) => (dispatch) => {
     })
 }
 
+*/

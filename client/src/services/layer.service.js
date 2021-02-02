@@ -4,12 +4,14 @@ const api = axios.create({
     baseURL: 'https://localhost:3000/api'
 })
 
-export const getAllUsers = () => api.get('/users');
-export const addUser = (user) => api.post('/user', user);
-export const getUser = (email,password) => api.get(`/user/${email}/${password}`).then(response => response.data);
+export const addLayer = (layer) => api.post('/layer', layer);
+export const getAllLayers = () => api.get('/layers');
+export const getLayerById = (id) => api.get(`/layer/${id}`);
 
 const apis = {
-  
+    addLayer,
+    getAllLayers,
+    getLayerById
 }
 
 export default apis;
