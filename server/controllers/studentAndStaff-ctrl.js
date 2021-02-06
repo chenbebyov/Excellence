@@ -37,7 +37,7 @@ setUserRole = (req, res) => {
             })
         }
         else {
-            createStaff(user).then(staff => {
+            createStaff(user, role).then(staff => {
                 return res.status(200).json({
                     success: true,
                     staff: staff,
@@ -47,45 +47,31 @@ setUserRole = (req, res) => {
         }
 
 
-    }).catch(err => res.status(400).json({ success: false, error: 'user id not found' }));
+    }).catch(err => { 
+        debugger
+        console.log(err);
+        return res.status(400).json({ success: false, error: 'user id not found' })
+    });
 }
 
-createStaff = (req, res) => {
-    const body = req.body
-
-    if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'Failed to create user, details are empty.',
-        })
-    }
-
-    const staff = new Staff(body)
-
-    if (!staff) {
-        return res.status(400).json({ success: false, error: staff })
-    }
-
-    staff.save().then(() => {
-            return res.status(200).json({
-                success: true,
-                staff: staff,
-                message: 'User created!',
-            })
-        })
-        .catch(error => {
-            return res.status(400).json({
-                error,
-                message: 'User not created!',
-        })
-    })
-}
 
 getRandomPassword = () => {
     return generator.generate({
         length: 10,
         numbers: true
     });
+}
+
+createStaff = (user, role) => {
+
+    const staff = new Staff();
+    staff.email = user.email;
+    staff.firstName = user.firstName;
+    staff.lastName = user.lastName;
+    staff.password = getRandomPassword();
+    staff.userId = user._id;
+    staff.role = role;
+    return staff.save();
 }
 
 createStudent = (user) => {

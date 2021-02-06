@@ -3,6 +3,7 @@ import Library from './pages/Library';
 import Lessons from './components/lessonsAndTasks/Lessons';
 import Home from './pages/Home';
 import ViewUsers from './components/users/ViewUsers';
+import ViewLayers from './components/layers/ViewLayers';
 import api from './services/user.service';
 import { logout } from './redux/actions/user.actions';
 import { useSelector, useDispatch } from 'react-redux';
@@ -63,6 +64,9 @@ function App (props) {
                                     <li>
                                         <Link to="/lessons/add">add lesson</Link>
                                     </li>
+                                    <li>
+                                        <Link to="/layers">Layers</Link>
+                                    </li>
                                     <li onClick={handleLogout}>
                                         <Link to="/">logout</Link>
                                     </li>
@@ -85,11 +89,10 @@ function App (props) {
                             {({ isAuthorized }) => (isAuthorized ? <UserDetails /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/users" requires={['teacher','admin']}>
-                            {({ isAuthorized }) => 
-                                (isAuthorized ? 
-                                <ViewUsers userList={userList} /> 
-                                : <Redirect to="/" />)
-                                }
+                            {({ isAuthorized }) => (isAuthorized ? <ViewUsers userList={userList} />: <Redirect to="/" />)}
+                        </AuthorizedRoute>
+                        <AuthorizedRoute path="/layers" requires={['teacher','admin']}>
+                            {({ isAuthorized }) => (isAuthorized ? <ViewLayers/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <Route path="/" component={Home}>
                             <Home />

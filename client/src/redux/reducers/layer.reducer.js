@@ -1,4 +1,5 @@
-import {SET_LAYERS} from '../actions/layer.actions'
+import {SET_LAYERS} from '../actions/layer.actions';
+import {ADD_LAYER} from '../actions/layer.actions';
 
 const InitialSatate = {
     layers: null
@@ -10,12 +11,12 @@ export default function reducer(state = InitialSatate, action){
             return {...state, 
                 layers : action.payload
             };
-        // case SET_LAYERS:
-        //     let layers = state.layers;
-        //     layers.push(action.payload);
-        //     return {...state, 
-        //         layers : layers
-        //     };
+        case ADD_LAYER:
+            let layers = state.layers;
+            layers.push(action.payload);
+            return {...state, 
+                layers : layers
+            };
         
         default:
             return state;

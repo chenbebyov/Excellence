@@ -1,5 +1,4 @@
-import {addUser, getUser} from '../../services/user.service';
-import {setRole} from '../../services/userRole.service';
+import {addUser, getUser, setRole} from '../../services/user.service';
 import {setMessage} from './message.action';
 export const SET_USER = 'SET USER'
 export const LOGOUT = 'LOGOUT'
