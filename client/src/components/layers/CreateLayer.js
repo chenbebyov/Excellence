@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
+import {CreateGrade} from 'layers';
 
 const layout = {
     labelCol: {
@@ -47,6 +48,7 @@ const CreateLayer = (props) => {
                     add
                 </Button>
             </Form.Item>
+            <Button type="text" htmlType="submit" onClick={<CreateGrade/>}>Add New Grade</Button>
         </Form>
     </>
 )
