@@ -1,6 +1,9 @@
-import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
-import {CreateGrade} from 'layers';
+import React, { useState }  from 'react';
+import { Form, Input, Button, Alert, message } from 'antd';
+import CreateGrade from './CreateGrade';
+import {useDispatch} from 'react-redux';
+import {addLayer} from '../../redux/actions/layer.actions';
+
 
 const layout = {
     labelCol: {
@@ -20,23 +23,50 @@ const tailLayout = {
 
 const CreateLayer = (props) => {
 
+    const {hideCreateLayer} = props;
+
+    // const  { message } = useSelector(state => state.messageReducer);
+    const [messageText, setMessageText] = useState();
+    const [loading, setLoading] = useState(false);
+    const [form] = Form.useForm();
+
+    const dispatch = useDispatch();
+
+
+    const save = (values) => {
+        setLoading(true);
+        let {layerName} = values;
+        dispatch(addLayer(layerName)).then((response) => {
+            setLoading(false);
+            if(response.success){
+                form.resetFields()
+                message.success('layer created sucessfuly');
+                hideCreateLayer();
+            }
+            else {
+                setMessageText(response.error.response.data.error);
+            }
+        }).catch(error => {
+            setMessageText('Filed to create layer');
+        });  
+    }
+
     return (
     <>
-        {message && <Alert
+        {messageText && <Alert
             message="Error"
-            description={message}
+            description={messageText}
             type="error"
             showIcon
         />}
-        <Form {...layout} name="Add Layer" initialValues={{ remember: true }} onFinish={save} onFinishFailed={onFinishFailed} >
+        <Form {...layout} form={form} name="Add Layer" initialValues={{ remember: true }} onFinish={save} >
             <Form.Item
-                label="NameLayer"
-                name="nameLayer"
+                label="Layer Name"
+                name="layerName"
                 rules={[
                     {
                         required: true,
-                        message: 'Please input name Layer!',
-                        type: 'text'
+                        message: 'Please input Layer name !'
                     },
                 ]}
             >
@@ -44,7 +74,7 @@ const CreateLayer = (props) => {
             </Form.Item>
 
             <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit" loading={loading}>
+                <Button type="primary" htmlType="submit"  loading={loading}>
                     add
                 </Button>
             </Form.Item>

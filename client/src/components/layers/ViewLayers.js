@@ -1,12 +1,15 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getLayers} from '../../redux/actions/layer.actions';
-import {CreateLayer} from 'layers';
+import { Button } from 'antd';
+import CreateLayer from './CreateLayer';
 
 const ViewLayers = () => {
-yer
-    debugger
+
+    
     const  { layers } = useSelector(state => state.layerReducer);
+
+    const [showAddNewLayer, setShowAddNewLayer] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -14,19 +17,30 @@ yer
         if(layers == null){
             dispatch(getLayers());
         }
+        else {
+            setShowAddNewLayer(false);
+        }
     }, [layers]);
+
+    const handleAddNewLayer = () => {
+        setShowAddNewLayer(true);
+    }
+
+    const hideCreateLayer = () => {
+        setShowAddNewLayer(false);
+    }
 
     return (
         <>
            {layers && 
-               <ul>
+               <div>
                    {layers.map(layer => 
                         <li key={layer._id}>{layer.name}</li>
                     )}
-               </ul>
+               </div>
             } 
-             <Button type="text" htmlType="submit" onClick={<CreateLayer/>}>Add New Layer</Button>
-
+            <Button type="text" htmlType="submit" onClick={handleAddNewLayer}>Add New Layer</Button>
+            {showAddNewLayer && <CreateLayer hideCreateLayer={hideCreateLayer}/>}
         </>
     )
 }

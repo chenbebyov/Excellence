@@ -19,7 +19,6 @@ export const setLayer = (layer) => {
 export const getLayers = () => {
     return (dispatch) => {
         getAllLayers().then(response => response.data).then(response => {
-            debugger;
             if(response.success){
                 dispatch(setLayers(response.data));
             }
@@ -27,12 +26,14 @@ export const getLayers = () => {
     }
 }
 export const addLayer = (layer) => {
-    return (dispatch) => {
-        addNewLayer(layer).then(response => response.data).then(response => {
-            debugger;
+    return dispatch => {
+        return addNewLayer(layer).then(response => response.data).then(response => {
             if(response.success){
-                dispatch(setLayer(response.data));
+                dispatch(setLayer(response.layer));
             }
-        })
+            return response;
+        }).catch(error=> 
+            { return {success:false , error: error};
+        });
     }
 }

@@ -20,6 +20,16 @@ createLayer = (req, res) => {
         return res.status(400).json({ success: false, error: err })
     }
 
+    Layer.findOne({name : body.name }).then(layer => {
+        if (layer) {
+            return res.status(400).json({
+                success: false,
+                error: 'Layer name already exist.',
+            })
+        }
+        
+    }).catch(err => res.status(400).json({ success: false, error: err }));
+
     layer.save().then(() => {
             return res.status(200).json({
                 success: true,
