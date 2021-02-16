@@ -13,7 +13,7 @@ const columns = [
 
 const AttendanceJournal = (props) => {
 
-    
+ const {id}=props;
 
   const [students,setStudents] = useState();
 

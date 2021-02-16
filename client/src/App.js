@@ -11,6 +11,7 @@ import { PermissionsProvider, AuthorizedRoute, AuthorizedSection } from '@tshio/
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import UserDetails from './components/users/UserDetails';
 import CreateLesson from './components/lessonsAndTasks/CreateLesson';
+import AttendanceJournal from './components/users/AttendanceJournal';
 
 const permissionsStrategy = (currentRole, requirement) => {
     return requirement.find(role => role === currentRole);
@@ -67,6 +68,9 @@ function App (props) {
                                     <li>
                                         <Link to="/layers">Layers</Link>
                                     </li>
+                                    <li>
+                                        <Link to="/attendanceJournal">AttendanceJournal</Link>
+                                    </li>
                                     <li onClick={handleLogout}>
                                         <Link to="/">logout</Link>
                                     </li>
@@ -93,6 +97,9 @@ function App (props) {
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/layers" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <ViewLayers/> : <Redirect to="/" />)}
+                        </AuthorizedRoute>
+                        <AuthorizedRoute path="/attendanceJournal"  requires={['teacher','admin']}>
+                            {({ isAuthorized }) => (isAuthorized ? <AttendanceJournal /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <Route path="/" component={Home}>
                             <Home />
