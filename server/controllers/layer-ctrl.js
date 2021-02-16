@@ -45,6 +45,49 @@ createLayer = (req, res) => {
     })
 }
 
+createGrade = (req, res) => {
+    const {layerId, gradeName} = req.body
+
+    if (!layerId || !gradeName) {
+        return res.status(400).json({
+            success: false,
+            error: 'Missing params, failed to create new grade.',
+        })
+    }
+
+    this.getLayer()
+
+    const layer = new Layer(body);
+
+    if (!layer) {
+        return res.status(400).json({ success: false, error: err })
+    }
+
+    Layer.findOne({name : body.name }).then(layer => {
+        if (layer) {
+            return res.status(400).json({
+                success: false,
+                error: 'Layer name already exist.',
+            })
+        }
+        
+    }).catch(err => res.status(400).json({ success: false, error: err }));
+
+    layer.save().then(() => {
+            return res.status(200).json({
+                success: true,
+                layer: layer,
+                message: 'layer created!',
+            })
+        })
+        .catch(error => {
+            return res.status(400).json({
+                error,
+                message: 'layer not created!',
+            })
+    })
+}
+
 getAllLayers = async (req, res) => {
     await Layer.find({}, (err, layers) => {
         if (err) {
@@ -59,8 +102,8 @@ getAllLayers = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getLayer = async (req, res) => {
-    Layer.findOne({_id : req.params.id }).then(layer => {
+getLayerById = (id) => {
+    Layer.findOne({_id : id }).then(layer => {
         console.log(layer);
         if (!layer) {
             return res
@@ -70,6 +113,10 @@ getLayer = async (req, res) => {
         return res.status(200).json({ success: true, data: layer })
         
     }).catch(err => res.status(400).json({ success: false, error: err }));
+}
+
+getLayer = async (req, res) => {
+    return getLayerById(req.params.id);
 }
 
 
