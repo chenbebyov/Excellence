@@ -1,8 +1,7 @@
-import React, { useState }  from 'react';
+import React, { useState, useEffect }  from 'react';
 import { Form, Input, Button, Alert, message } from 'antd';
-import CreateGrade from './CreateGrade';
 import {useDispatch} from 'react-redux';
-import {addLayer} from '../../redux/actions/layer.actions';
+import {addLayer, addGrade, addLevel, useGetLayerId} from '../../redux/actions/layer.actions';
 
 
 const layout = {
@@ -23,12 +22,14 @@ const tailLayout = {
 
 const CreateHierarchy = (props) => {
 
-    const {hideCreateLayer , type, parentId} = props;
+    const {hideCreateHierarchy , type, layerId, gradeId} = props;
+    const layerByGrade = useGetLayerId(gradeId);
 
     // const  { message } = useSelector(state => state.messageReducer);
     const [messageText, setMessageText] = useState();
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
+
 
     const dispatch = useDispatch();
 
@@ -37,32 +38,36 @@ const CreateHierarchy = (props) => {
         setLoading(true);
         let {name} = values;
         let func;
+        let params;
         switch (type) {
             case 'layer':
                 func = addLayer;
+                params = name;
                 break;
             case 'grade':
-                func = addLayer;
+                func = addGrade;
+                params = {layerId : layerId , gradeName: name };
                 break;
             case 'level':
-                func = addLayer;
+                func = addLevel;
+                params = {gradeId: gradeId, levelName: name, layerId: layerByGrade._id };
                 break;
         
             default:
                 break;
         }
-        dispatch(func(name,parentId)).then((response) => {
+        dispatch(func(params)).then((response) => {
             setLoading(false);
             if(response.success){
                 form.resetFields()
                 message.success(`${type} created sucessfuly`);
-                hideCreateLayer();
+                hideCreateHierarchy();
             }
             else {
                 setMessageText(response.error.response.data.error);
             }
         }).catch(error => {
-            setMessageText('Filed to create layer');
+            setMessageText(`Filed to create ${type}`);
         });  
     }
 
@@ -76,12 +81,12 @@ const CreateHierarchy = (props) => {
         />}
         <Form {...layout} form={form} name={`Add ${type}`} initialValues={{ remember: true }} onFinish={save} >
             <Form.Item
-                label="Layer Name"
+                label={`${type} Name`}
                 name="name"
                 rules={[
                     {
                         required: true,
-                        message: 'Please input Layer name !'
+                        message: `Please input ${type} name !`
                     },
                 ]}
             >

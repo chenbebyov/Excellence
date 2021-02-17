@@ -21,9 +21,12 @@ const ViewGrades = (props) => {
         <>      
         
             <h1>Grades</h1>
-            {/* <Button htmlType="submit" type="primary" onClick={handleAddNewLayer}>Add New Layer</Button>
-            {showAddNewLayer && <CreateLayer hideCreateLayer={hideCreateLayer}/>} */}
-           {layer && layer.grade && <HierarchyListView type="grade" data={layer.grade} showDetails={showDetails}/>
+           {layer && layer.grades && 
+                <HierarchyListView 
+                    type="grade" 
+                    layerId={layer._id} 
+                    showDetails={showDetails}
+                />
             } 
       
         </>

@@ -12,8 +12,9 @@ export default function reducer(state = InitialSatate, action){
                 layers : action.payload
             };
         case ADD_LAYER:
-            let layers = state.layers;
-            layers.push(action.payload);
+            let newLayer = action.payload;
+            let layers = state.layers.filter(layer => layer._id !== newLayer._id);
+            layers.push(newLayer);
             return {...state, 
                 layers : layers
             };

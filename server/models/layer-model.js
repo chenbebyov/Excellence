@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const Layer = new Schema(
     {
         name: { type: String, required: true },
-        grade: {
+        grades: {
             type: [{
                 name: { type: String, required: false },
                 levels: {

@@ -2,6 +2,7 @@ const Layer = require('../models/layer-model');
 const config = require("../config/auth.config");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+const { updateOne } = require('../models/layer-model');
 
 
 createLayer = (req, res) => {
@@ -46,7 +47,7 @@ createLayer = (req, res) => {
 }
 
 createGrade = (req, res) => {
-    const {layerId, gradeName} = req.body
+    const {layerId, gradeName} = req.body;
 
     if (!layerId || !gradeName) {
         return res.status(400).json({
@@ -55,36 +56,56 @@ createGrade = (req, res) => {
         })
     }
 
-    this.getLayer()
-
-    const layer = new Layer(body);
-
-    if (!layer) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    Layer.findOne({name : body.name }).then(layer => {
-        if (layer) {
+    Layer.findOne({_id : layerId }).then(layer => {
+        if(!layer){
             return res.status(400).json({
-                success: false,
-                error: 'Layer name already exist.',
+                error: 'layer does not exist',
             })
         }
-        
-    }).catch(err => res.status(400).json({ success: false, error: err }));
 
-    layer.save().then(() => {
+        let newGrade = {name: gradeName };
+        layer.grades.push(newGrade);
+        layer.save().then(() => {
             return res.status(200).json({
                 success: true,
                 layer: layer,
-                message: 'layer created!',
+                message: 'grade created!',
             })
-        })
-        .catch(error => {
+        }).catch(error => {
             return res.status(400).json({
                 error,
-                message: 'layer not created!',
+                message: 'grade not created!',
             })
+        });
+    })
+}
+
+createLevel = (req, res) => {
+    const {layerId, gradeId, levelName} = req.body;
+
+    if (!layerId ||!gradeId || !levelName) {
+        return res.status(400).json({
+            success: false,
+            error: 'Missing params, failed to create new level.',
+        })
+    }
+
+    Layer.findOne( { _id: layerId }, { grades: { $elemMatch: { _id: gradeId } }} ).then((layer) => {
+
+        let newLevel = {name: levelName};
+        layer.grades[0].levels.push(newLevel);
+        layer.save().then(() => {
+            return res.status(200).json({
+                success: true,
+                layer: layer,
+                message: 'level created!',
+            })
+        }).catch(error => {
+            return res.status(400).json({
+                error,
+                message: 'level not created!',
+            })
+        });
     })
 }
 
@@ -102,8 +123,9 @@ getAllLayers = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getLayerById = (id) => {
-    Layer.findOne({_id : id }).then(layer => {
+
+getLayer = async (req, res) => {
+    return Layer.findOne({_id : req.params.id }).then(layer => {
         console.log(layer);
         if (!layer) {
             return res
@@ -115,14 +137,12 @@ getLayerById = (id) => {
     }).catch(err => res.status(400).json({ success: false, error: err }));
 }
 
-getLayer = async (req, res) => {
-    return getLayerById(req.params.id);
-}
-
 
 
 module.exports = {
     createLayer,
     getAllLayers,
-    getLayer
+    getLayer,
+    createGrade,
+    createLevel
 }
