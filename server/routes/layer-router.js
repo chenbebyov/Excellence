@@ -9,5 +9,6 @@ router.get('/layers', LayerCtrl.getAllLayers);
 router.get('/layer/:id', LayerCtrl.getLayer);
 router.post('/grade', LayerCtrl.createGrade);
 router.post('/level', LayerCtrl.createLevel);
+router.post('/group', LayerCtrl.createGroup);
 
 module.exports = router;

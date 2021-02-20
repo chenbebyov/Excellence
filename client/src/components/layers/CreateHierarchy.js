@@ -1,7 +1,7 @@
 import React, { useState, useEffect }  from 'react';
 import { Form, Input, Button, Alert, message } from 'antd';
 import {useDispatch} from 'react-redux';
-import {addLayer, addGrade, addLevel, useGetLayerId} from '../../redux/actions/layer.actions';
+import {addLayer, addGrade, addLevel, addGroup, useGetLayerId , useGetGradeId} from '../../redux/actions/layer.actions';
 
 
 const layout = {
@@ -22,8 +22,9 @@ const tailLayout = {
 
 const CreateHierarchy = (props) => {
 
-    const {hideCreateHierarchy , type, layerId, gradeId} = props;
-    const layerByGrade = useGetLayerId(gradeId);
+    const {hideCreateHierarchy , type, layerId, gradeId , levelId} = props;
+    const gradeByLevel = useGetGradeId(levelId);
+    const layerByGrade = useGetLayerId(gradeByLevel._id);
 
     // const  { message } = useSelector(state => state.messageReducer);
     const [messageText, setMessageText] = useState();
@@ -51,6 +52,15 @@ const CreateHierarchy = (props) => {
             case 'level':
                 func = addLevel;
                 params = {gradeId: gradeId, levelName: name, layerId: layerByGrade._id };
+                break;
+            case 'group':
+                func = addGroup;
+                params = {
+                    gradeId: gradeByLevel._id, 
+                    groupName: name, 
+                    layerId: layerByGrade._id, 
+                    levelId: levelId
+                };
                 break;
         
             default:

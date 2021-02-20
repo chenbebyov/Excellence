@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import {getAllLayers, addNewLayer, addNewGrade, addNewLevel} from '../../services/layer.service';
+import {getAllLayers, addNewLayer, addNewGrade, addNewLevel, addNewGroup} from '../../services/layer.service';
 export const SET_LAYERS = 'SET LAYERS';
 export const ADD_LAYER = 'ADD LAYER';
 
@@ -53,7 +53,6 @@ export const addGrade = (params) => {
 }
 
 export const useGetLayerId = (gradeId) => {
-    debugger
     const { layers } = useSelector(state => state.layerReducer);
     
     if(!gradeId)
@@ -61,10 +60,43 @@ export const useGetLayerId = (gradeId) => {
     return layers.find(layers => layers.grades.find(grade => grade._id === gradeId));
 }
 
+export const useGetGradeId = (levelId) => {
+    const { layers } = useSelector(state => state.layerReducer);
+    
+    if(!levelId)
+        return null;
+
+    let result;
+    layers.forEach(layer => {
+        layer.grades.forEach(grade => {
+            let data = grade.levels.find(level => level._id === levelId)
+            if (data) {
+                result = grade;
+                return;
+            }
+        });
+
+    });
+    return result;
+}
+
 export const addLevel = (params) => {
    
     return dispatch => {
         return addNewLevel(params).then(response => response.data).then(response => {
+            if(response.success){
+                dispatch(setLayer(response.layer));
+            }
+            return response;
+        }).catch(error=> 
+            { return {success:false , error: error};
+        });
+    }
+}
+export const addGroup = (params) => {
+   
+    return dispatch => {
+        return addNewGroup(params).then(response => response.data).then(response => {
             if(response.success){
                 dispatch(setLayer(response.layer));
             }

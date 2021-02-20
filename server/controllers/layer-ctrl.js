@@ -108,6 +108,33 @@ createLevel = (req, res) => {
         });
     })
 }
+createGroup = (req, res) => {
+    const {layerId, gradeId, levelId, groupName} = req.body;
+
+    if (!layerId ||!gradeId || !levelId || !groupName) {
+        return res.status(400).json({
+            success: false,
+            error: 'Missing params, failed to create new group.',
+        })
+    }
+    Layer.findOne( { _id: layerId }, { grades: { $elemMatch: { _id: gradeId, levels: { $elemMatch: { _id:  levelId} }}}}).then((layer) => {
+
+        let newGroup = {name: groupName};
+        layer.grades[0].levels[0].groups.push(newGroup);
+        layer.save().then(() => {
+            return res.status(200).json({
+                success: true,
+                layer: layer,
+                message: 'group created!',
+            })
+        }).catch(error => {
+            return res.status(400).json({
+                error,
+                message: 'group not created!',
+            })
+        });
+    })
+}
 
 getAllLayers = async (req, res) => {
     await Layer.find({}, (err, layers) => {
@@ -144,5 +171,6 @@ module.exports = {
     getAllLayers,
     getLayer,
     createGrade,
-    createLevel
+    createLevel,
+    createGroup
 }

@@ -3,9 +3,7 @@ import Library from './pages/Library';
 import Lessons from './components/lessonsAndTasks/Lessons';
 import Home from './pages/Home';
 import ViewUsers from './components/users/ViewUsers';
-import ViewLayers from './components/layers/ViewLayers';
-import ViewGrades from './components/layers/ViewGrades';
-import ViewLevels from './components/layers/ViewLevels';
+import HierarchyListView from './components/layers/HierarchyListView';
 import api from './services/user.service';
 import { logout } from './redux/actions/user.actions';
 import { useSelector, useDispatch } from 'react-redux';
@@ -98,13 +96,16 @@ function App (props) {
                             {({ isAuthorized }) => (isAuthorized ? <ViewUsers userList={userList} />: <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/layers" requires={['teacher','admin']}>
-                            {({ isAuthorized }) => (isAuthorized ? <ViewLayers/> : <Redirect to="/" />)}
+                            {({ isAuthorized }) => (isAuthorized ? <HierarchyListView type="layer" nextHierarchy="grade"/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/grade" requires={['teacher','admin']}>
-                            {({ isAuthorized }) => (isAuthorized ? <ViewGrades/> : <Redirect to="/" />)}
+                            {({ isAuthorized }) => (isAuthorized ? <HierarchyListView type="grade" nextHierarchy="level"/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/level" requires={['teacher','admin']}>
-                            {({ isAuthorized }) => (isAuthorized ? <ViewLevels/> : <Redirect to="/" />)}
+                            {({ isAuthorized }) => (isAuthorized ? <HierarchyListView type="level" nextHierarchy="group"/> : <Redirect to="/" />)}
+                        </AuthorizedRoute>
+                        <AuthorizedRoute path="/group" requires={['teacher','admin']}>
+                            {({ isAuthorized }) => (isAuthorized ? <HierarchyListView type="group" nextHierarchy="viewGroupDetails"/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/attendanceJournal"  requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <AttendanceJournal /> : <Redirect to="/" />)}

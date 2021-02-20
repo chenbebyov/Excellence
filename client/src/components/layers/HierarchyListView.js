@@ -2,32 +2,69 @@ import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getLayers} from '../../redux/actions/layer.actions';
 import { Button, Card, Col, Row } from 'antd';
+import { useHistory } from 'react-router-dom';
 
 import CreateHierarchy from './CreateHierarchy';
 
 const HierarchyListView = (props) => {
 
-    const { type, showDetails, layerId, gradeId } = props;
-
-    const  { layers } = useSelector(state => state.layerReducer);
-
+    const { type, layerId, gradeId, nextHierarchy } = props;
     const [showAddNewHierarchy, setshowAddNewHierarchy] = useState(false);
+    const  { layers } = useSelector(state => state.layerReducer);
+    const history = useHistory();
+    // const {hierarchyItem} = history.location.state;
 
-    const getChildArray = (item) => {
-        return item[type];
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if(layers == null){
+            dispatch(getLayers());
+        }
+    }, [dispatch, layers]);
+
+    const getHierarchyItemId = () => {
+        if(history.location.state)
+            return history.location.state.hierarchyItem._id;
+        return null;
     }
 
     const getData = () => {
+        let data;
         switch (type) {
             case 'layer':
-                return layers;
+                data = layers;
+                break;
             case 'grade':
-                return layers.find(layer => layer._id === layerId).grades;
+                data =  layers.find(layer => layer._id === getHierarchyItemId()).grades;
+                break;
             case 'level':
-                return layers.find(layers => layers.grades.find(grade => grade._id === gradeId)).grades.find(grade => grade._id === gradeId).levels;
+                data =  layers.find(layers => layers.grades.find(grade => 
+                    grade._id === getHierarchyItemId())
+                ).grades.find(grade => 
+                    grade._id === getHierarchyItemId()
+                ).levels;
+                break;
+            case 'group':
+                layers.forEach(layer => {
+                    layer.grades.forEach(grade => {
+                        grade.levels.forEach(level => {
+                            if(level._id === getHierarchyItemId())
+                                data = level.groups;
+                        })
+                    })
+                })
+                break;
             default:
                 return [];
         }
+        return data ? data : [];
+    }
+
+    const showDetails = (item) => {
+        history.push({
+            pathname: `/${nextHierarchy}`,
+            state: { hierarchyItem: item },
+        });
     }
 
     const handleAddNewLayer = () => {
@@ -46,8 +83,9 @@ const HierarchyListView = (props) => {
                 <CreateHierarchy 
                     hideCreateHierarchy={hideCreateHierarchy} 
                     type={type} 
-                    layerId={layerId}
-                    gradeId={gradeId}
+                    layerId={getHierarchyItemId()}
+                    gradeId={getHierarchyItemId()}
+                    levelId={getHierarchyItemId()}
                 />}
                <div>
                 <div className="site-card-wrapper">

@@ -7,6 +7,7 @@ const api = axios.create({
 export const addNewLayer = (layer) => api.post('/layer', {name: layer});
 export const addNewGrade = (params) => api.post('/grade', params);
 export const addNewLevel = (params) => api.post('/level', params);
+export const addNewGroup = (params) => api.post('/group', params);
 export const getAllLayers = () => api.get('/layers');
 export const getLayerById = (id) => api.get(`/layer/${id}`);
 
@@ -15,7 +16,8 @@ const apis = {
     addNewGrade,
     addNewLevel,
     getAllLayers,
-    getLayerById
+    getLayerById,
+    addNewGroup
 }
 
 export default apis;

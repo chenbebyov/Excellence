@@ -13,6 +13,7 @@ const Layer = new Schema(
                         name: { type: String, required: false },
                         groups: {
                             type: [{
+                                name: { type: String, required: false },
                                 teacherCode: { type: String, required: false },
                                 timeLesson: {
                                     type: [{
