@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import {useSelector} from 'react-redux';
 import { Table,Input, AutoComplete } from 'antd';
 import { AudioOutlined } from '@ant-design/icons';
+import { $CombinedState } from 'redux';
+
 
 
 
@@ -10,10 +13,21 @@ const columns = [
     dataIndex: 'name'
   }
 ];
+ 
 
 const AttendanceJournal = (props) => {
 
- const {id}=props;
+  const {id}=props;
+
+const { user } = useSelector(state => state.userReducer);
+
+  const data = [
+  {
+    key:user._id ,
+    name: user.name
+  }
+ ];
+
 
   const [students,setStudents] = useState();
 
@@ -35,10 +49,12 @@ const AttendanceJournal = (props) => {
             ...rowSelection,
           }}
           columns={columns}
-          dataSource={students}
+          dataSource={data}
+
         />
     </>
   );
 };
 
 export default AttendanceJournal;
+
