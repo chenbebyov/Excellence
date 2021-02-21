@@ -1,20 +1,23 @@
 import React from 'react';
-import { Select } from 'antd';
+import { useHistory, Link } from 'react-router-dom';
+
 
 const ViewGroupsDetails = (props) => {
 
-    const { Option } = Select;
-const {groupId}= props;
+    const history = useHistory();
+    const group = history.location.state.hierarchyItem;
 
     return (
         <>  
-          <Select mode="tags" style={{ width: '100%' }} placeholder="Tags Mode" onChange={handleChange}>
-   
-         </Select>,
+            <Link to={{
+                    pathname: "/affiliationToGroup",
+                    state: { group }
+                }}
+            >Set Affiliation To Group </Link>
             <div>students list</div>
             <div>teacher name</div>
             <div>attandance</div>
         </>
     )
 }
-export default ViewGroups;
+export default ViewGroupsDetails;

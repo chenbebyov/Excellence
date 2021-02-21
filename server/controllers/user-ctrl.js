@@ -111,10 +111,26 @@ getUser = async (req, res) => {
     }).catch(err => res.status(400).json({ success: false, error: err }));
 }
 
+getTeachers = (req, res) => {
+    Staff.find({role: 'teacher'}, (err, teachers) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!teachers.length) {
+            return res
+                .status(404)
+                .json({ success: false, error: `There are no teachers` })
+        }
+        return res.status(200).json({ success: true, data: teachers })
+    })
+    .catch(err => console.log(err));
+}
+
 module.exports = {
     createUser,
     getUsers,
     login,
     getUser,
-    getUserById
+    getUserById,
+    getTeachers
 }

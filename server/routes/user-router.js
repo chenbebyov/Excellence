@@ -8,5 +8,6 @@ router.post('/user', UserCtrl.createUser);
 router.get('/user/:email/:password', UserCtrl.login);
 router.get('/users', UserCtrl.getUsers);
 router.get('/user/:id', UserCtrl.getUser);
+router.get('/teachers', UserCtrl.getTeachers);
 
 module.exports = router;

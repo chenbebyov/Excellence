@@ -12,6 +12,8 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-ro
 import UserDetails from './components/users/UserDetails';
 import CreateLesson from './components/lessonsAndTasks/CreateLesson';
 import AttendanceJournal from './components/users/AttendanceJournal';
+import ViewGroupsDetails from './components/layers/ViewGroupsDetails';
+import AffiliationToGroup from './components/groups/AffiliationToGroup';
 
 const permissionsStrategy = (currentRole, requirement) => {
     return requirement.find(role => role === currentRole);
@@ -106,6 +108,12 @@ function App (props) {
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/group" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <HierarchyListView type="group" nextHierarchy="viewGroupDetails"/> : <Redirect to="/" />)}
+                        </AuthorizedRoute>
+                        <AuthorizedRoute path="/viewGroupDetails" requires={['teacher','admin']}>
+                            {({ isAuthorized }) => (isAuthorized ? <ViewGroupsDetails/> : <Redirect to="/" />)}
+                        </AuthorizedRoute>
+                        <AuthorizedRoute path="/affiliationToGroup" requires={['teacher','admin']}>
+                            {({ isAuthorized }) => (isAuthorized ? <AffiliationToGroup/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/attendanceJournal"  requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <AttendanceJournal /> : <Redirect to="/" />)}
