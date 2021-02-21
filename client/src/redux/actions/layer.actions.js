@@ -52,33 +52,6 @@ export const addGrade = (params) => {
     }
 }
 
-export const useGetLayerId = (gradeId) => {
-    const { layers } = useSelector(state => state.layerReducer);
-    
-    if(!gradeId)
-        return null;
-    return layers.find(layers => layers.grades.find(grade => grade._id === gradeId));
-}
-
-export const useGetGradeId = (levelId) => {
-    const { layers } = useSelector(state => state.layerReducer);
-    
-    if(!levelId)
-        return null;
-
-    let result;
-    layers.forEach(layer => {
-        layer.grades.forEach(grade => {
-            let data = grade.levels.find(level => level._id === levelId)
-            if (data) {
-                result = grade;
-                return;
-            }
-        });
-
-    });
-    return result;
-}
 
 export const addLevel = (params) => {
    

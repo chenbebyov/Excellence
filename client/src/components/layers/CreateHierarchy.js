@@ -1,7 +1,7 @@
 import React, { useState, useEffect }  from 'react';
 import { Form, Input, Button, Alert, message } from 'antd';
-import {useDispatch} from 'react-redux';
-import {addLayer, addGrade, addLevel, addGroup, useGetLayerId , useGetGradeId} from '../../redux/actions/layer.actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {addLayer, addGrade, addLevel, addGroup} from '../../redux/actions/layer.actions';
 
 
 const layout = {
@@ -23,8 +23,10 @@ const tailLayout = {
 const CreateHierarchy = (props) => {
 
     const {hideCreateHierarchy , type, layerId, gradeId , levelId} = props;
-    const gradeByLevel = useGetGradeId(levelId);
-    const layerByGrade = useGetLayerId(gradeByLevel._id);
+    const { layers } = useSelector(state => state.layerReducer);
+
+    // const gradeByLevel = getGradeId(levelId);
+    // const layerByGrade = getLayerId(gradeByLevel);
 
     // const  { message } = useSelector(state => state.messageReducer);
     const [messageText, setMessageText] = useState();
@@ -34,6 +36,31 @@ const CreateHierarchy = (props) => {
 
     const dispatch = useDispatch();
 
+    const getLayerId = (gradeId) => {
+        
+        if(!gradeId)
+            return null;
+        return layers.find(layers => layers.grades.find(grade => grade._id === gradeId))._id;
+    }
+    
+    const getGradeId = (levelId) => {
+        
+        if(!levelId)
+            return null;
+    
+        let result;
+        layers.forEach(layer => {
+            layer.grades.forEach(grade => {
+                let data = grade.levels.find(level => level._id === levelId)
+                if (data) {
+                    result = grade;
+                    return;
+                }
+            });
+    
+        });
+        return result._id;
+    }
 
     const save = (values) => {
         setLoading(true);
@@ -51,14 +78,14 @@ const CreateHierarchy = (props) => {
                 break;
             case 'level':
                 func = addLevel;
-                params = {gradeId: gradeId, levelName: name, layerId: layerByGrade._id };
+                params = {gradeId: gradeId, levelName: name, layerId: getLayerId(gradeId) };
                 break;
             case 'group':
                 func = addGroup;
                 params = {
-                    gradeId: gradeByLevel._id, 
+                    gradeId: getGradeId(levelId), 
                     groupName: name, 
-                    layerId: layerByGrade._id, 
+                    layerId: getLayerId(getGradeId(levelId)), 
                     levelId: levelId
                 };
                 break;
