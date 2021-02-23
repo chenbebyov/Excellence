@@ -20,6 +20,7 @@ const Layer = new Schema(
                                         date: { type: Date, required: true },
                                         fromAnHour: { type: Date, required: true },
                                         toAnHour: { type: Date, required: true },
+                                        comments: { type: String, required: false },
                                     }],
                                     required: false
                                 },
