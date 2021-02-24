@@ -14,6 +14,7 @@ const ViewGroupsDetails = (props) => {
                     state: { group }
                 }}
             >Set Affiliation To Group </Link>
+            
             <div>students list</div>
             <div>teacher name</div>
             <div>attandance</div>

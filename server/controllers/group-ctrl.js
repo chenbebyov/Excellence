@@ -1,6 +1,3 @@
-const User = require('../models/user-model');
-const Staff = require('../models/staff-model');
-const Student = require('../models/student-model');
 const config = require("../config/auth.config");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
@@ -21,10 +18,5 @@ updateGroup = (req, res) => {
 
 
 module.exports = {
-    createUser,
-    getUsers,
-    login,
-    getUser,
-    getUserById,
-    getTeachers
+    updateGroup
 }

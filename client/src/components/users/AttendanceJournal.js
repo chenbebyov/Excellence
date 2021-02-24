@@ -12,7 +12,7 @@ const DnDCalendar = withDragAndDrop(Calendar);
 const AttendanceJournal = (props) => {
   
 const [eventList , setEventList] =useState([]);
-myEventsList[
+const myEventsList=[
   { 
     start: moment().toDate(),
     end: moment()
@@ -25,9 +25,9 @@ const onEventResize = (data) => {
   const { start, end } = data;
 
   this.setState((state) => {
-    state.events[0].start = start;
-    state.events[0].end = end;
-    return { events: [...state.events] };
+    state.myEventsList[0].start = start;
+    state.myEventsList[0].end = end;
+    return { myEventsList: [...state.events] };
   });
 };
 

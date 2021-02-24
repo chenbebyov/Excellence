@@ -9,6 +9,7 @@ export const addUser = (user) => api.post('/user', user);
 export const getUser = (email,password) => api.get(`/user/${email}/${password}`).then(response => response.data);
 export const setRole = (userId, role) => api.post(`/user/role`, {userId, role}).then(response => response.data);
 export const getTeachers = () => api.get(`/teachers`);
+export const getStudents = () => api.get(`/students`);
 
 
 const apis = {
@@ -16,7 +17,8 @@ const apis = {
     addUser,
     getUser,
     setRole,
-    getTeachers
+    getTeachers,
+    getStudents
 }
 
 export default apis;

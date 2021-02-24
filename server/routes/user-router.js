@@ -9,5 +9,7 @@ router.get('/user/:email/:password', UserCtrl.login);
 router.get('/users', UserCtrl.getUsers);
 router.get('/user/:id', UserCtrl.getUser);
 router.get('/teachers', UserCtrl.getTeachers);
+router.get('/students', UserCtrl.getStudents);
+
 
 module.exports = router;

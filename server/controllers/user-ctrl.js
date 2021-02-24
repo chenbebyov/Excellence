@@ -4,6 +4,7 @@ const Student = require('../models/student-model');
 const config = require("../config/auth.config");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+const Layer = require('../models/layer-model');
 
 
 createUser = (req, res) => {
@@ -126,11 +127,33 @@ getTeachers = (req, res) => {
     .catch(err => console.log(err));
 }
 
+getStudents = (req, res) => {
+    Student.find((err,students) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!students.length) {
+            return res
+                .status(404)
+                .json({ success: false, error: `There are no students` })
+        }
+        return res.status(200).json({ success: true, data: students })
+    })
+    .catch(err => console.log(err));
+}
+
+// getStudentsByGroupId = (groupId,teacherID) => {
+//     return Layer.findOne({ groupId} )+Staff.findOne({teacherID});
+
+// }
+
+
 module.exports = {
     createUser,
     getUsers,
     login,
     getUser,
     getUserById,
-    getTeachers
+    getTeachers,
+    getStudents
 }

@@ -4,6 +4,7 @@ import Form from 'antd/lib/form/Form';
 import { useHistory } from 'react-router-dom';
 import { getTeachers } from '../../services/user.service';
 import { message } from 'antd';
+import {useSelector} from 'react-redux';
 
 
 
@@ -14,12 +15,12 @@ const AffiliationToGroup = () => {
     const { group } = history.location.state;
     const [options, setOptions] = useState([]);
     const [selectedTeacher, setSelectedTeacher] = useState(group.teacherCode);
+    // const [selectStudent, setSelectStudent] = useState(group.StudentsInTheGroup.studentCode);
     const [defaultValue, setDefaultValue] = useState();
-
+    const { layers } = useSelector(state => state.layerReducer);
 
     useEffect(() => {
         getTeachers().then(resopnse => resopnse.data).then(response => {
-            debugger
             if (response.success) {
                 let result = response.data.map(teacher => {
                     if(group.teacherCode && teacher._id === group.teacherCode) {
@@ -35,13 +36,12 @@ const AffiliationToGroup = () => {
             }
             console.log(response);
         }).catch(error => message.error('Faild to load teacher list'));
+
     }, []);
 
     const handleSelectTeacher = (value, teacher) => {
-        debugger
         setSelectedTeacher(teacher._id);
     }
-
 
 
     return (
