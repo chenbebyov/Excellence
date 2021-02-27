@@ -95,7 +95,7 @@ function App (props) {
                             {({ isAuthorized }) => (isAuthorized ? <UserDetails /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/users" requires={['teacher','admin']}>
-                            {({ isAuthorized }) => (isAuthorized ? <ViewUsers userList={userList} />: <Redirect to="/" />)}
+                            {({ isAuthorized }) => (isAuthorized ? <ViewUsers userList={userList} showSetRole={true} />: <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/layers" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <HierarchyListView type="layer" nextHierarchy="grade"/> : <Redirect to="/" />)}

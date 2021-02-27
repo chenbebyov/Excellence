@@ -1,59 +1,59 @@
-import React,{useState} from 'react';
-import {Calendar , momentLocalizer} from 'react-big-calendar';
+import React, { useState } from 'react';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 
-const localizer =momentLocalizer(moment);
+const localizer = momentLocalizer(moment);
 const DnDCalendar = withDragAndDrop(Calendar);
 
 
 const AttendanceJournal = (props) => {
-  
-const [eventList , setEventList] =useState([]);
-const myEventsList=[
-  { 
-    start: moment().toDate(),
-    end: moment()
-      .add(1, "days")
-      .toDate(),
-    title: "Some title"
-  }
-];
-const onEventResize = (data) => {
-  const { start, end } = data;
 
-  this.setState((state) => {
-    state.myEventsList[0].start = start;
-    state.myEventsList[0].end = end;
-    return { myEventsList: [...state.events] };
-  });
-};
+    const [eventList, setEventList] = useState([]);
+    const myEventsList = [
+        {
+            start: moment().toDate(),
+            end: moment()
+                .add(1, "days")
+                .toDate(),
+            title: "Some title"
+        }
+    ];
+    const onEventResize = (data) => {
+        const { start, end } = data;
 
-const onEventDrop = (data) => {
-  console.log(data);
-};
+        // this.setState((state) => {
+        //   state.myEventsList[0].start = start;
+        //   state.myEventsList[0].end = end;
+        //   return { myEventsList: [...state.events] };
+        // });
+    };
 
-  return (
-    <>
-      <div>
-      <DnDCalendar
-      localizer={localizer}
-      events={myEventsList}
-      startAccessor="start"
-      endAccessor="end"
-      defaultDate={new Date()}
-      defaultView="month" 
-      onEventDrop={onEventDrop}
-      onEventResize={onEventResize}
-      resizable
-      style={{ height: "100vh" }}
-     
-      />
-      </div>
-    </>
-  )
+    const onEventDrop = (data) => {
+        console.log(data);
+    };
+
+    return (
+        <>
+            <div>
+                <DnDCalendar
+                    localizer={localizer}
+                    events={myEventsList}
+                    startAccessor="start"
+                    endAccessor="end"
+                    defaultDate={new Date()}
+                    defaultView="month"
+                    onEventDrop={onEventDrop}
+                    onEventResize={onEventResize}
+                    resizable
+                    style={{ height: "100vh" }}
+
+                />
+            </div>
+        </>
+    )
 }
 export default AttendanceJournal;
 
@@ -73,7 +73,7 @@ export default AttendanceJournal;
 //     dataIndex: 'name'
 //   }
 // ];
- 
+
 
 // const AttendanceJournal = (props) => {
 

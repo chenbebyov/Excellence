@@ -3,9 +3,9 @@ const Schema = mongoose.Schema
 
 const Book = new Schema(
     {
-        bookCode: { type: String, required: true },
-        bookName: { type: String, required: true },
-        writerName: { type: String, required: true },
+        barcode: { type: String, required: true },
+        name: { type: String, required: true },
+        writer: { type: String, required: true },
         status: { type: String, enum:['not borrowed','borrowed','in binding'], required: true },
     },
     { timestamps: true },

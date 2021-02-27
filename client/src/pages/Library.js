@@ -7,58 +7,52 @@ const columns = [
     {
         title: 'Barcode',
         dataIndex: 'barcode'
-      },
-    {
-      title: 'Name',
-      dataIndex: 'name'
     },
     {
-      title: 'Writer',
-      dataIndex: 'writer'
+        title: 'Name',
+        dataIndex: 'name'
     },
     {
-      title: 'Status',
-      dataIndex: 'status'
+        title: 'Writer',
+        dataIndex: 'writer'
+    },
+    {
+        title: 'Status',
+        dataIndex: 'status'
     }
-  ];
+];
 
 
 
-const Library = (props) => { 
-    
-    const { inputRef } = useBarcode({
-        value: '',
-    })
+const Library = () => {
 
-const data = [
-   {
-       key:<svg ref={inputRef} /> ,
-      name:  <ul>{bookList.map((book, index) => <li key={index}>{book.bookName}</li>)}</ul>,
-      writer:'' ,
-      status:''
-    }
-  ];
+    const [tableData, setTableData] = useState([]);
 
-    const [bookList, setBookList] = useState([]);
+    // const { inputRef } = useBarcode({
+    //     value: '',
+    // })
+
+    //  [
+    //     {
+    //         key: <svg ref={inputRef} />,
+    //         name: <ul>{bookList.map((book, index) => <li key={index}>{book.bookName}</li>)}</ul>,
+    //         writer: '',
+    //         status: ''
+    //     }
+    // ];
 
     useEffect(() => {
-        api.getAllBooks().then(books => {
-            setBookList(books.data.data);
-        },[])
-    },[]);
+        api.getAllBooks().then(response => response.data.data).then(books => {
+            let data = books.map(book => ({...book, key: book._id}));
+            setTableData(data);
+        }, [])
+    }, []);
 
     return (
-        
+
         <>
-            <Table columns={columns} dataSource={data} bordered />
+            <Table columns={columns} dataSource={tableData} bordered />
         </>
-        // <div>
-        //     <ul>
-        //     {bookList.map((book, index) => 
-        //        <li key={index}>{book.bookName}</li>
-        //     )}
-        //     </ul>
-        // </div>
     )
 }
 export default Library;

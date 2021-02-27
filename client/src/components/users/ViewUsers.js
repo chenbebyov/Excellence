@@ -5,7 +5,7 @@ import SetUserRole from './SetUserRole';
 
 const ViewUsers = (props) => {
 
-    const {userList} = props;
+    const {userList, showSetRole} = props;
     const history = useHistory();
     function getRandomColor() {
         var letters = '0123456789ABCDEF'.split('');
@@ -56,10 +56,14 @@ const ViewUsers = (props) => {
                             description={item.email}
 
                             />
-                            <Button type="primary" onClick={showModal}>Set User Role</Button>
-                            <Modal title="Set Role" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                                <SetUserRole id={item._id}></SetUserRole>
-                            </Modal>
+                            {showSetRole && 
+                                <>
+                                    <Button type="primary" onClick={showModal}>Set User Role</Button>
+                                    <Modal title="Set Role" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                                        <SetUserRole id={item._id}></SetUserRole>
+                                    </Modal>
+                                </>
+                            }
                     </List.Item>
                 )}
             >
