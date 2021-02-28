@@ -1,6 +1,4 @@
-const config = require("../config/auth.config");
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
+const Layer = require('../models/layer-model');
 
 
 updateGroup = (req, res) => {
@@ -13,6 +11,15 @@ updateGroup = (req, res) => {
         })
     }
 
+    Layer.findById({"grades.levels.groups._id":body.groupId},{"groups.$._id": 1}).then(group => {
+        if (group) {
+            return res.status(200).json({
+                success: true,
+                data:group
+            })
+        }
+        
+    }).catch(err => res.status(400).json({ success: false, error: err }));
     
 
     //TODO:...

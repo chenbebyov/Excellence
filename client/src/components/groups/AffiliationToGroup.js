@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AutoComplete } from 'antd';
-import Form from 'antd/lib/form/Form';
+import { AutoComplete, Input, Form } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { getTeachers, getStudents } from '../../services/user.service';
 import { message,Button } from 'antd';
@@ -16,6 +15,7 @@ const AffiliationToGroup = () => {
     const { group } = history.location.state;
     const [teacherList, setTeacherList] = useState([]);
     const [studentList, setStudentList] = useState();
+    const [groupName, setGroupName] = useState(group.name);
     const [selectedTeacher, setSelectedTeacher] = useState(group.teacherCode);
     const [selectedStudents, setSelectedStudents] = useState([]);
     const [currentStudent, setCurrentStudent] = useState(group.teacherCode);
@@ -46,13 +46,31 @@ const AffiliationToGroup = () => {
             console.log(response);
         }).catch(error => message.error('Faild to load teacher list'));
     }
+    const getPicklistItem = (student) => {
+        let value = `${student.firstName} ${student.lastName}`;
+        return (
+            <div value={value}>
+                <h3>{value}</h3>
+                <label>{student.email}</label>
+            </div>
+        )
+    }
     const initStudentList = () => {
         getStudents().then(resopnse => resopnse.data).then(response => {
             if (response.success) {
-                let result = response.data.map(student => ({...student,key:student._id, value:`${student.firstName} ${student.lastName}`}))
+                let result = response.data.map(student => 
+                    ({...student,
+                        key:student._id, 
+                        value: `${student.firstName} ${student.lastName}`,
+                        label : getPicklistItem(student)
+                    }
+                ));
                 setStudentList(result);
-                //TODO: selectedStudents = group.student
+                let studentsIds = group.StudentsInTheGroup.map(studentInGroup => studentInGroup.studentCode);
+                let existStudents = result.filter(student => studentsIds.includes(student._id));
+                setSelectedStudents(existStudents); 
             }
+            
             else {
                 message.error('Faild to load teacher list')
             }
@@ -68,16 +86,39 @@ const AffiliationToGroup = () => {
     }
 
     const addNewStudentToList = () => {
-        let students = selectedStudents;
-        students.push(currentStudent);
-        setSelectedStudents(students);
+        setSelectedStudents([...selectedStudents, currentStudent]);
     }
 
-    // {groupId: '', teacherCode: '', studentsIds:[]}
+    const filterAutoComplete  = (inputValue, option) => {
+        return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+    }
 
+    const save = () => {
+        let data = {
+            groupId: group._id,
+            name:groupName,
+            teacherCode: selectedTeacher,
+            StudentsInTheGroup: selectedStudents.map(student => 
+                ({studentCode: student._id})
+            )
+        }
+    }
 
     return (
         <>
+            <Form.Item
+                label="group name"
+                name="group name"
+                onChange={(e) => {setGroupName(e.target.value)}}
+                rules={[
+                    {
+                        required: true,
+                        message: `Please input group name!`
+                    },
+                ]}
+            >
+                <Input defaultValue={groupName}/>
+            </Form.Item>
             <label>select teacher</label>
             <AutoComplete
                 style={{
@@ -87,27 +128,23 @@ const AffiliationToGroup = () => {
                 defaultValue={teacherDefaultValue}
                 placeholder="teacher name"
                 onSelect={handleSelectTeacher}
-                filterOption={(inputValue, option) => 
-                    option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-                }
+                filterOption={filterAutoComplete}
             />
 
             <div>
                 <AutoComplete
-                    style={{
-                        width: 200,
-                    }}
+                    style={{width: 200}}
                     options={studentList}
                     placeholder="add student"
                     onSelect={handleSelectStudent}
-                    filterOption={(inputValue, option) =>
-                        option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-                    }
+                    filterOption={filterAutoComplete}
                 />
                 <Button onClick={addNewStudentToList}>Add Student</Button>
             </div>
 
             <ViewUsers userList={selectedStudents} showSetRole={false} />
+
+            <Button onClick={save}>Save Changes</Button>
         </>
     )
 }
