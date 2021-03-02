@@ -32,14 +32,15 @@ const formItemLayout = {
     },
   };
   
-  const RegistrationForm = () => {
+
+
+const NewPassword = () => { 
+   const RegistrationForm = () => {
     const [form] = Form.useForm();
   
     const onFinish = (values) => {
       console.log('Received values of form: ', values);
     };
-
-const NewPassword = () => {
     return (
         <>
                <Form

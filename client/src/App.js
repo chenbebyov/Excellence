@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-ro
 import UserDetails from './components/users/UserDetails';
 import CreateLesson from './components/lessonsAndTasks/CreateLesson';
 import AttendanceJournal from './components/users/AttendanceJournal';
+import NewPassword from './components/users/NewPassword';
 import ViewGroupsDetails from './components/layers/ViewGroupsDetails';
 import AffiliationToGroup from './components/groups/AffiliationToGroup';
 
@@ -115,6 +116,9 @@ function App (props) {
                         <AuthorizedRoute path="/affiliationToGroup" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <AffiliationToGroup/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
+                        {/* <AuthorizedRoute path="/newPassword" >
+                            {({ isAuthorized }) => (isAuthorized ? <NewPassword/> : <Redirect to="/" />)}
+                        </AuthorizedRoute> */}
                         <AuthorizedRoute path="/attendanceJournal"  requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <AttendanceJournal /> : <Redirect to="/" />)}
                         </AuthorizedRoute>

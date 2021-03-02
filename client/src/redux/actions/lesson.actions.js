@@ -20,10 +20,8 @@ export const createLesson = (lesson) => {
     return (dispatch) => {
         addLesson(lesson).then(response => {
             if(response.data.success){
-                ;
                 dispatch(setMessage('success'));
             }
         })
     }
 }
-
