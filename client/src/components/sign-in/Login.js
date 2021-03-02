@@ -22,6 +22,8 @@ const tailLayout = {
 
 const Login = (props) => {
 
+    const {hideModal} = props;
+
     const { message } = useSelector(state => state.messageReducer);
     const dispatch = useDispatch();
 
@@ -33,9 +35,14 @@ const Login = (props) => {
         dispatch(enterUser(values.email, values.password))
         .then(()=>{
             setLoading(false);
+            hideModal();
         }).catch(error => {
             setLoading(false);
         });
+    }
+
+    const handleCancel = () => {
+        hideModal();
     }
 
     const onFinishFailed = (errorInfo) => {
@@ -85,6 +92,9 @@ const Login = (props) => {
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit" loading={loading}>
                         Submit
+                    </Button>
+                    <Button type="default" htmlType="button" onClick={handleCancel}>
+                        Cancel
                     </Button>
                 </Form.Item>
             </Form>

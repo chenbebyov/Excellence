@@ -23,16 +23,24 @@ const tailLayout = {
 
 const Register = (props) => {
 
+    const {hideModal} = props;
+
     const dispatch = useDispatch();
     
     const save = (values) => {
         console.log('Success:', values); 
-        dispatch(createUser(values));       
+        dispatch(createUser(values)).then(res => {
+            hideModal();
+        });       
     }
     
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+
+    const handleCancel = () => {
+        hideModal();
+    }
 
     return (
         <>
@@ -88,6 +96,9 @@ const Register = (props) => {
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">
                         Save
+                    </Button>
+                    <Button type="default" htmlType="button" onClick={handleCancel}>
+                        Cancel
                     </Button>
                 </Form.Item>
             </Form>

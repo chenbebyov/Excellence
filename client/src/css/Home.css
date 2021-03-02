@@ -1,0 +1,21 @@
+.slide-show-image {
+    height: 62vh;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+nav {
+    display: flex;
+    background: #ebebeb;
+}
+
+nav > div {
+    padding: 10px;
+    border-bottom: solid 2px;
+    border-bottom: solid 3px;
+}
+
+nav > div:nth-child(1) { border-bottom-color: #636393; }
+nav > div:nth-child(2) { border-bottom-color: #B5222D; }
+nav > div:nth-child(3) { border-bottom-color: #D4953C; }
+nav > div:nth-child(4) { border-bottom-color: #609491; }

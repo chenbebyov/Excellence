@@ -10,8 +10,16 @@ updateGroup = (req, res) => {
             error: 'Failed to update group, details are empty.',
         })
     }
-
-    Layer.findById({"grades.levels.groups._id":body.groupId},{"groups.$._id": 1}).then(group => {
+    Layer.aggregate([
+        { $unwind: "$grades"},
+        { $unwind: "$grades.levels"},
+        { $unwind: "$grades.levels.groups"},
+        {
+            $match: {
+                "grades.levels.groups._id": body.groupId
+            }
+        }
+    ]).then(group => {
         if (group) {
             return res.status(200).json({
                 success: true,
@@ -20,6 +28,17 @@ updateGroup = (req, res) => {
         }
         
     }).catch(err => res.status(400).json({ success: false, error: err }));
+
+
+    // Layer.findById({"grades.levels.groups._id":body.groupId},{"groups.$._id": 1}).then(group => {
+    //     if (group) {
+    //         return res.status(200).json({
+    //             success: true,
+    //             data:group
+    //         })
+    //     }
+        
+    // }).catch(err => res.status(400).json({ success: false, error: err }));
     
 
     //TODO:...

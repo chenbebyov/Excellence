@@ -5,8 +5,7 @@ import Home from './pages/Home';
 import ViewUsers from './components/users/ViewUsers';
 import HierarchyListView from './components/layers/HierarchyListView';
 import api from './services/user.service';
-import { logout } from './redux/actions/user.actions';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { PermissionsProvider, AuthorizedRoute, AuthorizedSection } from '@tshio/react-router-permissions';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import UserDetails from './components/users/UserDetails';
@@ -15,6 +14,7 @@ import AttendanceJournal from './components/users/AttendanceJournal';
 import NewPassword from './components/users/NewPassword';
 import ViewGroupsDetails from './components/layers/ViewGroupsDetails';
 import AffiliationToGroup from './components/groups/AffiliationToGroup';
+import NavBar from './components/home/NavBar';
 
 const permissionsStrategy = (currentRole, requirement) => {
     return requirement.find(role => role === currentRole);
@@ -22,8 +22,7 @@ const permissionsStrategy = (currentRole, requirement) => {
 
 function App (props) {
 
-    const { loggedIn, user } = useSelector(state => state.userReducer);
-    const dispatch = useDispatch();
+    const { user } = useSelector(state => state.userReducer);
     const [userList, setUserList] = useState([]);
 
     useEffect(() => {
@@ -31,11 +30,6 @@ function App (props) {
             setUserList(users.data.data);
         }, [])
     }, []);
-
-    const handleLogout = () => {
-        localStorage.removeItem('access-token');
-        dispatch(logout());
-    };
 
     // const getRoles =() =>{
     //     return user ? [user.role] : 'guest';
@@ -48,39 +42,7 @@ function App (props) {
                 authorizationStrategy={permissionsStrategy}
             >
                 <Router>
-                    <nav>
-                        <ul>
-
-                            <li>
-                                <Link to="/">Home</Link>
-                            </li>
-                            {loggedIn &&
-                                <>
-                                    <li>
-                                        <Link to="/lessons">Lessons</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/library">Library</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/users">Users</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/lessons/add">add lesson</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/layers">Layers</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/attendanceJournal">AttendanceJournal</Link>
-                                    </li>
-                                    <li onClick={handleLogout}>
-                                        <Link to="/">logout</Link>
-                                    </li>
-                                </>
-                            }
-                        </ul>
-                    </nav>
+                    <NavBar/>
 
                     <Switch>
                         <AuthorizedRoute path="/lessons/add"  requires={['teacher','admin']}>
