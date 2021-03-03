@@ -1,21 +1,39 @@
 .slide-show-image {
-    height: 62vh;
-    background-repeat: no-repeat;
-    background-size: contain;
+  height: 70vh;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 nav {
-    display: flex;
-    background: #ebebeb;
+  display: flex;
+  background: #ebebeb;
 }
 
 nav > div {
-    padding: 10px;
-    border-bottom: solid 2px;
-    border-bottom: solid 3px;
+  display: flex;
+  padding: 10px;
+  border-bottom: solid 2px;
+  border-bottom: solid 3px;
 }
 
-nav > div:nth-child(1) { border-bottom-color: #636393; }
-nav > div:nth-child(2) { border-bottom-color: #B5222D; }
-nav > div:nth-child(3) { border-bottom-color: #D4953C; }
-nav > div:nth-child(4) { border-bottom-color: #609491; }
+nav > div:nth-child(1) {
+  border-bottom-color: #ef289d;
+}
+nav > div:nth-child(2) {
+  border-bottom-color: #9c1bbc;
+}
+nav > div:nth-child(3) {
+  border-bottom-color: #06680d;
+}
+nav > div:nth-child(4) {
+  border-bottom-color: #fb5d01;
+}
+nav > div:nth-child(5) {
+  border-bottom-color: #f5a002;
+}
+nav > div:nth-child(6) {
+  border-bottom-color: #0714a2;
+}
+nav > div:nth-child(7) {
+  border-bottom-color: #d6011d;
+}

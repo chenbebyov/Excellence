@@ -1,9 +1,9 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox,Upload, message  } from 'antd';
+import { Form, Input, Button,Upload, message  } from 'antd';
 import { useDispatch } from 'react-redux';
 import { createLesson } from '../../redux/actions/lesson.actions';
-import { InboxOutlined } from '@ant-design/icons';
-
+import { InboxOutlined ,UploadOutlined} from '@ant-design/icons';
+import '../css/Lessons.css';
 
 
 const layout = {
@@ -48,7 +48,10 @@ const props = {
     };
 
     return (
+      <>
+     <div className="parent">
         <Form {...layout} name="Add New Lesson" initialValues={{ remember: true }} onFinish={save} onFinishFailed={onFinishFailed} >
+        <div className="div1">
         <Form.Item
             label="lesson subject"
             name="lessonSubject"
@@ -63,24 +66,85 @@ const props = {
         >
             <Input />
         </Form.Item>
+      </div>
+      <div className="div2">
+        <Form.Item
+            label="file name"
+            name="fileName"
+            rules={[
+                {
+                    required: true,
+                    pattern:"(^[a-zA-Z0-9]+$)",
+                    min:2,
+                    message: 'file name is required and must be at least 2 chars',
+                },
+            ]}
+        >
+            <Input />
 
+        </Form.Item>
+        </div>
+        <div className="div3">
+        <Form.Item>
+        <Dragger {...props}>
+          <p className="ant-upload-drag-icon">
+            <InboxOutlined />
+         </p>
+         <p className="ant-upload-text">Click or drag file to this area to upload</p>
+         <p className="ant-upload-hint">
+            Support for a single or bulk upload. Strictly prohibit from uploading company data or other
+            band files
+         </p>
+       </Dragger>
+       <Upload action="                                                " directory>
+           <Button icon={<UploadOutlined />}>Upload Directory</Button>
+       </Upload>
+     </Form.Item>
+      </div>
+      <div className="div4">
+       <Form.Item
+            label="task name"
+            name="taskName"
+            rules={[
+                {
+                    required: true,
+                    pattern:"(^[a-zA-Z0-9]+$)",
+                    min:2,
+                    message: 'file name is required and must be at least 2 chars',
+                },
+            ]}
+        >
+            <Input />
+        </Form.Item>
+      </div>
+      <div className="div5">
+<Form.Item>
+      <Dragger {...props}>
+        <p className="ant-upload-drag-icon">
+         <InboxOutlined />
+       </p>
+      <p className="ant-upload-text">Click or drag file to this area to upload</p>
+      <p className="ant-upload-hint">
+         Support for a single or bulk upload. Strictly prohibit from uploading company data or other
+         band files
+      </p>
+     </Dragger>
+     <Upload action="                                                " directory>
+           <Button icon={<UploadOutlined />}>Upload Directory</Button>
+       </Upload>
+</Form.Item>
+</div>
+<div className="div6">
         <Form.Item>
             <Button type="primary" htmlType="submit">
                 Add Lesson
             </Button>
         </Form.Item>
-
-        <Dragger {...props}>
-    <p className="ant-upload-drag-icon">
-      <InboxOutlined />
-    </p>
-    <p className="ant-upload-text">Click or drag file to this area to upload</p>
-    <p className="ant-upload-hint">
-      Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-      band files
-    </p>
-  </Dragger>
+</div>
+       
     </Form>
+    </div>
+    </>
     )
 
 }

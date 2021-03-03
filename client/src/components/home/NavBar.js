@@ -25,7 +25,6 @@ const NavBar = (props) => {
     };
 
     const handleShowSignIn = () => {
-        debugger
         setShowSignIn(true);
     }
     const hideSignIn = () => {
@@ -44,9 +43,6 @@ const NavBar = (props) => {
             {loggedIn &&
                 
                 <>
-                    <div>
-                        <Link to="/lessons">Lessons</Link>
-                    </div>
                     <div>
                         <Link to="/library">Library</Link>
                     </div>
@@ -67,6 +63,9 @@ const NavBar = (props) => {
                         <div onClick={handleLogout}>
                             <Link to="/">logout</Link>
                         </div>
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
                         <div>{`Hello ${user.firstName} ${user.lastName}`}</div>
                     </div>
                     

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Library from './pages/Library';
-import Lessons from './components/lessonsAndTasks/Lessons';
 import Home from './pages/Home';
 import ViewUsers from './components/users/ViewUsers';
 import HierarchyListView from './components/layers/HierarchyListView';
@@ -47,9 +46,6 @@ function App (props) {
                     <Switch>
                         <AuthorizedRoute path="/lessons/add"  requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <CreateLesson /> : <Redirect to="/" />)}
-                        </AuthorizedRoute>
-                        <AuthorizedRoute path="/lessons" requires={['teacher','admin']}>
-                            {({ isAuthorized }) => (isAuthorized ? <Lessons /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/library" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <Library /> : <Redirect to="/" />)}
