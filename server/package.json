@@ -18,7 +18,8 @@
     "generate-password": "^1.6.0",
     "https": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.5"
+    "mongoose": "^5.11.5",
+    "mongoose-deep-populate": "^3.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
