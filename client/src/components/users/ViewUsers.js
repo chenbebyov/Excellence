@@ -2,21 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { List, message, Avatar, Spin, Card, Button , Modal} from 'antd';
 import { useHistory,Link } from 'react-router-dom';
 import SetUserRole from './SetUserRole';
+import stringToColor from '../../hooks/stringToColor';
 
 const ViewUsers = (props) => {
 
-    const {userList, showSetRole} = props;
+    const {userList, showSetRole, title, showRemove, removeStudent} = props;
+    const [selectUser, setSelectdUser] = useState(null);
+    
     const history = useHistory();
-    function getRandomColor() {
-        var letters = '0123456789ABCDEF'.split('');
-        var color = '#';
-        for (var i = 0; i < 6; i++ ) {
-            color += letters[Math.round(Math.random() * 15)];
-        }
-        return color;
+
+    function getRandomColor(userName) {
+        return stringToColor(userName);
     }
 
-    const navigate = (user) => {
+    function navigate(user) {
         history.push({
             pathname: `/users/${user._id}`,
             state: { user },
@@ -25,9 +24,10 @@ const ViewUsers = (props) => {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
 
-    const showModal = (e) => {
+    const showModal = (e, userId) => {
         e.stopPropagation();
         e.nativeEvent.stopImmediatePropagation();
+        setSelectdUser(userId);
         setIsModalVisible(true);
     };
 
@@ -40,35 +40,38 @@ const ViewUsers = (props) => {
     };
 
     return (
-        <Card type="inner" title="User List">
-            <List
-                dataSource={userList}
-                renderItem={item => (
-                    // <List.Item key={item._id} onClick={()=> navigate(item)}>
-                    <List.Item key={item._id}>
-                        <List.Item.Meta 
-                            avatar={
-                                <Avatar style={{ backgroundColor: getRandomColor(),textTransform: 'uppercase', verticalAlign: 'middle' }} size="large">
-                                    {item.firstName.charAt(0)}
-                                </Avatar>
-                            }
-                            title={`${item.firstName} ${item.lastName}`}
-                            description={item.email}
+        <>
+            <Card type="inner" title={title}>
+                <List
+                    dataSource={userList}
+                    renderItem={item => (
+                        // <List.Item key={item._id} onClick={()=> navigate(item)}>
+                        <List.Item key={item._id}>
+                            <List.Item.Meta 
+                                avatar={
+                                    <Avatar style={{ backgroundColor: getRandomColor(item.firstName),textTransform: 'uppercase', verticalAlign: 'middle' }} size="large">
+                                        {item.firstName.charAt(0)}
+                                    </Avatar>
+                                }
+                                title={`${item.firstName} ${item.lastName}`}
+                                description={item.email}
 
-                            />
-                            {showSetRole && 
-                                <>
-                                    <Button type="primary" onClick={showModal}>Set User Role</Button>
-                                    <Modal title="Set Role" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                                        <SetUserRole id={item._id}></SetUserRole>
-                                    </Modal>
-                                </>
-                            }
-                    </List.Item>
-                )}
-            >
-            </List>
-        </Card>
+                                />
+                                {showSetRole && 
+                                    <Button type="primary" onClick={(e) =>showModal(e,item._id)}>Set User Role</Button>
+                                }
+                                {showRemove && 
+                                    <Button type="primary" onClick={()=>removeStudent(item._id)}>Remove Student</Button>
+                                }
+                        </List.Item>
+                    )}
+                >
+                </List>
+            </Card>
+            <Modal title="Set Role" visible={isModalVisible}>
+                <SetUserRole id={selectUser} handleOk={handleOk} handleCancel={handleCancel}></SetUserRole>
+            </Modal>
+        </>
     )
 }
 export default ViewUsers;

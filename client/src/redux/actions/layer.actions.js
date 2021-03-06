@@ -1,7 +1,15 @@
 import { useSelector } from 'react-redux';
-import {getAllLayers, addNewLayer, addNewGrade, addNewLevel, addNewGroup} from '../../services/layer.service';
+import {getAllLayers, 
+        addNewLayer, 
+        addNewGrade, 
+        addNewLevel, 
+        addNewGroup,
+        updateGroupDetails
+} from '../../services/layer.service';
+
 export const SET_LAYERS = 'SET LAYERS';
 export const ADD_LAYER = 'ADD LAYER';
+export const UPDATE_GROUP = 'UPDATE GROUP';
 
 export const setLayers = (layersList) => {
     return {
@@ -13,6 +21,12 @@ export const setLayer = (layer) => {
     return {
         type: ADD_LAYER,
         payload: layer
+    };
+};
+export const setUpdatedGroup = (group) => {
+    return {
+        type: UPDATE_GROUP,
+        payload: group
     };
 };
 
@@ -72,6 +86,19 @@ export const addGroup = (params) => {
         return addNewGroup(params).then(response => response.data).then(response => {
             if(response.success){
                 dispatch(setLayer(response.layer));
+            }
+            return response;
+        }).catch(error=> 
+            { return {success:false , error: error};
+        });
+    }
+}
+export const updateGroup = (group) => {
+   
+    return dispatch => {
+        return updateGroupDetails(group).then(response => response.data).then(response => {
+            if(response.success){
+                dispatch(setUpdatedGroup(response.group));
             }
             return response;
         }).catch(error=> 

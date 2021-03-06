@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getLayers} from '../../redux/actions/layer.actions';
-import { Button, Card, Col, Row } from 'antd';
+import { Button, Card, Col, Row, Breadcrumb } from 'antd';
 import { useHistory } from 'react-router-dom';
 
 import CreateHierarchy from './CreateHierarchy';
@@ -78,7 +78,16 @@ const HierarchyListView = (props) => {
     return (
         <>      
         
-            <Button htmlType="submit" type="primary" onClick={handleAddNewLayer}>{`add new ${type}`}</Button>
+            <div className="hierarchy-header">
+                <Breadcrumb>
+                    {['layer', 'grade', 'level', 'group' ].includes(type) && <Breadcrumb.Item>Layers</Breadcrumb.Item>}
+                    {['grade', 'level', 'group' ].includes(type) && <Breadcrumb.Item>Grade</Breadcrumb.Item>}
+                    {['level', 'group' ].includes(type) && <Breadcrumb.Item>Level</Breadcrumb.Item>}
+                    {['group' ].includes(type) && <Breadcrumb.Item>Group</Breadcrumb.Item>}
+                </Breadcrumb>
+
+                <Button htmlType="submit" type="primary" onClick={handleAddNewLayer}>{`add new ${type}`}</Button>
+            </div>
             {showAddNewHierarchy && 
                 <CreateHierarchy 
                     hideCreateHierarchy={hideCreateHierarchy} 
@@ -92,7 +101,7 @@ const HierarchyListView = (props) => {
                     <Row gutter={16}>
                         {getData().map(item =>
                             <Col key={item._id} span={8}>
-                                <Card  title={item.name} bordered={false}>
+                                <Card  title={item.name} bordered={true} >
                                     <Button type="primary" onClick={() => showDetails(item)}>view details</Button>
                                 </Card>
                             </Col>

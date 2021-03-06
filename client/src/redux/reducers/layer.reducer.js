@@ -1,5 +1,4 @@
-import {SET_LAYERS} from '../actions/layer.actions';
-import {ADD_LAYER} from '../actions/layer.actions';
+import {SET_LAYERS, ADD_LAYER, UPDATE_GROUP} from '../actions/layer.actions';
 
 const InitialSatate = {
     layers: null
@@ -18,7 +17,26 @@ export default function reducer(state = InitialSatate, action){
             return {...state, 
                 layers : layers
             };
-        
+
+        //TODO fix this code with lodash
+        case UPDATE_GROUP:
+            for(let layer of state.layers) {
+                for(let grade of layer.grades) {
+                    for(let level of grade.levels) {
+                        for(let group of level.groups) {
+                            if(group._id === action.payload._id) {
+                                group = action.payload;
+                            }
+                        }
+                        level = {...level};
+                    }
+                    grade = {...grade};
+                }
+                layer = {...layer};
+            }
+            return {...state, 
+                layers : [...state.layers]
+            };
         default:
             return state;
     }

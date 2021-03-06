@@ -6,7 +6,7 @@ import {setUserRole} from '../../redux/actions/user.actions';
 
 const SetUserRole = (props) => {
 
-  const { id } = props;
+  const { id, handleOk, handleCancel } = props;
 
   const { user } = useSelector(state => state.userReducer);
     
@@ -20,7 +20,11 @@ const SetUserRole = (props) => {
   const dispatch = useDispatch();
     
   const save = () => {
-      dispatch(setUserRole(id, role));       
+      dispatch(setUserRole(id, role));    
+      handleOk();   
+  }
+  const cancel = () => {
+    handleCancel();
   }
 
   const onFinishFailed = () => {
@@ -49,6 +53,10 @@ const SetUserRole = (props) => {
           <Button type="primary" htmlType="submit">
               Save
           </Button>
+          <Button type="default" htmlType="submit" onClick={()=> cancel()}>
+              cancel
+          </Button>
+
       </Form.Item>
       </Form>
       

@@ -14,6 +14,7 @@ import NewPassword from './components/users/NewPassword';
 import ViewGroupsDetails from './components/layers/ViewGroupsDetails';
 import AffiliationToGroup from './components/groups/AffiliationToGroup';
 import NavBar from './components/home/NavBar';
+import '../src/css/App.css';
 
 const permissionsStrategy = (currentRole, requirement) => {
     return requirement.find(role => role === currentRole);
@@ -54,7 +55,7 @@ function App (props) {
                             {({ isAuthorized }) => (isAuthorized ? <UserDetails /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/users" requires={['teacher','admin']}>
-                            {({ isAuthorized }) => (isAuthorized ? <ViewUsers userList={userList} showSetRole={true} />: <Redirect to="/" />)}
+                            {({ isAuthorized }) => (isAuthorized ? <ViewUsers title="User List" userList={userList} showSetRole={true} />: <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/layers" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <HierarchyListView type="layer" nextHierarchy="grade"/> : <Redirect to="/" />)}
@@ -68,11 +69,11 @@ function App (props) {
                         <AuthorizedRoute path="/group" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <HierarchyListView type="group" nextHierarchy="viewGroupDetails"/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        <AuthorizedRoute path="/viewGroupDetails" requires={['teacher','admin']}>
+                        {/* <AuthorizedRoute path="/viewGroupDetails" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <ViewGroupsDetails/> : <Redirect to="/" />)}
-                        </AuthorizedRoute>
-                        <AuthorizedRoute path="/affiliationToGroup" requires={['teacher','admin']}>
-                            {({ isAuthorized }) => (isAuthorized ? <AffiliationToGroup/> : <Redirect to="/" />)}
+                        </AuthorizedRoute> */}
+                        <AuthorizedRoute path="/viewGroupDetails" requires={['teacher','admin']}>
+                            {({ isAuthorized }) => (isAuthorized ? <AffiliationToGroup mode="read"/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         {/* <AuthorizedRoute path="/newPassword" >
                             {({ isAuthorized }) => (isAuthorized ? <NewPassword/> : <Redirect to="/" />)}

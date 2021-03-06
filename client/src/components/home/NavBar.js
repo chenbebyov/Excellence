@@ -72,8 +72,8 @@ const NavBar = (props) => {
                 </>
             }
             {!loggedIn &&
-                <div>
-                    <label onClick={handleShowSignIn}>sign in</label>
+                <div onClick={handleShowSignIn}>
+                    <label>sign in</label>
                 </div>
             }
         </nav>

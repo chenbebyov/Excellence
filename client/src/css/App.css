@@ -1,0 +1,11 @@
+.ant-btn {
+    margin: 5px;
+}
+
+.ant-modal-mask {
+    background-color: rgb(0 0 0 / 2%);
+}
+
+.ant-modal-content {
+    box-shadow: 1px 0px 5px 0px rgb(0 0 0 / 3%);
+}
