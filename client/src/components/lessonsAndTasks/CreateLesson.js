@@ -99,6 +99,7 @@ const CreateLesson = () => {
                                     band files
                                 </p>
                             </Dragger>
+                            <br/>
                             <Upload action="                                                " directory>
                                 <Button icon={<UploadOutlined />}>Upload Directory</Button>
                             </Upload>
@@ -129,6 +130,7 @@ const CreateLesson = () => {
                                     band files
                                 </p>
                             </Dragger>
+                            <br/>
                             <Upload action="                                                " directory>
                                 <Button icon={<UploadOutlined />}>Upload Directory</Button>
                             </Upload>

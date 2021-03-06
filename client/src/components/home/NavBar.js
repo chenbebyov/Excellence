@@ -62,7 +62,7 @@ const NavBar = (props) => {
                     <div className="right-content">
                         <div onClick={handleLogout}>
                             <Link to="/">logout</Link>
-                        </div>
+                        </div>                     
                         &nbsp;
                         &nbsp;
                         &nbsp;

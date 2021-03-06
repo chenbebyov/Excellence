@@ -16,10 +16,12 @@ const Slideshow = () => {
         <Slide>
           <div className="each-slide">
             <div className="slide-show-image" style={{'backgroundImage': `url(${slideImages[0]})`}}>
+              <div className="text1">Next to excellence is the appreciation of it.</div>
             </div>
           </div>
           <div className="each-slide">
             <div className="slide-show-image" style={{'backgroundImage': `url(${slideImages[1]})`}}>
+            <div className="text2">Next to excellence is the appreciation of it.</div>
             </div>
           </div>
         </Slide>
