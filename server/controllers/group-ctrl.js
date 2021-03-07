@@ -66,7 +66,7 @@ updateGroup = (req, res) => {
 
     // }).catch(err => res.status(400).json({ success: false, error: err }));
 
-    let {groupId, name, teacherCode, StudentsInTheGroup} = body;
+    let {groupId, name, teacherCode, StudentsInTheGroup, lesson} = body;
 
     Layer.findOne({'grades.levels.groups._id': groupId}).then(layer => {
 
@@ -103,35 +103,71 @@ updateGroup = (req, res) => {
         }
 
     }).catch(err => res.status(400).json({ success: false, error: err }));
-
-
-    // name:groupName,
-    // teacherCode: selectedTeacher,
-    //         StudentsInTheGroup: selectedStudents.map(student => 
-    //             ({studentCode: student._id})
-    //         )
-
-    // Layer.aggregate()
-    // .match({'grades.levels.groups._id': body.groupId})
-    // .project({
-    //     'groups': {
-    //         '$filter': {
-    //             'input': '$groups',
-    //             'cond': {
-    //                 '$eq': ['$$groups._id', body.groupId]
-    //             }
-    //         }
-    //     }
-    // })
-    // .exec(function (err, res) {
-    //     if (err) return handleError(err);
-    //     console.log(res); // [ { orders: [...] } ]
-    // });
-
     //TODO:...
 }
 
+updateGroupLessons = (req, res) => {
+    const body = req.body;
+
+    if (!body || !body.groupId || !body.lessons) {
+        return res.status(400).json({
+            success: false,
+            error: 'Failed to update lessons, details are empty.',
+        })
+    }
+
+    let {groupId, lessons} = body;
+
+    Layer.findOne({'grades.levels.groups._id': groupId}).then(layer => {
+
+        if (layer) {
+            for(let grade of layer.grades) {
+                for(let level of grade.levels) {
+                    for(let group of level.groups) {
+                        if(group._id == body.groupId) {
+                            lessons.forEach(lesson=>{
+                                if(lesson._id === undefined){
+                                    if(group.lessons === undefined){
+                                        group.lessonss = [];
+                                    }
+                                    group.lessons.push(lesson);
+                                }
+                                else {
+                                    let lessonToUpdate = group.lessons.find(item => item._id === lesson._id);
+                                    lessonToUpdate.Code = lesson.Code;
+                                    lessonToUpdate.fromDateTime = lesson.fromDateTime;
+                                    lessonToUpdate.toDateTime = lesson.toDateTime;
+                                    lessonToUpdate.comments = lesson.comments;
+                                }
+                            })
+                            layer.save().then(() => {
+                                return res.status(200).json({
+                                    success: true,
+                                    group: group,
+                                    message: 'group updated!',
+                                })
+                            }).catch(error => {
+                                return res.status(400).json({
+                                    error,
+                                    message: 'group not updated!',
+                                })
+                            });
+                        }
+                    }
+                }
+            }
+
+            // return res.status(400).json({
+            //     success: false,
+            //     error: 'group not found.',
+            // })
+        }
+
+    }).catch(err => res.status(400).json({ success: false, error: err }));
+    //TODO:...
+}
 
 module.exports = {
-    updateGroup
+    updateGroup,
+    updateGroupLessons
 }

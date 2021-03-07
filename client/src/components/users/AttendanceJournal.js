@@ -11,16 +11,29 @@ const DnDCalendar = withDragAndDrop(Calendar);
 
 const AttendanceJournal = (props) => {
 
-    const [eventList, setEventList] = useState([]);
-    const myEventsList = [
-        {
-            start: moment().toDate(),
-            end: moment()
-                .add(1, "days")
-                .toDate(),
-            title: "Some title"
-        }
-    ];
+    const {lessons} = props;
+
+    // const [eventList, setEventList] = useState([]);
+    // const myEventsList = [
+    //     {
+    //         start: moment().toDate(),
+    //         end: moment()
+    //             .add(1, "days")
+    //             .toDate(),
+    //         title: "Some title"
+    //     }
+    // ];
+
+    const getEventsList = () => {
+        if(lessons === null)
+            return [];
+        return lessons.map(lesson => ({
+            start: lesson.fromAnHour,
+            end: lesson.toAnHour,
+            title: lesson.Code
+        }))
+    }
+
     const onEventResize = (data) => {
         const { start, end } = data;
 
@@ -38,9 +51,10 @@ const AttendanceJournal = (props) => {
     return (
         <>
             <div>
+                
                 <DnDCalendar
                     localizer={localizer}
-                    events={myEventsList}
+                    events={getEventsList}
                     startAccessor="start"
                     endAccessor="end"
                     defaultDate={new Date()}

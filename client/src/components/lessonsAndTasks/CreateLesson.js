@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { createLesson } from '../../redux/actions/lesson.actions';
 import { InboxOutlined, UploadOutlined } from '@ant-design/icons';
 import '../../css/Lessons.css';
+import UploadImageToS3WithReactS3 from './UploadImageToS3WithReactS3';
 
 
 const layout = {
@@ -25,7 +26,7 @@ const CreateLesson = () => {
     const props = {
         name: 'file',
         multiple: true,
-        action: '                                                ',
+        action: '',
         onChange(info) {
             const { status } = info.file;
             if (status !== 'uploading') {
@@ -51,6 +52,7 @@ const CreateLesson = () => {
     return (
         <>
         <Row>
+        <UploadImageToS3WithReactS3/>
             <Col span={12} offset={6}>
                 <Form className="parent" 
                         {...layout} 
@@ -65,7 +67,7 @@ const CreateLesson = () => {
                             rules={[
                                 {
                                     required: true,
-                                    pattern: "(^[a-zA-Z0-9]+$)",
+                                    pattern: "(^[a-zA-Z0-9 ]+$)",
                                     min: 2,
                                     message: 'lesson subject is required and must be at least 2 chars',
                                 },
