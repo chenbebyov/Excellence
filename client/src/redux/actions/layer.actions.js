@@ -4,7 +4,8 @@ import {getAllLayers,
         addNewGrade, 
         addNewLevel, 
         addNewGroup,
-        updateGroupDetails
+        updateGroupDetails,
+        updateGroupLessons
 } from '../../services/layer.service';
 
 export const SET_LAYERS = 'SET LAYERS';
@@ -98,6 +99,20 @@ export const updateGroup = (group) => {
     return dispatch => {
         return updateGroupDetails(group).then(response => response.data).then(response => {
             if(response.success){
+                dispatch(setUpdatedGroup(response.group));
+            }
+            return response;
+        }).catch(error=> 
+            { return {success:false , error: error};
+        });
+    }
+}
+export const updateLessonsInGroup = (data) => {
+   
+    return dispatch => {
+        return updateGroupLessons(data).then(response => response.data).then(response => {
+            if(response.success){
+                debugger;
                 dispatch(setUpdatedGroup(response.group));
             }
             return response;

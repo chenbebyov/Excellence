@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { AutoComplete, Input, Form } from 'antd';
+import { AutoComplete, Input, Form, Tabs, Drawer } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { getTeachers, getStudents } from '../../services/user.service';
 import { message,Button, Card } from 'antd';
 import {useSelector, useDispatch} from 'react-redux';
 import {updateGroup} from '../../redux/actions/layer.actions';
 import ViewUsers from '../../components/users/ViewUsers';
+import AddLessonsToGroup from './AddLessonToGroup';
+import LessonInGroup from './LessonInGroup';
 
 
 
@@ -24,9 +26,12 @@ const AffiliationToGroup = (props) => {
     const [teacherDefaultValue, setTeacherDefaultValue] = useState();
     const [loading, setLoading] = useState(false);
     const [viewMode, setViewMode] = useState(mode);
+    const [viewDrawer, setViewDrawer] = useState(false);
     // const { layers } = useSelector(state => state.layerReducer);
 
     const dispatch = useDispatch();
+    const { TabPane } = Tabs;
+
 
 
     useEffect(() => {
@@ -102,7 +107,7 @@ const AffiliationToGroup = (props) => {
     }
 
     const filterAutoComplete  = (inputValue, option) => {
-return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+        return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
     }
 
     const save = () => {
@@ -147,37 +152,45 @@ return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
         width: "-webkit-fill-available"
     }
 
+    const openLessonTimes = () => {
+
+    }
+
     return (
         <div style={style}>
             <div style={style2}>
                 {viewMode === 'edit' && 
                     <>
-                        <Form.Item
-                            label="group name"
-                            name="group name"
-                            onChange={(e) => {setGroupName(e.target.value)}}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: `Please input group name!`
-                                },
-                            ]}
+                        <Form
+                            layout="vertical"
                         >
-                            <Input defaultValue={groupName}/>
-                        </Form.Item>
-                        <label>select teacher</label>
-                        <AutoComplete
-                            style={{
-                                width: 200,
-                            }}
-                            options={teacherList}
-                            defaultValue={teacherDefaultValue}
-                            placeholder="teacher name"
-                            onSelect={handleSelectTeacher}
-                            filterOption={filterAutoComplete}
-                        />
+                            <Form.Item
+                                label="group name"
+                                name="group name"
+                                onChange={(e) => {setGroupName(e.target.value)}}
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: `Please input group name!`
+                                    },
+                                ]}
+                            >
+                                <Input defaultValue={groupName}/>
+                            </Form.Item>
+                            <Form.Item label="teacher name" name="teacher name">     
+                                <AutoComplete
+                                    style={{
+                                        width: 200,
+                                    }}
+                                    options={teacherList}
+                                    defaultValue={teacherDefaultValue}
+                                    placeholder="teacher name"
+                                    onSelect={handleSelectTeacher}
+                                    filterOption={filterAutoComplete}
+                                />
+                            </Form.Item>
 
-                        <div>
+                            <Form.Item label="add a new student" name="add a new student"> 
                             <AutoComplete
                                 style={{width: 200}}
                                 options={studentList}
@@ -188,27 +201,76 @@ return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
                                 value={currentStudent !== null? `${currentStudent.firstName} ${currentStudent.lastName}` : ""}
                             />
                             <Button onClick={addNewStudentToList}>Add Student</Button>
+                            </Form.Item>
+                        <div>
                         </div>
+
+                        </Form>
+                        <ViewUsers 
+                            title="Student In Group:" 
+                            userList={selectedStudents} 
+                            showSetRole={false}
+                            showRemove={true}
+                            removeStudent={removeStudent}
+                        /> 
                     </>
                 }
                     
                 {viewMode === 'read' &&
-                    <Card title={`Group name: ${groupName}`} style={{ width: 300 }} bordered={false}>
-                        <p>Teacher name: {teacherDefaultValue}</p>
-                    </Card>
-                }
+                    <>
+                        <Card title={`Group name: ${groupName}`} style={{ width: 300 }} bordered={false}>
+                            <p>Teacher name: {teacherDefaultValue}</p>
+                        </Card>
 
-                <ViewUsers 
-                    title="Student In Group:" 
-                    userList={selectedStudents} 
-                    showSetRole={false}
-                    showRemove={viewMode === 'edit'}
-                    removeStudent={removeStudent}
-                />           
+
+
+                    <Tabs defaultActiveKey="1">
+                        <TabPane tab="Student In Group" key="1">
+                            <ViewUsers 
+                                title="Student In Group:" 
+                                userList={selectedStudents} 
+                                showSetRole={false}
+                                showRemove={viewMode === 'edit'}
+                                removeStudent={removeStudent}
+                            /> 
+                        </TabPane>
+                        <TabPane tab="Group Lessons" key="2">
+                            <>
+                            <LessonInGroup/>
+                                <Button onClick={()=>{setViewDrawer(true)}}>Add new lesson to group</Button>
+                                <Drawer
+                                    title="Add new lesson"
+                                    placement="right"
+                                    closable={()=>{setViewDrawer(true)}}
+                                    visible={viewDrawer}
+                                    key="right"
+                                    >
+                                    <AddLessonsToGroup setViewDrawer={setViewDrawer} groupId={group._id}/>
+                                </Drawer>
+                            </>
+                        
+                            {/* <AddLessonsToGroup groupId={group._id}/> */}
+                        </TabPane>
+                        {/* <TabPane tab="Group Files" key="3">
+                            Files
+                        </TabPane>
+                        <TabPane tab="Group Tasks" key="4">
+                            Tasks
+                        </TabPane> */}
+                    </Tabs>
+                </>
+                }
+          
             </div>
             <div>
                 {viewMode === 'edit' && <Button loading={loading} onClick={save}>Save Changes</Button>}
-                {viewMode === 'read' && <Button loading={loading} onClick={editGroup}>Edit</Button>}
+                {viewMode === 'read' && 
+                    <>
+                        <Button loading={loading} onClick={openLessonTimes}>Set Lessons Times</Button>
+                        <Button loading={loading} onClick={editGroup}>Edit</Button>
+                    </>
+                }
+                
             </div>
 
         </div>

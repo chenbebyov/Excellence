@@ -11,6 +11,7 @@ export const addNewGroup = (params) => api.post('/group', params);
 export const getAllLayers = () => api.get('/layers');
 export const getLayerById = (id) => api.get(`/layer/${id}`);
 export const updateGroupDetails = (group) => api.put('/group', group);
+export const updateGroupLessons = (group) => api.put('/group/lessons', group);
 
 
 const apis = {
@@ -20,7 +21,8 @@ const apis = {
     getAllLayers,
     getLayerById,
     addNewGroup,
-    updateGroupDetails
+    updateGroupDetails,
+    updateGroupLessons
 }
 
 export default apis;
