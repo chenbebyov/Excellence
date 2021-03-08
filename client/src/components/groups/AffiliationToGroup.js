@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { AutoComplete, Input, Form, Tabs, Drawer } from 'antd';
+import { AutoComplete, Input, Form, Tabs, Drawer ,message,Button, Card } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { getTeachers, getStudents } from '../../services/user.service';
-import { message,Button, Card } from 'antd';
 import {useSelector, useDispatch} from 'react-redux';
 import {updateGroup} from '../../redux/actions/layer.actions';
 import ViewUsers from '../../components/users/ViewUsers';
-import AddLessonsToGroup from './AddLessonToGroup';
-import LessonInGroup from './LessonInGroup';
+import GroupDetails from './GroupDetails';
 
 
 
@@ -26,11 +24,9 @@ const AffiliationToGroup = (props) => {
     const [teacherDefaultValue, setTeacherDefaultValue] = useState();
     const [loading, setLoading] = useState(false);
     const [viewMode, setViewMode] = useState(mode);
-    const [viewDrawer, setViewDrawer] = useState(false);
     // const { layers } = useSelector(state => state.layerReducer);
 
     const dispatch = useDispatch();
-    const { TabPane } = Tabs;
 
 
 
@@ -217,48 +213,11 @@ const AffiliationToGroup = (props) => {
                 }
                     
                 {viewMode === 'read' &&
-                    <>
-                        <Card title={`Group name: ${groupName}`} style={{ width: 300 }} bordered={false}>
-                            <p>Teacher name: {teacherDefaultValue}</p>
-                        </Card>
-
-
-
-                    <Tabs defaultActiveKey="1">
-                        <TabPane tab="Student In Group" key="1">
-                            <ViewUsers 
-                                title="Student In Group:" 
-                                userList={selectedStudents} 
-                                showSetRole={false}
-                                showRemove={viewMode === 'edit'}
-                                removeStudent={removeStudent}
-                            /> 
-                        </TabPane>
-                        <TabPane tab="Group Lessons" key="2">
-                            <>
-                            <LessonInGroup/>
-                                <Button onClick={()=>{setViewDrawer(true)}}>Add new lesson to group</Button>
-                                <Drawer
-                                    title="Add new lesson"
-                                    placement="right"
-                                    closable={()=>{setViewDrawer(true)}}
-                                    visible={viewDrawer}
-                                    key="right"
-                                    >
-                                    <AddLessonsToGroup setViewDrawer={setViewDrawer} groupId={group._id}/>
-                                </Drawer>
-                            </>
-                        
-                            {/* <AddLessonsToGroup groupId={group._id}/> */}
-                        </TabPane>
-                        {/* <TabPane tab="Group Files" key="3">
-                            Files
-                        </TabPane>
-                        <TabPane tab="Group Tasks" key="4">
-                            Tasks
-                        </TabPane> */}
-                    </Tabs>
-                </>
+                    <GroupDetails 
+                        group={group} 
+                        teacherName={teacherDefaultValue} 
+                        studentsInGroup={selectedStudents}
+                    />
                 }
           
             </div>
