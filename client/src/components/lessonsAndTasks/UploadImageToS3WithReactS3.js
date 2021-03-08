@@ -1,12 +1,6 @@
 import React , {useState} from 'react';
 import { uploadFile } from 'react-s3';
 
-
-// const S3_BUCKET ='lessons-files';
-// const REGION ='eu-west-1';
-// const ACCESS_KEY ='AKIAJ3ZWMEZMT4LBEGFQ';
-// const SECRET_ACCESS_KEY ='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';
-
 const config = {
     bucketName: process.env.REACT_APP_S3_BUCKET,
     region: process.env.REACT_APP_S3_REGION,

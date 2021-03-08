@@ -14,6 +14,7 @@ const AddLessonsToGroup = (props) => {
     // const [startDate, setStartDate] = useState();
     const [lessons, setLessons] = useState([]);
     const [selectedLesson, setSelectedLesson] = useState();
+    const [loading, setLoading] = useState(false);
     const format = 'HH:mm';
 
     const dispatch = useDispatch();
@@ -60,7 +61,7 @@ const AddLessonsToGroup = (props) => {
     }
 
     const save = (values) => {
-        console.log('Success:', values); 
+        setLoading(true);
         let lesson = {
             Code: selectedLesson._id,
             fromDateTime:values["lesson time"][0],
@@ -69,8 +70,8 @@ const AddLessonsToGroup = (props) => {
         }
         let data = {groupId: groupId, lessons: [lesson]};
         dispatch(updateLessonsInGroup(data)).then(res => {
-            debugger;
             if(res.success){
+                setLoading(false);
                 message.success("lesson created successfuly")
                 setViewDrawer(false);
             }
@@ -92,24 +93,14 @@ const AddLessonsToGroup = (props) => {
         <>
         <Space>
         <Form layout="vertical" style={style} initialValues={{ remember: true }} onFinish={save}>
-            {/* <Form.Item 
-                label="lesson date" 
-                name="lesson date"
-                rules={[
-                    {
-                        required: true,
-                        message: 'please select lesson date!'                    },
-                ]}
-            >
-                <DatePicker placeholder="select date" onChange={handleSatartDateChanged} />
-            </Form.Item> */}
             <Form.Item 
                 label="lesson time" 
                 name="lesson time"
                 rules={[
                     {
                         required: true,
-                        message: 'please set lesson hours!'                    },
+                        message: 'please set lesson hours!'
+                    },
                 ]}
             >
                 <RangePicker
@@ -149,7 +140,7 @@ const AddLessonsToGroup = (props) => {
                     <Input />
             </Form.Item>
             <Form.Item>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" loading={loading}>
                         Save
                     </Button>
                     <Button type="default" htmlType="button" onClick={handleCancel}>
