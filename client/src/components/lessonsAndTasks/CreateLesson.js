@@ -6,6 +6,7 @@ import { createLesson } from '../../redux/actions/lesson.actions';
 import { InboxOutlined, UploadOutlined } from '@ant-design/icons';
 import '../../css/Lessons.css';
 import UploadImageToS3WithReactS3 from './UploadImageToS3WithReactS3';
+import UploadFiles from './UploadFiles';
 
 
 const layout = {
@@ -52,8 +53,9 @@ const CreateLesson = () => {
     return (
         <>
         <Row>
-        <UploadImageToS3WithReactS3/>
-            <Col span={12} offset={6}>
+        <UploadFiles actionOnUploadCompleted={null}/>
+        {/* <UploadImageToS3WithReactS3/> */}
+            {/* <Col span={12} offset={6}>
                 <Form className="parent" 
                         {...layout} 
                         name="Add New Lesson" 
@@ -143,8 +145,8 @@ const CreateLesson = () => {
                             </Button>
                         </Form.Item>
                 </Form>
-            </Col>
-        </Row>
+            </Col>*/}
+        </Row> 
         </>
     )
 
