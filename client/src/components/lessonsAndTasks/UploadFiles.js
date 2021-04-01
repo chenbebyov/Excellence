@@ -19,7 +19,6 @@ const UploadFiles  = (props) => {
     const [selectedFileList, setSelectedFileList] = useState([]);
 
     const uploadFileToS3 = ({ file, onSuccess, onError }) => {
-        debugger
         uploadFile(file, config).then(data => {
             console.log(data.location);
             actionOnUploadCompleted(data.location);

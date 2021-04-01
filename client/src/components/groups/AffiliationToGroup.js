@@ -148,10 +148,6 @@ const AffiliationToGroup = (props) => {
         width: "-webkit-fill-available"
     }
 
-    const openLessonTimes = () => {
-
-    }
-
     return (
         <div style={style}>
             <div style={style2}>
@@ -225,7 +221,6 @@ const AffiliationToGroup = (props) => {
                 {viewMode === 'edit' && <Button loading={loading} onClick={save}>Save Changes</Button>}
                 {viewMode === 'read' && 
                     <>
-                        <Button loading={loading} onClick={openLessonTimes}>Set Lessons Times</Button>
                         <Button loading={loading} onClick={editGroup}>Edit</Button>
                     </>
                 }

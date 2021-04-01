@@ -48,7 +48,7 @@ function SignIn(props) {
                 ]}
             >
                 {/* <Layout theme="light"> */}
-                <Tabs defaultActiveKey="1" size="large">
+                <Tabs defaultActiveKey="1" size="large" >
                     <TabPane tab="Login" key="1"><Login hideModal={hideModal} /></TabPane>
                     <TabPane tab="Register" key="2"><Register hideModal={hideModal} /></TabPane>
 

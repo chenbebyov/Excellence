@@ -51,12 +51,12 @@ const Login = (props) => {
 
     return (
         <>
-            {message && <Alert
+            {/* {message && <Alert
                 message="Error"
                 description={message}
                 type="error"
                 showIcon
-            />}
+            />} */}
             <Form {...layout} name="login" initialValues={{ remember: true }} onFinish={save} onFinishFailed={onFinishFailed} >
                 <Form.Item
                     label="Email"

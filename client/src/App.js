@@ -78,7 +78,7 @@ function App (props) {
                         {/* <AuthorizedRoute path="/newPassword" >
                             {({ isAuthorized }) => (isAuthorized ? <NewPassword/> : <Redirect to="/" />)}
                         </AuthorizedRoute> */}
-                        <AuthorizedRoute path="/attendanceJournal"  requires={['teacher','admin']}>
+                        <AuthorizedRoute path="/timetable"  requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <AttendanceJournal /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <Route path="/" component={Home}>

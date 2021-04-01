@@ -6,7 +6,6 @@ import { PersistGate } from 'redux-persist/integration/react'
 import {store,persistor} from '../src/redux/store';
 import 'antd/dist/antd.css';
 
-debugger
 
 ReactDOM.render(
   <React.StrictMode>
