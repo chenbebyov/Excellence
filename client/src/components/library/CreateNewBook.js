@@ -1,31 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Drawer, Form, Button, Col, Row, Input, Select, DatePicker } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 
-const CreateNewBook = () => {
+const CreateNewBook = (props) => {
 
-    state = { visible: false };
+    const {setVisible} = props;
 
-    showDrawer = () => {
-      this.setState({
-        visible: true,
-      });
+    const showDrawer = () => {
+        setVisible(true);
     };
   
-    onClose = () => {
-      this.setState({
-        visible: false,
-      });
+    const onClose = () => {
+        setVisible(false);
     };
   
     return (
         <>
         <Drawer
           title="Create a new book"
-          onClose={this.onClose}
-          visible={this.state.visible}
+          onClose={onClose}
+          visible={true}
           bodyStyle={{ paddingBottom: 80 }}
           footer={
             <div
@@ -33,10 +29,10 @@ const CreateNewBook = () => {
                 textAlign: 'right',
               }}
             >
-              <Button onClick={this.onClose} style={{ marginRight: 8 }}>
+              <Button onClick={onClose} style={{ marginRight: 8 }}>
                 Cancel
               </Button>
-              <Button onClick={this.onClose} type="primary">
+              <Button onClick={onClose} type="primary">
                 Submit
               </Button>
             </div>

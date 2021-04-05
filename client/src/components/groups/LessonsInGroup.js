@@ -8,7 +8,7 @@ const { Step } = Steps;
 const LessonsInGroup = (props) => {
 
     const {group} = props;
-    const [lessons, setLessons] = useState([]);
+    const [groupLessons, setGroupLessons] = useState([]);
 
     useEffect(() => {
         initLessons();
@@ -19,14 +19,17 @@ const LessonsInGroup = (props) => {
             debugger
             if (response.success) {
                 debugger
-                var lessonsMap = Object.assign({}, ...group.lessons.map(lesson => ({[lesson.Code]: lesson})));
-                let result = response.data.map(lesson => {
-                        if(lessonsMap[lesson._id] !== undefined) {
-                            lessonsMap[lesson._id] = Object.assign({}, lessonsMap[lesson._id], { lessonObject: lesson })
-                        }
-                    }
-                );
-                setLessons(Object.values(lessonsMap));
+                // var lessonsMap = Object.assign({}, ...group.lessons.map(lesson => ({[lesson.Code]: lesson})));
+                let lessonsMap = Object.assign({}, ...response.data.map(lesson => ({[lesson._id]: lesson})));
+                let result = group.lessons.map(lesson => ({...lesson, lessonObject: lessonsMap[lesson.Code]}));;
+                
+                // let result = response.data.map(lesson => {
+                //         if(lessonsMap[lesson._id] !== undefined) {
+                //             lessonsMap[lesson._id] = Object.assign({}, lessonsMap[lesson._id], { lessonObject: lesson })
+                //         }
+                //     }
+                // );
+                setGroupLessons(Object.values(result));
             }
             else {
                 message.error('Faild to load teacher list')
@@ -48,13 +51,13 @@ const LessonsInGroup = (props) => {
       );
 
     const getFilteredLessons = () => {
-        return lessons.sort((a, b) => new Date(a.fromDateTime) - new Date(b.fromDateTime))
+        return groupLessons.sort((a, b) => new Date(a.fromDateTime) - new Date(b.fromDateTime))
     }
 
     return (
         <>
-        <List
-                dataSource={lessons}
+        {/* <List
+                dataSource={groupLessons}
                 renderItem={item => (
                     // <List.Item key={item._id} onClick={()=> navigate(item)}>
                     <List.Item key={item._id}>
@@ -66,9 +69,9 @@ const LessonsInGroup = (props) => {
                     </List.Item>
                 )}
             >
-        </List>
+        </List> */}
 
-                {lessons.length && 
+                {groupLessons.length && 
                     <Steps progressDot={customDot} current={1} direction="vertical">
                 
                         {getFilteredLessons().map(lesson => 

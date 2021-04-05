@@ -13,27 +13,47 @@ const AffiliationToGroup = (props) => {
 
     const {mode} = props;
     const history = useHistory();
-    const [group, setGroup] = useState(history.location.state.hierarchyItem);
+    const [group, setGroup] = useState();
     const [teacherList, setTeacherList] = useState([]);
     const [studentList, setStudentList] = useState();
-    const [groupName, setGroupName] = useState(group.name);
-    const [selectedTeacher, setSelectedTeacher] = useState(group.teacherCode);
+    const [groupName, setGroupName] = useState('');
+    const [selectedTeacher, setSelectedTeacher] = useState('');
     const [selectedStudents, setSelectedStudents] = useState([]);
     const [currentStudent, setCurrentStudent] = useState(null);
     // const [selectStudent, setSelectStudent] = useState(group.StudentsInTheGroup.studentCode);
     const [teacherDefaultValue, setTeacherDefaultValue] = useState();
     const [loading, setLoading] = useState(false);
     const [viewMode, setViewMode] = useState(mode);
-    // const { layers } = useSelector(state => state.layerReducer);
+    const { layers } = useSelector(state => state.layerReducer);
 
     const dispatch = useDispatch();
 
 
 
     useEffect(() => {
-        initTeacherList();
-        initStudentList();
-    }, []);
+        if(group) {
+            initTeacherList();
+            initStudentList();
+        }
+    }, [group]);
+
+    useEffect(() => {
+        debugger
+        for(let layer of layers) {
+            for(let grade of layer.grades) {
+                for(let level of grade.levels) {
+                    for(let group of level.groups) {
+                        if(group._id === history.location.state.hierarchyItem._id) {
+                            setGroup(group);
+                            setGroupName(group.name)
+                            setSelectedTeacher(group.teacherCode)
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }, [layers]);
 
     const initTeacherList = () => {
         getTeachers().then(resopnse => resopnse.data).then(response => {
@@ -149,7 +169,11 @@ const AffiliationToGroup = (props) => {
     }
 
     return (
+        
+       
         <div style={style}>
+        {group &&
+            <>
             <div style={style2}>
                 {viewMode === 'edit' && 
                     <>
@@ -192,7 +216,7 @@ const AffiliationToGroup = (props) => {
                                 notFoundContent="No student found"
                                 value={currentStudent !== null? `${currentStudent.firstName} ${currentStudent.lastName}` : ""}
                             />
-                            <Button onClick={addNewStudentToList}>Add Student</Button>
+                            <Button disabled={currentStudent=== null} onClick={addNewStudentToList}>Add Student</Button>
                             </Form.Item>
                         <div>
                         </div>
@@ -226,7 +250,8 @@ const AffiliationToGroup = (props) => {
                 }
                 
             </div>
-
+            </>
+        }
         </div>
     )
 }

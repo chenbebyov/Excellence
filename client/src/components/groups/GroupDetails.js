@@ -32,9 +32,9 @@ const GroupDetails = (props) => {
                 <TabPane tab="Group Lessons" key="2">
                     <>
                     <LessonsInGroup group={group}/>
-                        <Button onClick={()=>{setViewDrawer(true)}}>Add new lesson to group</Button>
+                        <Button onClick={()=>{setViewDrawer(true)}}>add new lesson to group</Button>
                         <Drawer
-                            title="Add new lesson"
+                            title="add lesson to group"
                             placement="right"
                             closable={()=>{setViewDrawer(true)}}
                             visible={viewDrawer}

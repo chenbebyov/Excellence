@@ -13,16 +13,16 @@ const AttendanceJournal = (props) => {
 
     const {lessons} = props;
 
-    // const [eventList, setEventList] = useState([]);
-    // const myEventsList = [
-    //     {
-    //         start: moment().toDate(),
-    //         end: moment()
-    //             .add(1, "days")
-    //             .toDate(),
-    //         title: "Some title"
-    //     }
-    // ];
+    const [eventList, setEventList] = useState([]);
+    const myEventsList = [
+        {
+            start: moment().toDate(),
+            end: moment()
+                .add(1, "days")
+                .toDate(),
+            title: "Some title"
+        }
+    ];
 
     const getEventsList = () => {
         if(lessons === null)

@@ -10,6 +10,7 @@
     "antd": "^4.9.4",
     "axios": "^0.21.1",
     "formik-antd": "^2.0.1",
+    "immer": "^9.0.1",
     "react": "^17.0.1",
     "react-barcode": "^1.4.0",
     "react-barcodes": "^1.0.3",

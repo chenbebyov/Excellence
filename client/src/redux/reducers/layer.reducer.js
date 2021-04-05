@@ -1,10 +1,12 @@
 import {SET_LAYERS, ADD_LAYER, UPDATE_GROUP} from '../actions/layer.actions';
+import produce from "immer"
+
 
 const InitialSatate = {
     layers: null
 }
 
-export default function reducer(state = InitialSatate, action){
+export default produce((state = InitialSatate, action) => {
     switch (action.type) {
         case SET_LAYERS:
             return {...state, 
@@ -13,31 +15,25 @@ export default function reducer(state = InitialSatate, action){
         case ADD_LAYER:
             let newLayer = action.payload;
             let layers = state.layers.filter(layer => layer._id !== newLayer._id);
-            layers.push(newLayer);
+            state.layers.push(newLayer);
             return {...state, 
                 layers : layers
             };
 
-        //TODO fix this code with lodash
         case UPDATE_GROUP:
             for(let layer of state.layers) {
                 for(let grade of layer.grades) {
                     for(let level of grade.levels) {
                         for(let group of level.groups) {
                             if(group._id === action.payload._id) {
-                                group = action.payload;
+                                group = Object.assign(group, action.payload);
+                                break;
                             }
                         }
-                        level = {...level};
                     }
-                    grade = {...grade};
                 }
-                layer = {...layer};
             }
-            return {...state, 
-                layers : [...state.layers]
-            };
         default:
             return state;
     }
-}
+})

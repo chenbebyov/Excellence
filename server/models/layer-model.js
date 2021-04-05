@@ -35,6 +35,11 @@ const Layer = new Schema(
 
                     }],
                     required: true
+                },
+                lessonOfLevel: {
+                    type: [{
+                        lessonId: { type: ObjectId, required: true }
+                    }], required: false
                 }
             }],
             required: true

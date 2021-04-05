@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import api from '../services/books.service';
-import { Table } from 'antd';
-import CreateNewBook from '../components/library/CreateNewBook';
+import api from '../../services/books.service';
+import { Table, Button } from 'antd';
+import CreateNewBook from './CreateNewBook';
 
 const columns = [
     {
@@ -29,6 +29,9 @@ const Library = () => {
     const [tableData, setTableData] = useState([]);
     const [viewDrawer, setViewDrawer] = useState(false);
 
+    const setViewAddBook = (value) => {
+        setViewDrawer(value)
+    }
 
     useEffect(() => {
         api.getAllBooks().then(response => response.data.data).then(books => {
@@ -40,8 +43,8 @@ const Library = () => {
     return (
 
         <>
-            <Button type="primary" onClick={()=>{setViewDrawer(true)}}>New Book</Button>
-            
+            <Button type="primary" onClick={()=>{setViewAddBook(true)}}>New Book</Button>
+            {viewDrawer && <CreateNewBook setVisible={setViewAddBook} />}
             <Table columns={columns} dataSource={tableData} bordered />
         </>
     )

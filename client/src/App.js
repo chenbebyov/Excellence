@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Library from './pages/Library';
+import Library from './components/library/Library';
 import Home from './pages/Home';
 import ViewUsers from './components/users/ViewUsers';
 import HierarchyListView from './components/layers/HierarchyListView';
