@@ -1,5 +1,4 @@
 import {addUser, getUser, setRole} from '../../services/user.service';
-import {setMessage} from './message.action';
 export const SET_USER = 'SET USER'
 export const LOGOUT = 'LOGOUT'
 
@@ -27,12 +26,7 @@ export const createUser = (user) => {
 }
 export const setUserRole = (userId, role) => {
     return (dispatch) => {
-        setRole(userId, role).then(response => {
-            if(response.success){
-                //dispatch(setUser(response.data.user));
-                dispatch(setMessage(response.message));
-            }
-        })
+        return setRole(userId, role);
     }
 }
 
@@ -41,12 +35,8 @@ export const enterUser = (email, password) => (dispatch) => {
         if (response.success) {
             dispatch(setUser(response.data.user));
             localStorage.setItem('access-token', response.data.accessToken);
-            return Promise.resolve();
         }
-    }).catch(error => {
-         // const message = (response.error)
-            dispatch(setMessage(error.response.data.error));
-            return Promise.reject();
-    })
+        return response;
+    }).catch(error => error)
 }
 

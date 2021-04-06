@@ -1,5 +1,5 @@
 import React, { useState, useEffect }  from 'react';
-import { Form, Input, Button, Alert, message } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import {useDispatch, useSelector} from 'react-redux';
 import {addLayer, addGrade, addLevel, addGroup} from '../../redux/actions/layer.actions';
 
@@ -24,12 +24,6 @@ const CreateHierarchy = (props) => {
 
     const {hideCreateHierarchy , type, layerId, gradeId , levelId} = props;
     const { layers } = useSelector(state => state.layerReducer);
-
-    // const gradeByLevel = getGradeId(levelId);
-    // const layerByGrade = getLayerId(gradeByLevel);
-
-    // const  { message } = useSelector(state => state.messageReducer);
-    const [messageText, setMessageText] = useState();
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
 
@@ -101,21 +95,16 @@ const CreateHierarchy = (props) => {
                 hideCreateHierarchy();
             }
             else {
-                setMessageText(response.error.response.data.error);
+                message.error(response.error.response.data.error);
             }
         }).catch(error => {
-            setMessageText(`Filed to create ${type}`);
+            debugger;
+            message.error(`Filed to create ${type}, error message: ${error}`);
         });  
     }
 
     return (
     <>
-        {messageText && <Alert
-            message="Error"
-            description={messageText}
-            type="error"
-            showIcon
-        />}
         <Form {...layout} form={form} name={`Add ${type}`} initialValues={{ remember: true }} onFinish={save} >
             <Form.Item
                 label={`${type} Name`}

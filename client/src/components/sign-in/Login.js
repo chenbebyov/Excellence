@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { enterUser } from '../../redux/actions/user.actions';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Form, Input, Button, Checkbox, Alert } from 'antd';
+import { Form, Input, Button, Checkbox, Alert, message } from 'antd';
 
 const layout = {
     labelCol: {
@@ -24,7 +24,7 @@ const Login = (props) => {
 
     const {hideModal} = props;
 
-    const { message } = useSelector(state => state.messageReducer);
+    // const { message } = useSelector(state => state.messageReducer);
     const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(false);
@@ -33,12 +33,25 @@ const Login = (props) => {
         setLoading(true);
 
         dispatch(enterUser(values.email, values.password))
-        .then(()=>{
-            setLoading(false);
-            hideModal();
-        }).catch(error => {
-            setLoading(false);
-        });
+            .then((response)=>{
+                setLoading(false);
+                if(response.data){
+                    hideModal();
+                    return;
+                }
+                switch (response.request.status) {
+                    case 404:
+                        message.error('Error: user name or password are not exist');
+                        break;
+                    default:
+                        message.error('Login Failed 1');
+                        break;
+                }
+            })
+            .catch(error => {
+                setLoading(false);
+                message.error('Login Failed 2')
+            });
     }
 
     const handleCancel = () => {
@@ -57,7 +70,7 @@ const Login = (props) => {
                 type="error"
                 showIcon
             />} */}
-            <Form {...layout} name="login" initialValues={{ remember: true }} onFinish={save} onFinishFailed={onFinishFailed} >
+            <Form {...layout} name="login" onFinish={save} onFinishFailed={onFinishFailed} >
                 <Form.Item
                     label="Email"
                     name="email"
@@ -83,10 +96,6 @@ const Login = (props) => {
                     ]}
                 >
                     <Input.Password />
-                </Form.Item>
-
-                <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                    <Checkbox>Remember me</Checkbox>
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>

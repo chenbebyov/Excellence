@@ -1,5 +1,4 @@
 import {addLesson} from '../../services/lesson.service';
-import {setMessage} from './message.action';
 export const SET_USER = 'SET USER'
 export const LOGOUT = 'LOGOUT'
 
@@ -18,10 +17,8 @@ export const logout = () => {
 
 export const createLesson = (lesson) => {
     return (dispatch) => {
-        addLesson(lesson).then(response => {
-            if(response.data.success){
-                dispatch(setMessage('success'));
-            }
-        })
+        return addLesson(lesson)
+            .then(response => response.data)
+            .catch(error => ({success:false , error: error}));
     }
 }

@@ -15,10 +15,9 @@ export default produce((state = InitialSatate, action) => {
         case ADD_LAYER:
             let newLayer = action.payload;
             let layers = state.layers.filter(layer => layer._id !== newLayer._id);
-            state.layers.push(newLayer);
-            return {...state, 
-                layers : layers
-            };
+            layers = [...layers, newLayer];
+            state.layers = layers;
+            return state;
 
         case UPDATE_GROUP:
             for(let layer of state.layers) {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import { Form, Input, Radio, Button, Modal } from 'antd';
+import { Form, Input, Radio, Button, Modal, message } from 'antd';
 import {setUserRole} from '../../redux/actions/user.actions';
 
 
@@ -20,7 +20,9 @@ const SetUserRole = (props) => {
   const dispatch = useDispatch();
     
   const save = () => {
-      dispatch(setUserRole(id, role));    
+      dispatch(setUserRole(id, role)).then(response => {
+        message.success('role was set successfully');
+      }).catch(error => message.error('set user role failed'));    
       handleOk();   
   }
   const cancel = () => {

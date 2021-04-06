@@ -44,7 +44,7 @@ const Register = (props) => {
 
     return (
         <>
-            <Form {...layout} name="login" initialValues={{ remember: true }} onFinish={save} onFinishFailed={onFinishFailed} >
+            <Form {...layout} name="login" onFinish={save} onFinishFailed={onFinishFailed} >
                 <Form.Item
                     label="first name"
                     name="firstName"
@@ -87,10 +87,6 @@ const Register = (props) => {
                     ]}
                 >
                     <Input />
-                </Form.Item>
-
-                <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                    <Checkbox>Remember me</Checkbox>
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>

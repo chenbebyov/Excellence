@@ -43,7 +43,14 @@ const CreateLesson = () => {
 
     const save = (values) => {
         console.log('Success:', values);
-        dispatch(createLesson(values));
+        dispatch(createLesson(values)).then(response => {
+            if(response.success){
+                message.success(response.message)
+            }
+            else {
+                message.error('lesson creation failed')
+            }
+        }).catch(error => message.error('lesson creation failed'));
     }
 
     const onFinishFailed = (errorInfo) => {
@@ -53,9 +60,9 @@ const CreateLesson = () => {
     return (
         <>
         <Row>
-        <UploadFiles actionOnUploadCompleted={null}/>
-        <UploadImageToS3WithReactS3/>
-            {/* <Col span={12} offset={6}>
+        {/* <UploadFiles actionOnUploadCompleted={null}/>
+        <UploadImageToS3WithReactS3/> */}
+            <Col span={12} offset={6}>
                 <Form className="parent" 
                         {...layout} 
                         name="Add New Lesson" 
@@ -145,7 +152,7 @@ const CreateLesson = () => {
                             </Button>
                         </Form.Item>
                 </Form>
-            </Col>*/}
+            </Col>
         </Row> 
         </>
     )
