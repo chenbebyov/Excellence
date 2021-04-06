@@ -31,7 +31,7 @@ const GroupDetails = (props) => {
                 </TabPane>
                 <TabPane tab="Group Lessons" key="2">
                     <>
-                    <LessonsInGroup group={group}/>
+                    <LessonsInGroup lessons={group.lessons}/>
                         <Button onClick={()=>{setViewDrawer(true)}}>add new lesson to group</Button>
                         <Drawer
                             title="add lesson to group"

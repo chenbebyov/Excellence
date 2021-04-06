@@ -68,9 +68,8 @@ const ViewUsers = (props) => {
                 >
                 </List>
             </Card>
-            <Modal title="Set Role" visible={isModalVisible}>
-                <SetUserRole id={selectUser} handleOk={handleOk} handleCancel={handleCancel}></SetUserRole>
-            </Modal>
+            
+            {isModalVisible && <SetUserRole id={selectUser} handleOk={handleOk} handleCancel={handleCancel}></SetUserRole>}
         </>
     )
 }

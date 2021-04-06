@@ -15,6 +15,7 @@ const AddLessonsToGroup = (props) => {
     const [lessons, setLessons] = useState([]);
     const [selectedLesson, setSelectedLesson] = useState();
     const [loading, setLoading] = useState(false);
+    const [key, setKey] = useState(new Date());
     const format = 'HH:mm';
 
     const dispatch = useDispatch();
@@ -74,6 +75,7 @@ const AddLessonsToGroup = (props) => {
                 setLoading(false);
                 message.success("lesson created successfuly")
                 setViewDrawer(false);
+                setKey(new Date());
             }
         });
     }
@@ -92,7 +94,7 @@ const AddLessonsToGroup = (props) => {
     return (
         <>
         <Space>
-        <Form layout="vertical" style={style} initialValues={{ remember: true }} onFinish={save}>
+        <Form key={key} layout="vertical" style={style} initialValues={{ remember: true }} onFinish={save}>
             <Form.Item 
                 label="lesson time" 
                 name="lesson time"
@@ -119,7 +121,8 @@ const AddLessonsToGroup = (props) => {
                 rules={[
                     {
                         required: true,
-                        message: 'please select lesson!'                    },
+                        message: 'please select lesson!'
+                    },
                 ]}
             
             >     

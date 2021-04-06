@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import { Form, Input, Radio, Button } from 'antd';
+import { Form, Input, Radio, Button, Modal } from 'antd';
 import {setUserRole} from '../../redux/actions/user.actions';
 
 
@@ -33,33 +33,35 @@ const SetUserRole = (props) => {
 
     return (
       <>
-      <Form onFinish={save} onFinishFailed={onFinishFailed} >
+        <Modal title="Set Role" visible={true} footer={null}>
+          <Form onFinish={save} onFinishFailed={onFinishFailed} >
 
-      <Form.Item>
-        <Radio.Group onChange={onChange}>
-        <Radio value={'student'}>student</Radio>
-        <br />
-        <Radio value={'teacher'}>teacher</Radio>
-        <br />
-        <Radio value={'secretary'}>secretary</Radio>
-        <br />
-        { user.role === 'admin' && 
-          <Radio value={'admin'}>admin</Radio>
-        }
-        </Radio.Group>
-      </Form.Item>
+          <Form.Item>
+            <Radio.Group onChange={onChange}>
+            <Radio value={'student'}>student</Radio>
+            <br />
+            <Radio value={'teacher'}>teacher</Radio>
+            <br />
+            <Radio value={'secretary'}>secretary</Radio>
+            <br />
+            { user.role === 'admin' && 
+              <Radio value={'admin'}>admin</Radio>
+            }
+            </Radio.Group>
+          </Form.Item>
 
-      <Form.Item>
-          <Button type="primary" htmlType="submit">
-              Save
-          </Button>
-          <Button type="default" htmlType="submit" onClick={()=> cancel()}>
-              cancel
-          </Button>
+          <Form.Item>
+              <Button type="primary" htmlType="submit">
+                  Save
+              </Button>
+              <Button type="default" htmlType="submit" onClick={()=> cancel()}>
+                  cancel
+              </Button>
 
-      </Form.Item>
-      </Form>
-      
+          </Form.Item>
+          </Form>
+        </Modal>
+
         </>
     )
 }

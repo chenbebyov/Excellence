@@ -54,7 +54,7 @@ const CreateLesson = () => {
         <>
         <Row>
         <UploadFiles actionOnUploadCompleted={null}/>
-        {/* <UploadImageToS3WithReactS3/> */}
+        <UploadImageToS3WithReactS3/>
             {/* <Col span={12} offset={6}>
                 <Form className="parent" 
                         {...layout} 
