@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import api from '../../services/books.service';
+import api from '../../services/book.service';
 import { Table, Button } from 'antd';
 import CreateNewBook from './CreateNewBook';
 

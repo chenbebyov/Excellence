@@ -8,9 +8,12 @@ export const getAllBooks = () => api.get('/books');
 export const updateBook =(id,book) => api.put(`/book/${id}`, book);
 export const addBook = (book) => api.put(`/book`, book);
 
+
+
 const apis = {
     getAllBooks,
-    updateBook
+    updateBook,
+    addBook
 }
 
 

@@ -1,12 +1,20 @@
-import React, { useState } from 'react'
-import { Drawer, Form, Button, Col, Row, Input, Select, DatePicker } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import React from 'react';
+import {setNewBook} from '../../redux/actions/book.actions';
+import { Drawer, Form, Button, Input, Select ,message} from 'antd';
+
 
 const { Option } = Select;
 
 const CreateNewBook = (props) => {
 
     const {setVisible} = props;
+
+    const save = () => {
+      dispatch(setNewBook(book)).then(response => {
+        message.success('the book was successfully added');
+      }).catch(error => message.error('add new book failed'));    
+      onClose();   
+    }
 
     const showDrawer = () => {
         setVisible(true);
@@ -32,8 +40,8 @@ const CreateNewBook = (props) => {
               <Button onClick={onClose} style={{ marginRight: 8 }}>
                 Cancel
               </Button>
-              <Button onClick={onClose} type="primary">
-                Submit
+              <Button type="primary" htmlType="submit">
+                Save
               </Button>
             </div>
           }
