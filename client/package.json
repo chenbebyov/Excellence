@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.1.1",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
     "@tshio/react-router-permissions": "^1.2.1",
     "antd": "^4.9.4",
     "axios": "^0.21.1",
+    "craco-less": "^1.17.1",
     "formik-antd": "^2.0.1",
     "immer": "^9.0.1",
     "react": "^17.0.1",
@@ -32,9 +34,9 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "set PORT=8000 && react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "set PORT=8000 && craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

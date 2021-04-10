@@ -14,7 +14,6 @@ import NewPassword from './components/users/NewPassword';
 import ViewGroupsDetails from './components/layers/ViewGroupsDetails';
 import AffiliationToGroup from './components/groups/AffiliationToGroup';
 import NavBar from './components/home/NavBar';
-import '../src/css/App.css';
 
 const permissionsStrategy = (currentRole, requirement) => {
     return requirement.find(role => role === currentRole);
