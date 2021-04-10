@@ -40,16 +40,16 @@ const Library = () => {
     useEffect(() => {
         debugger
         if(books == null) {
-            dispatch(getBooks()).catch(error => message.error('Failed to get books from server'));
-            // ;
+            dispatch(getBooks())
+            .catch(error => {
+                console.log(error);
+                message.error('Failed to get books from server')
+            });
         }
         else {
              let data = books.map(book => ({...book, key: book._id}));
             setTableData(data);
         }
-        // api.getAllBooks().then(response => response.data.data).then(books => {
-           
-        // }, [])
     }, [books, dispatch]);
 
     return (

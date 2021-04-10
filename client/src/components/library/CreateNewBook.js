@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {setNewBook} from '../../redux/actions/book.actions';
 import {useDispatch} from 'react-redux';
 import { Drawer, Form, Button, Input, Select ,message} from 'antd';
@@ -9,19 +9,21 @@ const { Option } = Select;
 const CreateNewBook = (props) => {
 
     const {setVisible} = props;
+    const [loading, setLoading] = useState(false)
 
     const dispatch = useDispatch();
 
     const save = (book) => {
+      setLoading(true)
       dispatch(setNewBook(book)).then(response => {
-        message.success('the book was successfully added');
-      }).catch(error => message.error('add new book failed'));    
-      onClose();   
+        setLoading(false);
+        message.success('the book was added successfully');
+        onClose();
+      }).catch(error => {
+        message.error('add new book failed');
+        setLoading(false);
+      });    
     }
-
-    const showDrawer = () => {
-        setVisible(true);
-    };
   
     const onClose = () => {
         setVisible(false);
@@ -43,13 +45,13 @@ const CreateNewBook = (props) => {
               <Button onClick={onClose} style={{ marginRight: 8 }}>
                 Cancel
               </Button>
-              <Button type="primary" htmlType="submit">
+              <Button loading={loading}  type="primary" htmlType="submit" form="newBookForm" key="submit">
                 Save
               </Button>
             </div>
           }
         >
-          <Form layout="vertical" hideRequiredMark onFinish={save}>
+          <Form id="newBookForm" layout="vertical" hideRequiredMark onFinish={save}>
 
                 <Form.Item
                   name="barcode"
@@ -85,15 +87,6 @@ const CreateNewBook = (props) => {
                     <Option value="borrowed">borrowed</Option>
                     <Option value="in binding">in binding</Option>
                   </Select>
-                </Form.Item>
-
-                <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                        Save
-                    </Button>
-                    <Button type="default" htmlType="button">
-                        Cancel
-                    </Button>
                 </Form.Item>
           </Form>
         </Drawer>
