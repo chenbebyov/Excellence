@@ -1,5 +1,6 @@
 import React from 'react';
 import {setNewBook} from '../../redux/actions/book.actions';
+import {useDispatch} from 'react-redux';
 import { Drawer, Form, Button, Input, Select ,message} from 'antd';
 
 
@@ -9,7 +10,9 @@ const CreateNewBook = (props) => {
 
     const {setVisible} = props;
 
-    const save = () => {
+    const dispatch = useDispatch();
+
+    const save = (book) => {
       dispatch(setNewBook(book)).then(response => {
         message.success('the book was successfully added');
       }).catch(error => message.error('add new book failed'));    
@@ -46,7 +49,7 @@ const CreateNewBook = (props) => {
             </div>
           }
         >
-          <Form layout="vertical" hideRequiredMark>
+          <Form layout="vertical" hideRequiredMark onFinish={save}>
 
                 <Form.Item
                   name="barcode"
@@ -78,10 +81,19 @@ const CreateNewBook = (props) => {
                   rules={[{ required: true, message: 'Please select status' }]}
                 >
                   <Select placeholder="Please select status book">
-                    <Option value="1">not borrowed</Option>
-                    <Option value="2">borrowed</Option>
-                    <Option value="3">in binding</Option>
+                    <Option value="not borrowed">not borrowed</Option>
+                    <Option value="borrowed">borrowed</Option>
+                    <Option value="in binding">in binding</Option>
                   </Select>
+                </Form.Item>
+
+                <Form.Item>
+                    <Button type="primary" htmlType="submit">
+                        Save
+                    </Button>
+                    <Button type="default" htmlType="button">
+                        Cancel
+                    </Button>
                 </Form.Item>
           </Form>
         </Drawer>

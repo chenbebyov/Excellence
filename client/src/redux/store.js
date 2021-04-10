@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk';
 import userReducer from './reducers/user.reducer';
 import layerReducer from './reducers/layer.reducer';
+import bookReducer from './reducers/book.reducer';
 
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -17,7 +18,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     userReducer,
-    layerReducer
+    layerReducer,
+    bookReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

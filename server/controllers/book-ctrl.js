@@ -21,7 +21,7 @@ createBook = (req, res) => {
         .then(() => {
             return res.status(200).json({
                 success: true,
-                id: book._id,
+                book: book,
                 message: 'Book created!',
             })
         })

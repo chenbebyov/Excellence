@@ -1,17 +1,20 @@
-import {SET_BOOK} from '../actions/book.actions'
+import {SET_BOOKS, ADD_BOOK} from '../actions/book.actions'
 
 const InitialSatate = {
-    book: {},
-    loggedIn : false
+    books: null
 }
 
 export default function reducer(state = InitialSatate, action){
+    debugger
     switch (action.type) {
-        case SET_BOOK:
+        case SET_BOOKS:
             return {...state, 
-                book : action.payload,
-                loggedIn : true
+                books : action.payload,
             };
+        case ADD_BOOK: 
+            return {...state,
+                books: [...state.books, action.payload]
+            }
         default:
             return state;
     }
