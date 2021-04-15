@@ -11,28 +11,7 @@ const Layer = new Schema(
                 levels: {
                     type: [{
                         name: { type: String, required: false },
-                        groups: {
-                            type: [{
-                                name: { type: String, required: false },
-                                teacherCode: { type: String, required: false },
-                                lessons: {
-                                    type: [{
-                                        Code: { type: ObjectId, required: true },
-                                        fromDateTime: { type: Date, required: true },
-                                        toDateTime: { type: Date, required: true },
-                                        comments: { type: String, required: false },
-                                    }],
-                                    required: false
-                                },
-                                StudentsInTheGroup: {
-                                    type: [{
-                                        studentCode: { type: ObjectId, required: true },
-                                    }],
-                                    required: false
-                                },
-                            }], required: false
-                        }
-
+                        groups: [{ type:ObjectId, ref:"groups"}]
                     }],
                     required: true
                 },

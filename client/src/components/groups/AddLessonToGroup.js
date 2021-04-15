@@ -50,7 +50,7 @@ const AddLessonsToGroup = (props) => {
         setStartDate(date);
     }
 
-    // Code: { type: ObjectId, required: true },
+    // lessonId: { type: ObjectId, required: true },
     // remarks: { type: String, required: false },
     // // date: { type: Date, required: true },
     // comments: { type: Date, required: true },
@@ -64,7 +64,7 @@ const AddLessonsToGroup = (props) => {
     const save = (values) => {
         setLoading(true);
         let lesson = {
-            Code: selectedLesson._id,
+            lessonId: selectedLesson._id,
             fromDateTime:values["lesson time"][0],
             toDateTime:values["lesson time"][1],
             comments: values["comments"]

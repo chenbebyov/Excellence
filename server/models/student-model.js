@@ -11,8 +11,7 @@ const Student = new Schema(
         cellPhone: { type: String, required: false },
         city: { type: String, required: false },
         bornDate: { type: Date, required: false },
-        groupCode: { type: Number, required: false },
-        userId : { type: ObjectId , required : true },
+        userId : { type: ObjectId , required : true , ref:"users"},
         attendance: {
             type:[{
                 date: { type: Date, required: true },

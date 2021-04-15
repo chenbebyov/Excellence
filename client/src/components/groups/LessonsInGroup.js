@@ -32,7 +32,7 @@ const LessonsInGroup = (props) => {
 
             if (response.success) {
                 let lessonsMap = Object.assign({}, ...response.data.map(lesson => ({[lesson._id]: lesson})));
-                let result = Object.values(lessons.map(lesson => ({...lesson, lessonObject: lessonsMap[lesson.Code]})));
+                let result = Object.values(lessons.map(lesson => ({...lesson, lessonObject: lessonsMap[lesson.lessonId]})));
                 let filterdList = result.sort((a, b) => new Date(a.fromDateTime) - new Date(b.fromDateTime))
                 setGroupLessons(filterdList);
             }

@@ -5,7 +5,6 @@ const InitialSatate = {
 }
 
 export default function reducer(state = InitialSatate, action){
-    debugger
     switch (action.type) {
         case SET_BOOKS:
             return {...state, 

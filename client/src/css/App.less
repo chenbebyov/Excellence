@@ -1,4 +1,7 @@
 @import '~antd/dist/antd.less';
+// html {
+//     direction: rtl;
+// }
 .ant-btn {
     margin: 5px;
 }
@@ -9,4 +12,16 @@
 
 .ant-modal-content {
     box-shadow: 1px 0px 5px 0px rgb(0 0 0 / 3%);
+}
+
+video::-internal-media-controls-download-button {
+    display:none !important;
+}
+
+video::-webkit-media-controls-enclosure {
+    overflow:hidden !important;
+}
+
+video::-webkit-media-controls-panel {
+    width: calc(100% + 30px) !important; /* Adjust as needed */
 }

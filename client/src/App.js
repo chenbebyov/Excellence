@@ -9,10 +9,10 @@ import { PermissionsProvider, AuthorizedRoute, AuthorizedSection } from '@tshio/
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import UserDetails from './components/users/UserDetails';
 import CreateLesson from './components/lessonsAndTasks/CreateLesson';
-import AttendanceJournal from './components/users/AttendanceJournal';
 import NewPassword from './components/users/NewPassword';
 import ViewGroupsDetails from './components/layers/ViewGroupsDetails';
 import AffiliationToGroup from './components/groups/AffiliationToGroup';
+import CalendarView from './components/general/CalendarView';
 import NavBar from './components/home/NavBar';
 
 const permissionsStrategy = (currentRole, requirement) => {
@@ -77,8 +77,8 @@ function App (props) {
                         {/* <AuthorizedRoute path="/newPassword" >
                             {({ isAuthorized }) => (isAuthorized ? <NewPassword/> : <Redirect to="/" />)}
                         </AuthorizedRoute> */}
-                        <AuthorizedRoute path="/timetable"  requires={['teacher','admin']}>
-                            {({ isAuthorized }) => (isAuthorized ? <AttendanceJournal /> : <Redirect to="/" />)}
+                        <AuthorizedRoute path="/calendar"  requires={['teacher','admin']}>
+                            {({ isAuthorized }) => (isAuthorized ? <CalendarView userId={user._id}/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <Route path="/" component={Home}>
                             <Home />

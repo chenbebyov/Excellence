@@ -5,6 +5,8 @@ const config = require("../config/auth.config");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 const Layer = require('../models/layer-model');
+const sendEmail = require('../general/emails-ctrl');
+const {getRegisteredMessage} = require('../general/email-templates');
 
 
 createUser = (req, res) => {
@@ -24,6 +26,10 @@ createUser = (req, res) => {
     }
 
     user.save().then(() => {
+            console.log(user._id);
+            let template = getRegisteredMessage(user.firstName);
+            console.log(template);
+            sendEmail(user.email, 'רישום ל Excellence', template, false);
             return res.status(200).json({
                 success: true,
                 user: user,
@@ -141,12 +147,6 @@ getStudents = (req, res) => {
     })
     .catch(err => console.log(err));
 }
-
-// getStudentsByGroupId = (groupId,teacherID) => {
-//     return Layer.findOne({ groupId} )+Staff.findOne({teacherID});
-
-// }
-
 
 module.exports = {
     createUser,

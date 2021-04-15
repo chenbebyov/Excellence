@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const Order = new Schema(
     {
-        teacherCode: { type: int, required: true },
+        teacherCode: { type: int, required: true, ref:"staff"},
         branchCode: { type: int, required: true },
         orderDetails: {
              type:[{

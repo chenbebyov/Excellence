@@ -56,7 +56,7 @@ const NavBar = (props) => {
                         <Link to="/layers">Layers</Link>
                     </div>
                     <div>
-                        <Link to="/timetable">TimeTable</Link>
+                        <Link to="/calendar">TimeTable</Link>
                     </div>
 
                     <div className="right-content">

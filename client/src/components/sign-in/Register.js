@@ -51,7 +51,7 @@ const Register = (props) => {
                     rules={[
                         {
                             required: true,
-                            pattern:"(^[a-zA-Z]+$)",
+                            pattern:"(^[a-zA-Z\u0590-\u05fe]+$)",
                             min:2,
                             message: 'first name is required and must be at least 2 chars',
                         },
@@ -66,7 +66,7 @@ const Register = (props) => {
                     rules={[
                         {
                             required: true,
-                            pattern:"(^[a-zA-Z]+$)",
+                            pattern:"(^[a-zA-Z\u0590-\u05fe]+$)",
                             min:2,
                             message: 'first name is required and must be at least 2 chars',
                         },

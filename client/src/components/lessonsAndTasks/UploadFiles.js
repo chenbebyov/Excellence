@@ -1,6 +1,6 @@
 import React, {useState} from  'react';
 import { Upload, Button, message } from "antd";
-import { InboxOutlined, UploadOutlined } from '@ant-design/icons';
+import { InboxOutlined, UploadOutlined,PlusOutlined  } from '@ant-design/icons';
 import { uploadFile } from 'react-s3';
 
 
@@ -21,7 +21,8 @@ const UploadFiles  = (props) => {
     const uploadFileToS3 = ({ file, onSuccess, onError }) => {
         uploadFile(file, config).then(data => {
             console.log(data.location);
-            actionOnUploadCompleted(data.location);
+            debugger
+            actionOnUploadCompleted(data.location, data.name);
             onSuccess("ok")
         }).catch(error => {
             console.error(error);
@@ -32,6 +33,7 @@ const UploadFiles  = (props) => {
     //TODO : delete files: https://www.npmjs.com/package/react-s3
 
     const upload = info => {
+        debugger;
 
         switch (info.file.status) {
             // case "uploading":
@@ -54,6 +56,12 @@ const UploadFiles  = (props) => {
         onChange : upload
     };
 
+    const uploadButton = (
+        <div>
+            <PlusOutlined />
+            <div style={{ marginTop: 8 }}>Upload</div>
+        </div>
+    );
 
     return (
       <>
@@ -67,6 +75,16 @@ const UploadFiles  = (props) => {
             band files
             </p>
         </Dragger>
+
+        <Upload
+            // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            listType="picture-card"
+            fileList={selectedFileList}
+            customRequest={uploadFileToS3}
+            onChange={upload}
+        >
+          {selectedFileList.length >= 8 ? null : uploadButton}
+        </Upload>
       </>
     );
 }
