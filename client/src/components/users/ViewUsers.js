@@ -11,11 +11,11 @@ const ViewUsers = (props) => {
     
     const history = useHistory();
 
-    function getRandomColor(userName) {
+    const getRandomColor = (userName) => {
         return stringToColor(userName);
     }
 
-    function navigate(user) {
+    const navigate = (user) => {
         history.push({
             pathname: `/users/${user._id}`,
             state: { user },
@@ -45,8 +45,8 @@ const ViewUsers = (props) => {
                 <List
                     dataSource={userList}
                     renderItem={item => (
-                        // <List.Item key={item._id} onClick={()=> navigate(item)}>
-                        <List.Item key={item._id}>
+                        // <List.Item key={item._id} >
+                        <List.Item key={item._id} onClick={()=> navigate(item)}>
                             <List.Item.Meta 
                                 avatar={
                                     <Avatar style={{ backgroundColor: getRandomColor(item.firstName),textTransform: 'uppercase', verticalAlign: 'middle' }} size="large">

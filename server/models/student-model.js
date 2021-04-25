@@ -29,10 +29,10 @@ const Student = new Schema(
         }, 
         borrowingBooks: {
             type:[{
-                codeBorrowe: { type: Number, required: true },
-                booksCode: { type: String, required: true },
-                dateBorrowe: { type: Date, required: true },
-                endDateBorrowing: { type: Date, required: true }
+                booksCode: { type: ObjectId, required: true, ref:'books' },
+                dateBorrowe: { type: Date, required: true, default:new Date() },
+                endDateBorrowing: { type: Date, required: true },
+                isReturned: { type: Boolean, required: true, default:false }
             }],
             required: false
         }, 

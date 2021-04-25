@@ -18,9 +18,7 @@ const CalendarFilters = (props) => {
     useEffect(() => {
         getUserGroups(user._id)
         .then(response => response.data).then(response => {
-            debugger;
             if(response.success) {
-                debugger
                 setGroups(response.groups);
             }
         })
@@ -46,7 +44,10 @@ const CalendarFilters = (props) => {
 
     return (
         <>
+            
            <Select
+                mode="multiple"
+                allowClear
                 showSearch
                 style={{ width: 200 }}
                 placeholder="בחר קבוצה"

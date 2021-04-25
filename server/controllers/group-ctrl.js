@@ -89,15 +89,15 @@ updateGroupLessons = (req, res) => {
 async function getLessons(req, res){
 
     try {
-
-        if (req.params.userId === 'undefined') {
+        console.log(req.body);
+        if (!req.body) {
             return res.status(400).json({
                 success: false,
                 error: 'missing paramas, can not retrieve lessons data.',
             })
         }
 
-        let {groupId, userId, getAll} = req.params;
+        let {groupIds, userId, getAll} = req.body;
         getAll = getAll == 'true';
         let lessonsResult = [];
         let group;
@@ -115,9 +115,9 @@ async function getLessons(req, res){
         }
 
         //if group Id is not null get lessons by group id according to user permissions
-        if(groupId != 'undefined') {
-
-            group = await Group.findById(groupId).populate('lessons.lessonId').exec();
+        if(groupIds) {
+            let groupIdsArray = groupIds.map(id => new mongoose.Types.ObjectId(id));
+            group = await Group.find({'_id': { "$in": groupIdsArray }}).populate('lessons.lessonId').exec();
             
             if(student != null){
                 let isStudentExistInGroup = group.StudentsInTheGroup.find(
@@ -178,7 +178,7 @@ async function getLessons(req, res){
 async function getUserGroups(req, res) {
 
     try {
-        let {userId} = req.params.userId;
+        let {userId} = req.params;
 
         if (userId === 'undefined') {
             return res.status(400).json({
@@ -190,6 +190,7 @@ async function getUserGroups(req, res) {
         let groupsResult;
 
         let staff = await Staff.findById(userId);
+        
         if(staff!=null && adminRoles.includes(staff.role)) {
             groupsResult = await Group.find({});
         }

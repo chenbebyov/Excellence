@@ -11,6 +11,7 @@ const SetUserRole = (props) => {
   const { user } = useSelector(state => state.userReducer);
     
   const [role, setRole] = useState();
+  const [loading, setLoading] = useState(false);
 
   const onChange = e => {
     console.log('radio checked', e.target.value);
@@ -20,9 +21,14 @@ const SetUserRole = (props) => {
   const dispatch = useDispatch();
     
   const save = () => {
+      setLoading(true);
       dispatch(setUserRole(id, role)).then(response => {
         message.success('role was set successfully');
-      }).catch(error => message.error('set user role failed'));    
+        setLoading(false);
+      }).catch(error => {
+        setLoading(false);
+        message.error('set user role failed');
+      });    
       handleOk();   
   }
   const cancel = () => {
@@ -35,31 +41,30 @@ const SetUserRole = (props) => {
 
     return (
       <>
-        <Modal title="Set Role" visible={true} footer={null}>
-          <Form onFinish={save} onFinishFailed={onFinishFailed} >
+        <Modal title="הגדרת תפקיד משתמש" visible={true} footer={
+          <>
+              <Button onClick={cancel} style={{ marginRight: 8 }}>
+                Cancel
+              </Button>
+              <Button loading={loading}  type="primary" htmlType="submit" form="newBookForm" key="submit">
+                Save
+              </Button>
+            </>
+          }>
+          <Form id="newBookForm" onFinish={save} onFinishFailed={onFinishFailed} >
 
-          <Form.Item>
+          <Form.Item id="roleForm">
             <Radio.Group onChange={onChange}>
-            <Radio value={'student'}>student</Radio>
+            <Radio value={'student'}>תלמיד/ה</Radio>
             <br />
-            <Radio value={'teacher'}>teacher</Radio>
+            <Radio value={'teacher'}>מורה</Radio>
             <br />
-            <Radio value={'secretary'}>secretary</Radio>
+            <Radio value={'secretary'}>מזכיר/ה</Radio>
             <br />
             { user.role === 'admin' && 
-              <Radio value={'admin'}>admin</Radio>
+              <Radio value={'admin'}>מנהל</Radio>
             }
             </Radio.Group>
-          </Form.Item>
-
-          <Form.Item>
-              <Button type="primary" htmlType="submit">
-                  Save
-              </Button>
-              <Button type="default" htmlType="submit" onClick={()=> cancel()}>
-                  cancel
-              </Button>
-
           </Form.Item>
           </Form>
         </Modal>

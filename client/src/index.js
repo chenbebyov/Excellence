@@ -9,15 +9,13 @@ import '../src/css/App.less';
 
 
 ReactDOM.render(
-  <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ConfigProvider direction="rtl">
           <App />
         </ConfigProvider>
       </PersistGate>
-    </Provider>
-  </React.StrictMode>,
+    </Provider>,
   document.getElementById('root')
 );
 

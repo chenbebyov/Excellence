@@ -13,7 +13,7 @@ export const getAllLayers = () => api.get('/layers');
 export const getLayerById = (id) => api.get(`/layer/${id}`);
 export const updateGroupDetails = (group) => api.put('/group', group);
 export const updateGroupLessons = (group) => api.put('/group/lessons', group);
-export const getLessons = (groupId, userId, getAll) => api.get(`/groups/lessons/${groupId}/${userId}/${getAll}`);
+export const getLessons = (groupIds, userId, getAll) => api.post(`/group/lessons/get`,{groupIds, userId, getAll});
 
 
 const apis = {

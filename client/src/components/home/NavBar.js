@@ -1,16 +1,62 @@
 import React, { useState, useEffect } from 'react';
+import { Menu,Avatar, Badge } from 'antd';
 import {Link} from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/actions/user.actions';
 import SignIn from '../../pages/SignIn';
+import MenuItem from './MenuItem';
 import '../../css/Home.css';
+import { 
+    MailOutlined, 
+    AppstoreOutlined, 
+    SettingOutlined, 
+    ApartmentOutlined,
+    HomeOutlined,
+    UserOutlined,
+    CalendarOutlined,
+    UsergroupAddOutlined,
+    ReadOutlined,
+    MessageOutlined,
+    WechatOutlined,
+    IdcardOutlined,
+    LogoutOutlined
+} from '@ant-design/icons';
+
+const { SubMenu } = Menu;
+
+const pathPermissions = new Map([
+    ['/', new Array('guest','admin','secretary','teacher', 'student')],
+    ['/library', new Array('admin','secretary','teacher', 'student')],
+    ['/users', new Array('admin','secretary')],
+    ['/users/:id', new Array('admin','secretary','teacher', 'student')],
+    ['/lessons/add', new Array('admin')],
+    ['/layers', new Array('admin','secretary','teacher')],
+    ['/calendar', new Array('admin','secretary','teacher', 'student')],
+    ['/grade', new Array('admin','secretary','teacher')],
+    ['/level', new Array('admin','secretary','teacher')],
+    ['/group', new Array('admin','secretary','teacher')],
+    ['/viewGroupDetails', new Array('admin','secretary','teacher', 'student')],
+    ['/viewGroupDetails', new Array('admin','secretary','teacher', 'student')]
+]);
+
+const navBarItems = new Map([
+    ['/','בית'],
+    ['/library','ספריה'],
+    ['/users','משתמשים'],
+    ['/users/:id','פרטי משתמש'],
+    ['/lessons/add','הוספת שיעור חדש'],
+    ['/layers','שכבות'],
+    ['/calendar','לוח שנה']
+]);
 
 
 const NavBar = (props) => {
 
+    const [current, setCurrent] = useState('/');
     const { user, loggedIn } = useSelector(state => state.userReducer);
     const dispatch = useDispatch();
     const [showSignIn, setShowSignIn] = useState(false);
+    const [userRole, setUserRole] = useState(user && user.role ? user.role : 'guest');
 
     useEffect(() => {
         if(loggedIn){
@@ -18,7 +64,10 @@ const NavBar = (props) => {
         }
     }, [loggedIn]);
 
-    
+    const handleClick = e => {
+        setCurrent(e.key);
+    };
+
     const handleLogout = () => {
         localStorage.removeItem('access-token');
         dispatch(logout());
@@ -30,56 +79,59 @@ const NavBar = (props) => {
     const hideSignIn = () => {
         setShowSignIn(false);
     }
+    const getMessagesCount = () => {
+        return 1;
+    }
 
 
     return (
         <>
-        <nav>
-            {/* {loggedIn && <h1>{`Hello ${user.firstName} ${user.lastName}`}</h1>}
-            {!loggedIn && <SignIn/>} */}
-            <div>
-                <Link to="/">Home</Link>
-            </div>
-            {loggedIn &&
-                
-                <>
-                    <div>
-                        <Link to="/library">Library</Link>
-                    </div>
-                    <div>
-                        <Link to="/users">Users</Link>
-                    </div>
-                    <div>
-                        <Link to="/lessons/add">add lesson</Link>
-                    </div>
-                    <div>
-                        <Link to="/layers">Layers</Link>
-                    </div>
-                    <div>
-                        <Link to="/calendar">TimeTable</Link>
-                    </div>
+        <Menu style={{lineHeight: '5vh'}}  onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+            <MenuItem route="/" key='/' icon={<HomeOutlined />}>בית</MenuItem>
+            <MenuItem route="/layers" key='/layers' roles={['admin','secretary','teacher']} icon={<ApartmentOutlined />}>קבוצות</MenuItem>
+            <SubMenu key="lessons and tasks" roles={['admin','secretary','teacher']} icon={<ReadOutlined />} title="שיעורים ומשימות">
+            <Menu.ItemGroup>
+                <Menu.Item key="/lessons/add" role={['admin']}>
+                    <Link to="/lessons/add">הוספת שיעור חדש</Link>
+                </Menu.Item>
+                <Menu.Item key="setting:2" role={['admin','secretary','teacher']}>רשימת שיעורים</Menu.Item>
+            </Menu.ItemGroup>
+            </SubMenu>
+            <MenuItem route="/calendar" key='/calendar' roles={['admin','secretary','teacher', 'student']} icon={<CalendarOutlined />}>לוח שנה</MenuItem>
+            <MenuItem route="/library" key='/library' roles={['admin','teacher']} icon={<CalendarOutlined />}>ספריה</MenuItem>
+            <MenuItem route="/users" key='/users' roles={['admin','secretary']} icon={<UsergroupAddOutlined />}>ניהול משתמשים</MenuItem>
 
-                    <div className="right-content">
-                        <div onClick={handleLogout}>
-                            <Link to="/">logout</Link>
-                        </div>                     
-                        &nbsp;
-                        &nbsp;
-                        &nbsp;
-                        <div>{`Hello ${user.firstName} ${user.lastName}`}</div>
-                    </div>
-                    
-                </>
-            }
-            {!loggedIn &&
-                <div onClick={handleShowSignIn}>
-                    <label>sign in</label>
-                </div>
-            }
-        </nav>
+        {user && 
+            <SubMenu 
+                style={{float: 'left'}} 
+                key="user" 
+                icon={
+                    <Badge style={{float: 'right'}} count={getMessagesCount()}>
+                        <Avatar icon={<UserOutlined />} />
+                    </Badge> 
+                }>
+                <Menu.ItemGroup>
+                    <Menu.Item key="messeges" icon={<WechatOutlined />}>הודעות</Menu.Item>
+                    <Menu.Item key="profile" icon={<IdcardOutlined />}>פרופיל</Menu.Item>
+                    <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={handleLogout}>יציאה</Menu.Item>
+                </Menu.ItemGroup>
+            </SubMenu>
+        }
 
-        {showSignIn && <SignIn hideSignIn={hideSignIn}/>}
-        </>
+        {!user &&
+            <Menu.Item
+                    style={{float: 'left'}} 
+                    key="signIn" 
+                    onClick={handleShowSignIn}
+            >
+                <span style={{padding:"8px"}}>כניסה</span> 
+                <LogoutOutlined />
+            </Menu.Item>
+        }
+      </Menu>
+      {showSignIn && <SignIn hideSignIn={hideSignIn}/>}
+
+      </>
     )
 }
 

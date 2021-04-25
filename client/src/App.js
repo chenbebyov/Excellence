@@ -14,6 +14,7 @@ import ViewGroupsDetails from './components/layers/ViewGroupsDetails';
 import AffiliationToGroup from './components/groups/AffiliationToGroup';
 import CalendarView from './components/general/CalendarView';
 import NavBar from './components/home/NavBar';
+import BookList from './components/library/BookList';
 
 const permissionsStrategy = (currentRole, requirement) => {
     return requirement.find(role => role === currentRole);
@@ -48,7 +49,7 @@ function App (props) {
                             {({ isAuthorized }) => (isAuthorized ? <CreateLesson /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/library" requires={['teacher','admin']}>
-                            {({ isAuthorized }) => (isAuthorized ? <Library /> : <Redirect to="/" />)}
+                            {({ isAuthorized }) => (isAuthorized ? <Library />: <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/users/:id" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <UserDetails /> : <Redirect to="/" />)}
@@ -78,7 +79,7 @@ function App (props) {
                             {({ isAuthorized }) => (isAuthorized ? <NewPassword/> : <Redirect to="/" />)}
                         </AuthorizedRoute> */}
                         <AuthorizedRoute path="/calendar"  requires={['teacher','admin']}>
-                            {({ isAuthorized }) => (isAuthorized ? <CalendarView userId={user._id}/> : <Redirect to="/" />)}
+                            {({ isAuthorized }) => (isAuthorized ? <CalendarView/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <Route path="/" component={Home}>
                             <Home />

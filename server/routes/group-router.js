@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.put('/group', updateGroup);
 router.put('/group/lessons', updateGroupLessons);
-router.get('/groups/lessons/:groupId/:userId/:getAll', getLessons);
+router.post('/group/lessons/get', getLessons);
 router.get('/groups/:userId', getUserGroups);
 
 

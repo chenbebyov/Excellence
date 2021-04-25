@@ -1,63 +1,67 @@
-import React, { useEffect, useState } from 'react';
-import api from '../../services/book.service';
-import { Table, Button, message } from 'antd';
+import React from 'react';
+import { Menu,Layout } from 'antd';
+import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import '../../css/Library.css';
+import { AlignRightOutlined, ReadOutlined, BarChartOutlined } from '@ant-design/icons';
+import BookList from './BookList';
 import CreateNewBook from './CreateNewBook';
-import { useDispatch, useSelector } from 'react-redux';
-import {getBooks} from '../../redux/actions/book.actions'
+import { Route, Link} from "react-router-dom";
 
-const columns = [
-    {
-        title: 'Barcode',
-        dataIndex: 'barcode'
-    },
-    {
-        title: 'Name',
-        dataIndex: 'name'
-    },
-    {
-        title: 'Writer',
-        dataIndex: 'writer'
-    },
-    {
-        title: 'Status',
-        dataIndex: 'status'
-    }
-];
+const { SubMenu } = Menu;
+const { Header, Content, Sider } = Layout;
 
+
+const rootSubmenuKeys = ['borrows', 'books', 'statistics'];
 
 
 const Library = () => {
 
-    const [tableData, setTableData] = useState([]);
-    const [viewDrawer, setViewDrawer] = useState(false);
-    const { books } = useSelector(state => state.bookReducer);
-    const dispatch = useDispatch();
+    const [openKeys, setOpenKeys] = React.useState(['borrows', 'books', 'statistics']);
 
-    const setViewAddBook = (value) => {
-        setViewDrawer(value)
-    }
-
-    useEffect(() => {
-        debugger
-        if(books == null) {
-            dispatch(getBooks())
-            .catch(error => {
-                console.log(error);
-                message.error('Failed to get books from server')
-            });
-        }
-        else {
-             let data = books.map(book => ({...book, key: book._id}));
-            setTableData(data);
-        }
-    }, [books, dispatch]);
+    const onOpenChange = keys => {
+      const latestOpenKey = keys.find(key => openKeys.indexOf(key) === -1);
+      if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+        setOpenKeys(keys);
+      } else {
+        setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+      }
+    };
 
     return (
-
         <>
-            <Button type="primary" onClick={()=>{setViewAddBook(true)}}>New Book</Button>
-            {viewDrawer && <CreateNewBook setVisible={setViewAddBook} />}
-            <Table columns={columns} dataSource={tableData} bordered />
+            <Layout>
+                <Sider width={200} theme="light">
+                    <Menu mode="inline" style={{float: 'right'}} openKeys={openKeys} onOpenChange={onOpenChange}>
+                        <SubMenu key="borrows" icon={<AlignRightOutlined />} title="השאלת ספרים">
+                            <Menu.Item key="borrowing books">
+                                <Link to='/library/borrows'>רשימת השאלות</Link>
+                            </Menu.Item>
+                            <Menu.Item key="add new borrow">
+                                <Link to='/library/borrows/add'>הוספת השאלה חדשה</Link>
+                            </Menu.Item>
+                        </SubMenu>
+                        <SubMenu key="books" icon={<ReadOutlined />} title="ספרים">
+                            <Menu.Item key="book list">
+                                <Link to='/library/books'>רשימת ספרים</Link>
+                            </Menu.Item>
+                            <Menu.Item key="add new book">
+                                <Link to='/library/books/add'>הוספת ספר חדש</Link>
+                            </Menu.Item>
+                        </SubMenu>
+                        <Menu.Item key="statistics" icon={<BarChartOutlined />}>
+                            <label>סטטיסטיקה</label>
+                        </Menu.Item>
+                    </Menu>
+                </Sider>
+                <Layout>
+                    <Content style={{float: 'right', background: 'transparent', padding: '30px'}}>
+
+                        <Route path='/library/books' component={BookList} exact />
+                        <Route path='/library/books/add' component={CreateNewBook} exact />
+                        <Route path='/library/borrows' render={() => <>borrows</>} />
+                    </Content>
+                </Layout>
+            </Layout>
         </>
     )
 }

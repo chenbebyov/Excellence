@@ -31,7 +31,7 @@ const CreateNewBook = (props) => {
   
     return (
         <>
-        <Drawer
+        {/* <Drawer
           title="Create a new book"
           onClose={onClose}
           visible={true}
@@ -50,7 +50,7 @@ const CreateNewBook = (props) => {
               </Button>
             </div>
           }
-        >
+        > */}
           <Form id="newBookForm" layout="vertical" hideRequiredMark onFinish={save}>
 
                 <Form.Item
@@ -88,8 +88,16 @@ const CreateNewBook = (props) => {
                     <Option value="in binding">in binding</Option>
                   </Select>
                 </Form.Item>
+                <Form.Item>
+                  <Button onClick={onClose} style={{ marginRight: 8 }}>
+                    Cancel
+                  </Button>
+                  <Button loading={loading} type="primary" htmlType="submit">
+                    Save
+                  </Button>
+                </Form.Item>
           </Form>
-        </Drawer>
+        {/* </Drawer> */}
         </>
     )
 }

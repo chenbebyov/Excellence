@@ -1,9 +1,13 @@
+body {
+  background-color: #eff1f1;
+}
+
 .slide-show-image {
   height: 70vh;
   background-repeat: no-repeat;
   background-size: cover;
 }
-
+/* 
 nav {
   display: flex;
   background: #ebebeb;
@@ -37,6 +41,7 @@ nav > div:nth-child(6) {
 nav > div:nth-child(7) {
   border-bottom-color: #d6011d;
 }
+*/
 
 .text1 {
   top: 447px;
@@ -169,4 +174,8 @@ nav > div:nth-child(7) {
 
 .login {
   background-color: #32d8db;
+}
+
+span.anticon.anticon-user {
+    display: contents;
 }
