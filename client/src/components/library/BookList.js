@@ -7,19 +7,19 @@ import {getBooks} from '../../redux/actions/book.actions'
 
 const columns = [
     {
-        title: 'Barcode',
+        title: 'ברקוד',
         dataIndex: 'barcode'
     },
     {
-        title: 'Name',
+        title: 'שם',
         dataIndex: 'name'
     },
     {
-        title: 'Writer',
+        title: 'סופר/ת',
         dataIndex: 'writer'
     },
     {
-        title: 'Status',
+        title: 'סטטוס',
         dataIndex: 'status'
     }
 ];

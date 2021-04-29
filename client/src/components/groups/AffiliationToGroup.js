@@ -20,7 +20,6 @@ const AffiliationToGroup = (props) => {
     const [selectedTeacher, setSelectedTeacher] = useState('');
     const [selectedStudents, setSelectedStudents] = useState([]);
     const [currentStudent, setCurrentStudent] = useState(null);
-    // const [selectStudent, setSelectStudent] = useState(group.StudentsInTheGroup.studentCode);
     const [teacherDefaultValue, setTeacherDefaultValue] = useState();
     const [loading, setLoading] = useState(false);
     const [viewMode, setViewMode] = useState(mode);
@@ -223,7 +222,7 @@ const AffiliationToGroup = (props) => {
 
                         </Form>
                         <ViewUsers 
-                            title="Student In Group:" 
+                            title="תלמידים בקבוצה:" 
                             userList={selectedStudents} 
                             showSetRole={false}
                             showRemove={true}
@@ -242,10 +241,10 @@ const AffiliationToGroup = (props) => {
           
             </div>
             <div>
-                {viewMode === 'edit' && <Button loading={loading} onClick={save}>Save Changes</Button>}
+                {viewMode === 'edit' && <Button loading={loading} onClick={save}>שמור שינויים</Button>}
                 {viewMode === 'read' && 
                     <>
-                        <Button loading={loading} onClick={editGroup}>Edit</Button>
+                        <Button loading={loading} onClick={editGroup}>יציאה</Button>
                     </>
                 }
                 

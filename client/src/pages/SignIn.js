@@ -37,7 +37,7 @@ function SignIn(props) {
         <>
             {/* <Button type="primary" onClick={showModal}>Sign in</Button> */}
             <Modal
-                title="Login/Register"
+                title="כניסה/הרשמה"
                 onOk={handleOk}
                 onCancel={handleCancel}
                 visible={visible}
@@ -47,10 +47,9 @@ function SignIn(props) {
                     // <Button key="submit" type="primary" loading={loading} onClick={handleOk}> Submit</Button>
                 ]}
             >
-                {/* <Layout theme="light"> */}
                 <Tabs defaultActiveKey="1" size="large" >
-                    <TabPane tab="Login" key="1"><Login hideModal={hideModal} /></TabPane>
-                    <TabPane tab="Register" key="2"><Register hideModal={hideModal} /></TabPane>
+                    <TabPane tab="כניסה" key="1"><Login hideModal={hideModal} /></TabPane>
+                    <TabPane tab="הרשמה" key="2"><Register hideModal={hideModal} /></TabPane>
 
                 </Tabs>
                 {/* </Layout> */}

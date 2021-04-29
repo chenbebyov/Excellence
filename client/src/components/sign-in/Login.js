@@ -72,7 +72,7 @@ const Login = (props) => {
             />} */}
             <Form {...layout} name="login" onFinish={save} onFinishFailed={onFinishFailed} >
                 <Form.Item
-                    label="Email"
+                    label="מייל"
                     name="email"
                     rules={[
                         {
@@ -86,7 +86,7 @@ const Login = (props) => {
                 </Form.Item>
 
                 <Form.Item
-                    label="Password"
+                    label="סיסמא"
                     name="password"
                     rules={[
                         {
@@ -100,10 +100,10 @@ const Login = (props) => {
 
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit" loading={loading}>
-                        Submit
+                        שלח
                     </Button>
                     <Button type="default" htmlType="button" onClick={handleCancel}>
-                        Cancel
+                        ביטול
                     </Button>
                 </Form.Item>
             </Form>

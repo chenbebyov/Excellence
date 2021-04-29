@@ -46,7 +46,7 @@ const Register = (props) => {
         <>
             <Form {...layout} name="login" onFinish={save} onFinishFailed={onFinishFailed} >
                 <Form.Item
-                    label="first name"
+                    label="שם פרטי"
                     name="firstName"
                     rules={[
                         {
@@ -61,7 +61,7 @@ const Register = (props) => {
                 </Form.Item>
 
                 <Form.Item
-                    label="last name"
+                    label="שם משפחה"
                     name="lastName"
                     rules={[
                         {
@@ -76,7 +76,7 @@ const Register = (props) => {
                 </Form.Item>
                 
                 <Form.Item
-                    label="Email"
+                    label="מייל"
                     name="email"
                     rules={[
                         {
@@ -91,10 +91,10 @@ const Register = (props) => {
 
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">
-                        Save
+                        שמור
                     </Button>
                     <Button type="default" htmlType="button" onClick={handleCancel}>
-                        Cancel
+                        ביטול
                     </Button>
                 </Form.Item>
             </Form>

@@ -44,10 +44,10 @@ const SetUserRole = (props) => {
         <Modal title="הגדרת תפקיד משתמש" visible={true} footer={
           <>
               <Button onClick={cancel} style={{ marginRight: 8 }}>
-                Cancel
+                ביטול
               </Button>
               <Button loading={loading}  type="primary" htmlType="submit" form="newBookForm" key="submit">
-                Save
+                שמור
               </Button>
             </>
           }>

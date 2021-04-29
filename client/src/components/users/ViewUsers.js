@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { List, message, Avatar, Spin, Card, Button , Modal} from 'antd';
-import { useHistory,Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { List, Avatar, Card, Button} from 'antd';
+import { useHistory } from 'react-router-dom';
 import SetUserRole from './SetUserRole';
 import stringToColor from '../../hooks/stringToColor';
 

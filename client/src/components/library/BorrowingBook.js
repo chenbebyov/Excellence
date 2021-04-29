@@ -6,7 +6,7 @@ import { Drawer, Form, Button, Input, Select ,message} from 'antd';
 
 const { Option } = Select;
 
-const CreateNewBook = (props) => {
+const BorrowingBook = () => {
 
     const {setVisible} = props;
     const [loading, setLoading] = useState(false)
@@ -29,29 +29,11 @@ const CreateNewBook = (props) => {
         setVisible(false);
     };
   
+
+
     return (
         <>
-        {/* <Drawer
-          title="Create a new book"
-          onClose={onClose}
-          visible={true}
-          bodyStyle={{ paddingBottom: 80 }}
-          footer={
-            <div
-              style={{
-                textAlign: 'right',
-              }}
-            >
-              <Button onClick={onClose} style={{ marginRight: 8 }}>
-                Cancel
-              </Button>
-              <Button loading={loading}  type="primary" htmlType="submit" form="newBookForm" key="submit">
-                Save
-              </Button>
-            </div>
-          }
-        > */}
-          <Form id="newBookForm" layout="vertical" hideRequiredMark onFinish={save}>
+             <Form id="newBookForm" layout="vertical" hideRequiredMark onFinish={save}>
 
                 <Form.Item
                   name="barcode"
@@ -63,21 +45,28 @@ const CreateNewBook = (props) => {
 
                 <Form.Item
                   name="name"
-                  label="שם"
-                  rules={[{ required: true, message: 'Please enter book name' }]}
+                  label="שם תלמיד"
+                  rules={[{ required: true, message: 'Please enter user name' }]}
                 >
                   <Input placeholder="Please enter book name" />
                 </Form.Item>
 
                 <Form.Item
-                  name="writer"
-                  label="סופר/ת"
-                  rules={[{ required: true, message: 'Please enter writer name' }]}
+                  name="date"
+                  label="זמן השאלה"
+                  rules={[{ required: true, message: 'Please enter date borrow' }]}
                 >
-                  <Input placeholder="Please enter writer name" />
+                <RangePicker
+                   ranges={{
+                        Today: [moment(), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    }}
+                    showTime
+                    format="YYYY/MM/DD HH:mm"
+                />  
                 </Form.Item>
          
-                <Form.Item
+                {/* <Form.Item
                   name="status"
                   label="סטטוס"
                   rules={[{ required: true, message: 'Please select status' }]}
@@ -87,7 +76,7 @@ const CreateNewBook = (props) => {
                     <Option value="borrowed">מושאל</Option>
                     <Option value="in binding">בתיקון</Option>
                   </Select>
-                </Form.Item>
+                </Form.Item> */}
                 <Form.Item>
                   <Button onClick={onClose} style={{ marginRight: 8 }}>
                     ביטול
@@ -96,10 +85,10 @@ const CreateNewBook = (props) => {
                     שמור
                   </Button>
                 </Form.Item>
-          </Form>
-        {/* </Drawer> */}
+          </Form> 
         </>
     )
 }
+export default BorrowingBook;
 
-export default CreateNewBook;
+

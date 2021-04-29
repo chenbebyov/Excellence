@@ -11,7 +11,6 @@ const { RangePicker } = DatePicker;
 const AddLessonsToGroup = (props) => {
     const {groupId, setViewDrawer} = props;
     const [startDate, setStartDate] = useState();
-    // const [startDate, setStartDate] = useState();
     const [lessons, setLessons] = useState([]);
     const [selectedLesson, setSelectedLesson] = useState();
     const [loading, setLoading] = useState(false);
@@ -96,7 +95,7 @@ const AddLessonsToGroup = (props) => {
         <Space>
         <Form key={key} layout="vertical" style={style} initialValues={{ remember: true }} onFinish={save}>
             <Form.Item 
-                label="lesson time" 
+                label="זמן השיעור" 
                 name="lesson time"
                 rules={[
                     {
@@ -116,7 +115,7 @@ const AddLessonsToGroup = (props) => {
 
             </Form.Item>
             <Form.Item 
-                label="select lesson" 
+                label="נושא השיעור" 
                 name="select lesson" 
                 rules={[
                     {
@@ -137,17 +136,17 @@ const AddLessonsToGroup = (props) => {
                 />
             </Form.Item>
             <Form.Item
-                    label="comments"
+                    label="הערות"
                     name="comments"
                 >
                     <Input />
             </Form.Item>
             <Form.Item>
                     <Button type="primary" htmlType="submit" loading={loading}>
-                        Save
+                        שמור
                     </Button>
                     <Button type="default" htmlType="button" onClick={handleCancel}>
-                        Cancel
+                        ביטול
                     </Button>
             </Form.Item>
         </Form>

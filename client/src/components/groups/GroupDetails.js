@@ -16,25 +16,25 @@ const GroupDetails = (props) => {
 
     return (
         <>
-            <Card title={`Group name: ${group.name}`} style={{ width: 300 }} bordered={false}>
-                        <p>Teacher name: {teacherName}</p>
+            <Card title={`שם קבוצה: ${group.name}`} style={{ width: 300 }} bordered={false}>
+                        <p>שם מורה: {teacherName}</p>
             </Card>
 
             <Tabs defaultActiveKey="1">
-                <TabPane tab="Student In Group" key="1">
+                <TabPane tab="תלמידים בקבוצה" key="1">
                     <ViewUsers 
-                        title="Student In Group:" 
+                        title="תלמידים בקבוצה:" 
                         userList={studentsInGroup} 
                         showSetRole={false}
                         showRemove={false}
                     /> 
                 </TabPane>
-                <TabPane tab="Group Lessons" key="2">
+                <TabPane tab="שיעורים בקבוצה" key="2">
                     <>
                     <LessonsInGroup lessons={group.lessons}/>
-                        <Button onClick={()=>{setViewDrawer(true)}}>add new lesson to group</Button>
+                        <Button onClick={()=>{setViewDrawer(true)}}>הוספת שיעור לקבוצה</Button>
                         <Drawer
-                            title="add lesson to group"
+                            title="הוספת שיעור לקבוצה"
                             placement="right"
                             closable={()=>{setViewDrawer(true)}}
                             visible={viewDrawer}
