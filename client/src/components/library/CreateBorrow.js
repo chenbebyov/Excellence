@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import {setNewBook} from '../../redux/actions/book.actions';
 import {useDispatch} from 'react-redux';
-import { Drawer, Form, Button, Input, Select ,message} from 'antd';
+import { Drawer, Form, Button, Input, Select ,message, DatePicker, Space} from 'antd';
 
 
 const { Option } = Select;
 
-const BorrowingBook = () => {
+const CreateBorrow = () => {
 
     const {setVisible} = props;
     const [loading, setLoading] = useState(false)
 
     const dispatch = useDispatch();
+    const { RangePicker } = DatePicker;
 
     const save = (book) => {
       setLoading(true)
@@ -23,7 +24,7 @@ const BorrowingBook = () => {
         message.error('add new book failed');
         setLoading(false);
       });    
-    }
+    };
   
     const onClose = () => {
         setVisible(false);
@@ -33,7 +34,7 @@ const BorrowingBook = () => {
 
     return (
         <>
-             <Form id="newBookForm" layout="vertical" hideRequiredMark onFinish={save}>
+             <Form id="newBorrowForm" layout="vertical" hideRequiredMark onFinish={save}>
 
                 <Form.Item
                   name="barcode"
@@ -48,35 +49,23 @@ const BorrowingBook = () => {
                   label="שם תלמיד"
                   rules={[{ required: true, message: 'Please enter user name' }]}
                 >
-                  <Input placeholder="Please enter book name" />
+                  <Select>
+                     <Select.Option value=""></Select.Option>
+                  </Select>
+
+                  <Input placeholder="Please choose pupil name" />
                 </Form.Item>
 
                 <Form.Item
                   name="date"
-                  label="זמן השאלה"
-                  rules={[{ required: true, message: 'Please enter date borrow' }]}
+                  label="זמן סיום השאלה"
+                  rules={[{ required: true, message: 'Please enter date borrow finished' }]}
                 >
-                <RangePicker
-                   ranges={{
-                        Today: [moment(), moment()],
-                        'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    }}
-                    showTime
-                    format="YYYY/MM/DD HH:mm"
-                />  
+                <Space direction="vertical" size={12}>
+                   <DatePicker renderExtraFooter={() => 'extra footer'} />
+                </Space>
                 </Form.Item>
-         
-                {/* <Form.Item
-                  name="status"
-                  label="סטטוס"
-                  rules={[{ required: true, message: 'Please select status' }]}
-                >
-                  <Select placeholder="Please select status book">
-                    <Option value="not borrowed">לא מושאל</Option>
-                    <Option value="borrowed">מושאל</Option>
-                    <Option value="in binding">בתיקון</Option>
-                  </Select>
-                </Form.Item> */}
+                
                 <Form.Item>
                   <Button onClick={onClose} style={{ marginRight: 8 }}>
                     ביטול
@@ -89,6 +78,6 @@ const BorrowingBook = () => {
         </>
     )
 }
-export default BorrowingBook;
+export default CreateBorrow;
 
 

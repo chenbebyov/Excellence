@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import api from '../../services/book.service';
 import { Table, Button, message } from 'antd';
-import CreateNewBook from './CreateNewBook';
 import { useDispatch, useSelector } from 'react-redux';
 import {getBooks} from '../../redux/actions/book.actions'
 
@@ -55,8 +53,6 @@ const BookList = () => {
     return (
 
         <>
-            {/* <Button type="primary" onClick={()=>{setViewAddBook(true)}}>New Book</Button>
-            {viewDrawer && <CreateNewBook setVisible={setViewAddBook} />} */}
             <Table columns={columns} dataSource={tableData} bordered />
         </>
     )
