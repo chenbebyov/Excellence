@@ -1,4 +1,4 @@
-import {addBook, getAllBooks} from '../../services/book.service'
+import {addBook, getAllBooks, addBorrow} from '../../services/book.service'
 export const SET_BOOKS = 'SET BOOK'
 export const ADD_BOOK = 'ADD BOOK'
 export const ADD_BORROW = 'ADD BORROW'

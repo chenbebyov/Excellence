@@ -4,9 +4,9 @@ import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/ico
 import '../../css/Library.css';
 import { AlignRightOutlined, ReadOutlined, BarChartOutlined } from '@ant-design/icons';
 import BookList from './BookList';
+import CreateBorrow from './CreateBorrow';
 import CreateNewBook from './CreateNewBook';
 import { Route, Link} from "react-router-dom";
-// import BorrowingBook from './BorrowingBook';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -59,8 +59,8 @@ const Library = () => {
 
                         <Route path='/library/books' component={BookList} exact />
                         <Route path='/library/books/add' component={CreateNewBook} exact />
-                        {/* <Route path='/library/borrows/add' component={BorrowingBook} exact /> */}
-                        <Route path='/library/borrows' render={() => <>borrows</>} />
+                        <Route path='/library/borrows' render={() => <>borrows</>} exact/>
+                        <Route path='/library/borrows/add' component={CreateBorrow} exact/>
                     </Content>
                 </Layout>
             </Layout>

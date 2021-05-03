@@ -9,7 +9,7 @@ const Student = new Schema(
         lastName: { type: String, required: true },
         password: { type: String, required: true },
         cellPhone: { type: String, required: false },
-        city: { type: String, required: false },
+        address: { type: String, required: false },
         bornDate: { type: Date, required: false },
         userId : { type: ObjectId , required : true , ref:"users"},
         attendance: {
@@ -29,7 +29,7 @@ const Student = new Schema(
         }, 
         borrowingBooks: {
             type:[{
-                booksCode: { type: ObjectId, required: true, ref:'books' },
+                bookId: { type: ObjectId, required: true, ref:'books' },
                 dateBorrowe: { type: Date, required: true, default:new Date() },
                 endDateBorrowing: { type: Date, required: true },
                 isReturned: { type: Boolean, required: true, default:false }

@@ -1,5 +1,6 @@
 const Book = require('../models/book-model')
 const Student= require('../models/student-model')
+const { ObjectId } = require('mongodb');
 
 createBook = (req, res) => {
     const body = req.body
@@ -34,15 +35,27 @@ createBook = (req, res) => {
         })
 }
 
-createBorrow = (req, res) => {
+async function createBorrow(req, res) {
 
-    const borrow = new Student.borrowingBooks()
+    const body = req.body;
+    const {barcode, endDate, studentId} = body;
 
-    if (!borrow) {
-        return res.status(400).json({ success: false, error: err })
+    if (!body || !barcode ||  !endDate || !studentId) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide parameters',
+        })
     }
 
-    borrow
+    
+    let student = await Student.findById(studentId);
+    let book = await Book.findOne({barcode: barcode});
+
+    const newBorrow = {bookId: book._id,  endDateBorrowing: endDate};
+    student.borrowingBooks.push(newBorrow);
+
+
+    student
         .save()
         .then(() => {
             return res.status(200).json({
