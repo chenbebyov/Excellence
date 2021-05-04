@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { setNewBorrow } from '../../redux/actions/book.actions';
 import { useDispatch } from 'react-redux';
 import { getStudents } from '../../services/user.service';
-import { Popover, Form, Button, Input, message, DatePicker, Space, AutoComplete } from 'antd';
+import { getAllBooks } from '../../services/book.service';
+import { Popover, Form, Button, Input, message, DatePicker, AutoComplete } from 'antd';
 import {
     PhoneOutlined,
     MailOutlined,
@@ -18,7 +19,9 @@ const CreateBorrow = (props) => {
     const { setVisible } = props;
     const [loading, setLoading] = useState(false)
     const [studentList, setStudentList] = useState([]);
+    const [bookList, setBookList] = useState([]);
     const [studentOptions, setStudentOptions] = useState([]);
+
 
     useEffect(() => {
         getStudents()
@@ -30,9 +33,17 @@ const CreateBorrow = (props) => {
     }, [])
 
     useEffect(() => {
+        getAllBooks()
+            .then(resopnse => resopnse.data)
+            .then(resopnse => resopnse.data)
+            .then(resopnse => {
+                setBookList(resopnse);
+            });
+    }, [])
+
+    useEffect(() => {
         let options = studentList.map(student => ({
             value: student._id,
-            displayValue: `${student.firstName} ${student.lastName}`,
             label: (
                 <Popover placement="left" content={getStudentDetails(student)} title={`${student.firstName} ${student.lastName}`} trigger="hover">
                     <div style={{ float: 'left', textAlign:'right', width:"100%"}}>
@@ -77,6 +88,10 @@ const CreateBorrow = (props) => {
         setVisible(false);
     };
 
+    const getBarcode= () =>{
+        return bookList.map(book=>({
+            value: book.barcode  }))
+    } 
 
 
     return (
@@ -89,7 +104,17 @@ const CreateBorrow = (props) => {
                     label="ברקוד"
                     rules={[{ required: true, message: 'Please enter a barcode' }]}
                 >
-                    <Input placeholder="Please enter a barcode" />
+                     <AutoComplete
+                        style={{
+                            width: 200,
+                        }}
+                        options={getBarcode()}
+                        showSearch={ true }
+                        placeholder="ברקוד"
+                        filterOption={(inputValue, option) =>
+                            option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                        }
+                    />
                 </Form.Item>
 
                 <Form.Item
@@ -119,24 +144,6 @@ const CreateBorrow = (props) => {
                         format="YYYY/MM/DD"
                     />
                 </Form.Item>
-
-                {/* <RangePicker
-                    ranges={{
-                        Today: [moment(), moment()],
-                        'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    }}
-                    showTime
-                    format="YYYY/MM/DD HH:mm"
-                /> */}
-                {/* <Form.Item
-                    name="endDate"
-                    label="זמן סיום השאלה"
-                    // rules={[{ required: true, message: 'Please enter date borrow finished' }]}
-                >
-                    <Space direction="vertical" size={12}>
-                        <DatePicker renderExtraFooter={() => 'extra footer'} />
-                    </Space>
-                </Form.Item> */}
 
                 <Form.Item>
                     <Button onClick={onClose} style={{ marginRight: 8 }}>
