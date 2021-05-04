@@ -103,6 +103,7 @@ const CreateBorrow = (props) => {
                         }}
                         options={studentOptions}
                         showSearch={ true }
+                        optionFilterProp="label"
                         placeholder="שם תלמיד"
                         filterOption={(inputValue, option) =>
                             option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
