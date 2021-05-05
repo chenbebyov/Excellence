@@ -2,7 +2,7 @@ const Book = require('../models/book-model')
 const Student= require('../models/student-model')
 const { ObjectId } = require('mongodb');
 
-createBook = (req, res) => {
+async function createBook(req, res){
     const body = req.body
 
     if (!body) {
@@ -11,6 +11,15 @@ createBook = (req, res) => {
             error: 'You must provide a book',
         })
     }
+
+    let existBook = await Book.findOne({barcode: body.barcode});
+    
+    if(existBook) {
+        return res.status(500).json({
+            message: 'barcode already exist',
+        })
+    }
+
 
     const book = new Book(body)
 
@@ -37,40 +46,80 @@ createBook = (req, res) => {
 
 async function createBorrow(req, res) {
 
-    const body = req.body;
-    const {barcode, endDate, studentId} = body;
+    try {
+        const body = req.body;
+        const {barcode, endDate, studentId} = body;
 
-    if (!body || !barcode ||  !endDate || !studentId) {
-        return res.status(400).json({
-            success: false,
-            error: 'You must provide parameters',
+        if (!body || !barcode ||  !endDate || !studentId) {
+            return res.status(400).json({
+                success: false,
+                error: 'You must provide parameters',
+            })
+        }
+
+        
+        let student = await Student.findById(studentId);
+        let book = await Book.findOne({barcode: barcode});
+
+        book.status = 'borrowed';
+        await book.save();
+
+        const newBorrow = {bookId: book._id,  endDateBorrowing: endDate};
+        student.borrowingBooks.push(newBorrow);
+
+
+        student.save();
+        return res.status(200).json({
+            success: true,
+            borrow: newBorrow,
+            message: 'borrow created!',
         })
     }
-
-    
-    let student = await Student.findById(studentId);
-    let book = await Book.findOne({barcode: barcode});
-
-    const newBorrow = {bookId: book._id,  endDateBorrowing: endDate};
-    student.borrowingBooks.push(newBorrow);
-
-
-    student
-        .save()
-        .then(() => {
-            return res.status(200).json({
-                success: true,
-                borrow: borrow,
-                message: 'A new borrow created!',
-            })
+    catch(error) {
+        return res.status(500).json({
+            error,
+            message: 'borrow not created!',
         })
-        .catch(error => {
-            return res.status(400).json({
-                error,
-                message: 'A new borrow not created!',
-            })
-        })
+    }
 }
+
+async function returnBorrow(req, res) {
+
+    try {
+        const body = req.body;
+        const {studentId, bookId, borrowId} = body;
+
+        if (!body || !studentId ||  !bookId || !borrowId) {
+            return res.status(400).json({
+                success: false,
+                error: 'You must provide parameters',
+            })
+        }
+        
+        let student = await Student.findById(studentId);
+        let book = await Book.findById(bookId);
+
+        book.status = 'not borrowed';
+        await book.save();
+
+        let borrow = student.borrowingBooks.find(borrow => borrow._id.toString() === borrowId);
+        borrow.isReturned =  true;
+        student.save();
+
+        return res.status(200).json({
+            success: true,
+            borrow: borrow,
+            message: 'borrow created!',
+        })
+    }
+    catch(error) {
+        return res.status(500).json({
+            error,
+            message: 'borrow not created!',
+        })
+    }
+}
+
 
 updateBook = async (req, res) => {
     const body = req.body
@@ -156,17 +205,39 @@ getBooks = async (req, res) => {
 }
 
 getBorrows = async (req, res) => {
-    await Student.find({}, (err, borrowingBooks) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
-        if (!borrowingBooks.length) {
-            return res
-                .status(404)
-                .json({ success: false, error: `not found` })
-        }
-        return res.status(200).json({ success: true, data: borrowingBooks })
-    }).catch(err => console.log(err))
+
+    try {
+
+        let borrowsResult = [];
+        const students = await Student.find({}).populate('borrowingBooks.bookId').exec();;
+    
+        students.forEach(student => {
+            if(student.borrowingBooks) {
+                let borrows = student.borrowingBooks.map(item => {
+                    let {name, writer, barcode} = item.bookId.toObject();
+                    let {bookId, ...borrow} = item.toObject();
+                    return ({
+                        ...borrow,
+                        bookName: name,
+                        writer,
+                        barcode,
+                        studentName : `${student.firstName} ${student.lastName}`,
+                        studentId: student._id,
+                        bookId: bookId._id,
+                    })
+                })
+                borrowsResult.push(...borrows);
+            }
+        })
+        return res.status(200).json({ success: true, data: borrowsResult })
+    }
+    catch(error) {
+        return res.status(500).json({
+            error,
+            message: 'failed to retrive borrows',
+        })
+    }
+
 }
 
 module.exports = {
@@ -176,5 +247,6 @@ module.exports = {
     getBooks,
     getBookById,
     createBorrow,
-    getBorrows
+    getBorrows,
+    returnBorrow
 }

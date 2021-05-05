@@ -41,16 +41,16 @@ const Login = (props) => {
                 }
                 switch (response.request.status) {
                     case 404:
-                        message.error('Error: user name or password are not exist');
+                        message.error('שגיאה: שם משתמש או סיסמה לא קיימים');
                         break;
                     default:
-                        message.error('Login Failed 1');
+                        message.error('שגיאה');
                         break;
                 }
             })
             .catch(error => {
                 setLoading(false);
-                message.error('Login Failed 2')
+                message.error('שגיאה')
             });
     }
 

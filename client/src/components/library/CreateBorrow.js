@@ -10,17 +10,21 @@ import {
     HomeOutlined, 
   } from '@ant-design/icons';
 import moment from 'moment';
+import { useHistory } from 'react-router-dom';
+
 
 
 
 
 const CreateBorrow = (props) => {
 
-    const { setVisible } = props;
     const [loading, setLoading] = useState(false)
     const [studentList, setStudentList] = useState([]);
     const [bookList, setBookList] = useState([]);
     const [studentOptions, setStudentOptions] = useState([]);
+
+    const history = useHistory();
+
 
 
     useEffect(() => {
@@ -76,21 +80,18 @@ const CreateBorrow = (props) => {
         dispatch(setNewBorrow(newBorrow)).then(response => {
             debugger
             setLoading(false);
-            message.success('the book was added successfully');
-            onClose();
+            message.success('ההשאלה נשמרה בהצלחה');
+            history.push({
+                pathname: `/library/borrows`,
+            });
         }).catch(error => {
-            message.error('add new book failed');
+            message.error('שגיאה ביצירת השאלה, אנא נסה שנית');
             setLoading(false);
         });
     };
 
-    const onClose = () => {
-        setVisible(false);
-    };
-
     const getBarcode= () =>{
-        return bookList.map(book=>({
-            value: book.barcode  }))
+        return bookList.filter(book => book.status === 'not borrowed').map(book => ({value: book.barcode  }))
     } 
 
 
@@ -147,9 +148,6 @@ const CreateBorrow = (props) => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button onClick={onClose} style={{ marginRight: 8 }}>
-                        ביטול
-                  </Button>
                     <Button loading={loading} type="primary" htmlType="submit">
                         שמור
                   </Button>

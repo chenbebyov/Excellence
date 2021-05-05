@@ -40,8 +40,9 @@ const Student = new Schema(
             type:[{
                 subject: { type: String, required: true },
                 messageContent: { type: String, required: true },
-                dateMessage: { type: Date, required: true },
-                publisher: { type: ObjectId, required: true, ref:'users' }
+                dateMessage: { type: Date, required: true, default: new Date() },
+                publisher: { type: ObjectId, required: true, ref:'users' },
+                isRead: { type: Boolean, required: true, default: false }
             }],
             required: false
         }, 

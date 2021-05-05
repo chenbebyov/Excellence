@@ -14,9 +14,11 @@ const Staff = new Schema(
         userId : { type: ObjectId , required : true },
         messages: {
             type:[{
-                Subject: { type: String, required: true },
-                detailsOfTheMessage: { type: String, required: true },
-                dateMessage: { type: Date, required: true }
+                subject: { type: String, required: true },
+                messageContent: { type: String, required: true },
+                dateMessage: { type: Date, required: true },
+                publisher: { type: ObjectId, required: true, ref:'users' },
+                isRead: { type: Boolean, required: true, default: false }
             }],
             required: false
        }, 

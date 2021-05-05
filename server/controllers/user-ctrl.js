@@ -7,6 +7,8 @@ var bcrypt = require("bcryptjs");
 const Layer = require('../models/layer-model');
 const sendEmail = require('../general/emails-ctrl');
 const {getRegisteredMessage} = require('../general/email-templates');
+const { ObjectId } = require('mongodb');
+
 
 
 createUser = (req, res) => {
@@ -88,6 +90,7 @@ login = async (req, res) => {
 }
 
 getUsers = async (req, res) => {
+    console.log(req.headers);
     await User.find({}, (err, users) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -148,6 +151,47 @@ getStudents = (req, res) => {
     .catch(err => console.log(err));
 }
 
+async function createMessages(req, res){
+
+    try {
+        
+        const {body} = req;
+
+        if (!body || !body.message) {
+            return res.status(400).json({
+                success: false,
+                error: 'Failed to create message, details are empty.',
+            })
+        }
+
+        const {message, usersIds} = body;
+
+        let usersIdsArray = usersIds.map(id => new ObjectId(id));
+        let students = await Student.find({'_id': { "$in": usersIdsArray }});
+        let staffList = await Staff.find({'_id': { "$in": usersIdsArray }});
+
+        if(students.length) {
+            students.forEach(async student => {
+                student.messages.push(message);
+                await student.save();
+            });
+        }
+
+        if(staffList.length) {
+            staffList.forEach(async staff => {
+                staff.messages.push(newMessage);
+                await staff.save();
+            });
+        }
+        return res.status(200).json({ success: true, message: 'messages created successfuly!' });
+    }
+    catch(e) {
+        return res
+            .status(500)
+            .json({ success: false, error: `failed to create message`, errorMessage: e });
+    }
+}
+
 module.exports = {
     createUser,
     getUsers,
@@ -155,5 +199,6 @@ module.exports = {
     getUser,
     getUserById,
     getTeachers,
-    getStudents
+    getStudents,
+    createMessages
 }

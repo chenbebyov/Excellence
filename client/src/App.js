@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Library from './components/library/Library';
 import Home from './pages/Home';
-import ViewUsers from './components/users/ViewUsers';
+import ManageUsers from './components/users/ManageUsers';
 import HierarchyListView from './components/layers/HierarchyListView';
-import api from './services/user.service';
 import { useSelector } from 'react-redux';
 import { PermissionsProvider, AuthorizedRoute, AuthorizedSection } from '@tshio/react-router-permissions';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
@@ -15,6 +14,7 @@ import AffiliationToGroup from './components/groups/AffiliationToGroup';
 import CalendarView from './components/general/CalendarView';
 import NavBar from './components/home/NavBar';
 import BookList from './components/library/BookList';
+import AddMessage from './components/messages/AddMessage';
 
 const permissionsStrategy = (currentRole, requirement) => {
     return requirement.find(role => role === currentRole);
@@ -23,13 +23,7 @@ const permissionsStrategy = (currentRole, requirement) => {
 function App (props) {
 
     const { user } = useSelector(state => state.userReducer);
-    const [userList, setUserList] = useState([]);
-
-    useEffect(() => {
-        api.getAllUsers().then(users => {
-            setUserList(users.data.data);
-        }, [])
-    }, []);
+    
 
     // const getRoles =() =>{
     //     return user ? [user.role] : 'guest';
@@ -55,7 +49,7 @@ function App (props) {
                             {({ isAuthorized }) => (isAuthorized ? <UserDetails /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/users" requires={['teacher','admin']}>
-                            {({ isAuthorized }) => (isAuthorized ? <ViewUsers title="User List" userList={userList} showSetRole={true} />: <Redirect to="/" />)}
+                            {({ isAuthorized }) => (isAuthorized ? <ManageUsers/>: <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/layers" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <HierarchyListView type="layer" nextHierarchy="grade"/> : <Redirect to="/" />)}
@@ -80,6 +74,9 @@ function App (props) {
                         </AuthorizedRoute> */}
                         <AuthorizedRoute path="/calendar"  requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <CalendarView/> : <Redirect to="/" />)}
+                        </AuthorizedRoute>
+                        <AuthorizedRoute path="/message/add" requires={['teacher','admin', 'student', 'secritary']}>
+                            {({ isAuthorized }) => (isAuthorized ? <AddMessage/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <Route path="/" component={Home}>
                             <Home />

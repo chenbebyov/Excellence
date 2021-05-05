@@ -10,6 +10,7 @@ router.get('/users', UserCtrl.getUsers);
 router.get('/user/:id', UserCtrl.getUser);
 router.get('/teachers', UserCtrl.getTeachers);
 router.get('/students', UserCtrl.getStudents);
+router.post('/messages/add', UserCtrl.createMessages);
 
 
 module.exports = router;

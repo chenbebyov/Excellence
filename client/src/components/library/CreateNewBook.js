@@ -8,7 +8,6 @@ const { Option } = Select;
 
 const CreateNewBook = (props) => {
 
-    const {setVisible} = props;
     const [loading, setLoading] = useState(false)
 
     const dispatch = useDispatch();
@@ -17,17 +16,12 @@ const CreateNewBook = (props) => {
       setLoading(true)
       dispatch(setNewBook(book)).then(response => {
         setLoading(false);
-        message.success('the book was added successfully');
-        onClose();
+        message.success('הספר נוסף בהצלחה!');
       }).catch(error => {
-        message.error('add new book failed');
+        message.error('יצירת הספר נכשלה');
         setLoading(false);
       });    
     }
-  
-    const onClose = () => {
-        setVisible(false);
-    };
   
     return (
         <>
@@ -89,9 +83,6 @@ const CreateNewBook = (props) => {
                   </Select>
                 </Form.Item>
                 <Form.Item>
-                  <Button onClick={onClose} style={{ marginRight: 8 }}>
-                    ביטול
-                  </Button>
                   <Button loading={loading} type="primary" htmlType="submit">
                     שמור
                   </Button>

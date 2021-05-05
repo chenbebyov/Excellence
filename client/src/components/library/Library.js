@@ -6,6 +6,7 @@ import { AlignRightOutlined, ReadOutlined, BarChartOutlined } from '@ant-design/
 import BookList from './BookList';
 import CreateBorrow from './CreateBorrow';
 import CreateNewBook from './CreateNewBook';
+import BorrowBookList from './BorrowBookList';
 import { Route, Link} from "react-router-dom";
 
 const { SubMenu } = Menu;
@@ -59,7 +60,7 @@ const Library = () => {
 
                         <Route path='/library/books' component={BookList} exact />
                         <Route path='/library/books/add' component={CreateNewBook} exact />
-                        <Route path='/library/borrows' render={() => <>borrows</>} exact/>
+                        <Route path='/library/borrows' component={BorrowBookList} exact/>
                         <Route path='/library/borrows/add' component={CreateBorrow} exact/>
                     </Content>
                 </Layout>
