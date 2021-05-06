@@ -16,6 +16,7 @@ import NavBar from './components/home/NavBar';
 import BookList from './components/library/BookList';
 import AddMessage from './components/messages/AddMessage';
 import { Layout, Menu, Breadcrumb } from 'antd';
+import EditorialBoard from './components/lessonsAndTasks/EditorialBoard';
 
 
 const { Header, Content, Footer } = Layout;
@@ -47,6 +48,12 @@ function App (props) {
                     <Switch>
                         <AuthorizedRoute path="/lessons/add"  requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <CreateLesson /> : <Redirect to="/" />)}
+                        </AuthorizedRoute>
+                        <AuthorizedRoute path="/lessons"  requires={['admin','secretary','teacher']}>
+                            {({ isAuthorized }) => (isAuthorized ? <EditorialBoard /> : <Redirect to="/" />)}
+                        </AuthorizedRoute>
+                        <AuthorizedRoute path="/lesson/:id"  requires={['admin','secretary','teacher']}>
+                            {({ isAuthorized }) => (isAuthorized ? <LessonView /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/library" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <Library />: <Redirect to="/" />)}

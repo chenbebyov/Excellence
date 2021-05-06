@@ -1,17 +1,23 @@
+import { message ,Card,List} from 'antd';
 import React, { useEffect, useState } from 'react';
-import {useDispatch} from 'react-redux';
+import {getAllLessns} from '../../redux/actions/lesson.actions';
+import { useHistory} from 'react-router-dom';
+import {getLessons} from '../../services/lesson.service';
 
 
 const EditorialBoard = (props) => {
 
-    const dispatch = useDispatch();
     const { title } = props;
+    const [lessons,setLessons]=useState();
+    const history = useHistory();
 
     useEffect(() => {
-        if(lessons == null){
-            dispatch(getAllLessns());
-        }
-    }, [dispatch, lessons]);
+        getLessons()
+            .then(resopnse => {
+                setLessons(resopnse.data);
+            })
+            .catch(error=> message.error('שגיאה בהצגת השיעורים'));
+    }, []);
 
     const navigate = (lessons) => {
         history.push({
@@ -24,7 +30,7 @@ const EditorialBoard = (props) => {
         <>
          <Card type="inner" title={title}>
                 <List
-                    dataSource={userList}
+                    dataSource={lessons}
                     renderItem={item => (
                         <List.Item key={item._id} onClick={()=> navigate(item)}>
                             <List.Item.Meta 
