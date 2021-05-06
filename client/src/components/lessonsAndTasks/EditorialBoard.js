@@ -14,7 +14,8 @@ const EditorialBoard = (props) => {
     useEffect(() => {
         getLessons()
             .then(resopnse => {
-                setLessons(resopnse.data);
+                    debugger;
+                    setLessons(resopnse.data);
             })
             .catch(error=> message.error('שגיאה בהצגת השיעורים'));
     }, []);

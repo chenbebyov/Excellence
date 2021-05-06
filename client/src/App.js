@@ -15,6 +15,7 @@ import CalendarView from './components/general/CalendarView';
 import NavBar from './components/home/NavBar';
 import BookList from './components/library/BookList';
 import AddMessage from './components/messages/AddMessage';
+import ListMassage from './components/messages/ListMassage';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import EditorialBoard from './components/lessonsAndTasks/EditorialBoard';
 
@@ -52,9 +53,7 @@ function App (props) {
                         <AuthorizedRoute path="/lessons"  requires={['admin','secretary','teacher']}>
                             {({ isAuthorized }) => (isAuthorized ? <EditorialBoard /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        <AuthorizedRoute path="/lesson/:id"  requires={['admin','secretary','teacher']}>
-                            {({ isAuthorized }) => (isAuthorized ? <LessonView /> : <Redirect to="/" />)}
-                        </AuthorizedRoute>
+                      
                         <AuthorizedRoute path="/library" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <Library />: <Redirect to="/" />)}
                         </AuthorizedRoute>
@@ -90,6 +89,9 @@ function App (props) {
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/message/add" requires={['teacher','admin', 'student', 'secritary']}>
                             {({ isAuthorized }) => (isAuthorized ? <AddMessage/> : <Redirect to="/" />)}
+                        </AuthorizedRoute>
+                        <AuthorizedRoute path="/message" requires={['teacher','admin', 'student', 'secritary']}>
+                            {({ isAuthorized }) => (isAuthorized ? <ListMassage/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <Route path="/" component={Home}>
                             <Home />
