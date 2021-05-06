@@ -15,9 +15,9 @@ export const logout = () => {
     }
 }
 
-export const createLesson = (lesson) => {
+export const createLesson = (lesson, levelsIds) => {
     return (dispatch) => {
-        return addLesson(lesson)
+        return addLesson(lesson, levelsIds)
             .then(response => response.data)
             .catch(error => ({success:false , error: error}));
     }

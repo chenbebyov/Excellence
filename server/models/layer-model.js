@@ -11,14 +11,15 @@ const Layer = new Schema(
                 levels: {
                     type: [{
                         name: { type: String, required: false },
-                        groups: [{ type:ObjectId, ref:"groups"}]
+                        groups: [{ type:ObjectId, ref:"groups"}],
+                        lessonOfLevel: {
+                            type: [{
+                                lessonId: { type: ObjectId, required: true, ref:'lesson' }
+                            }], 
+                            required: false
+                        }
                     }],
                     required: true
-                },
-                lessonOfLevel: {
-                    type: [{
-                        lessonId: { type: ObjectId, required: true }
-                    }], required: false
                 }
             }],
             required: true

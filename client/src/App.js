@@ -15,6 +15,10 @@ import CalendarView from './components/general/CalendarView';
 import NavBar from './components/home/NavBar';
 import BookList from './components/library/BookList';
 import AddMessage from './components/messages/AddMessage';
+import { Layout, Menu, Breadcrumb } from 'antd';
+
+
+const { Header, Content, Footer } = Layout;
 
 const permissionsStrategy = (currentRole, requirement) => {
     return requirement.find(role => role === currentRole);
@@ -31,13 +35,15 @@ function App (props) {
 
     return (
         <>
+          {/* <Layout className="layout"> */}
+
             <PermissionsProvider
                 permissions={user ? user.role : 'guest'}
                 authorizationStrategy={permissionsStrategy}
             >
                 <Router>
                     <NavBar/>
-
+                
                     <Switch>
                         <AuthorizedRoute path="/lessons/add"  requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <CreateLesson /> : <Redirect to="/" />)}
@@ -85,6 +91,9 @@ function App (props) {
                 </Router>
             </PermissionsProvider>
 
+            <Footer style={{ textAlign: 'center' }}>Excellence ©2021</Footer>
+
+            {/* </Layout> */}
         </>
     );
 }

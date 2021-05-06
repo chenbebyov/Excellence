@@ -167,22 +167,11 @@ async function createMessages(req, res){
         const {message, usersIds} = body;
 
         let usersIdsArray = usersIds.map(id => new ObjectId(id));
-        let students = await Student.find({'_id': { "$in": usersIdsArray }});
-        let staffList = await Staff.find({'_id': { "$in": usersIdsArray }});
 
-        if(students.length) {
-            students.forEach(async student => {
-                student.messages.push(message);
-                await student.save();
-            });
-        }
+        let query = {'_id': { "$in": usersIdsArray }};
+        await Student.updateMany(query, { $push: { messages: message } }, {"multi": true});
+        await Staff.updateMany(query, { $push: { messages: message } }, {"multi": true});
 
-        if(staffList.length) {
-            staffList.forEach(async staff => {
-                staff.messages.push(newMessage);
-                await staff.save();
-            });
-        }
         return res.status(200).json({ success: true, message: 'messages created successfuly!' });
     }
     catch(e) {

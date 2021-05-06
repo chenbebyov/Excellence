@@ -121,6 +121,7 @@ const BorrowBookList = () => {
                     let currentResult = currentBorrows.filter(item => item._id !== borrow._id);
                     setCurrentBorrows(currentResult);
                     setHistoryBorrows([...historyBorrows, borrow]);
+                    message.success('הספר הוחזר בהצלחה!')
                 }
             })
             .catch(error => message.error('החזרת הספר נכשלה'))

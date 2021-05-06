@@ -22,7 +22,7 @@ const UploadFiles  = (props) => {
         uploadFile(file, config).then(data => {
             console.log(data.location);
             debugger
-            actionOnUploadCompleted(data.location, data.name);
+            actionOnUploadCompleted(data.location, data.key);
             onSuccess("ok")
         }).catch(error => {
             console.error(error);
@@ -46,6 +46,8 @@ const UploadFiles  = (props) => {
             case "error":
                 message.error(`${info.file.name} file upload failed.`);
                 break;
+
+            default: return;
         }
     }
 
@@ -69,14 +71,13 @@ const UploadFiles  = (props) => {
             <p className="ant-upload-drag-icon">
             <InboxOutlined />
             </p>
-            <p className="ant-upload-text">Click or drag file to this area to upload</p>
+            <p className="ant-upload-text">לחץ / גרור קובץ לאיזור זה כדי להעלות אותו</p>
             <p className="ant-upload-hint">
-            Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-            band files
+            ניתן לעלות קובץ בודד או קבצים מרובים
             </p>
         </Dragger>
 
-        <Upload
+        {/* <Upload
             // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
             listType="picture-card"
             fileList={selectedFileList}
@@ -84,7 +85,7 @@ const UploadFiles  = (props) => {
             onChange={upload}
         >
           {selectedFileList.length >= 8 ? null : uploadButton}
-        </Upload>
+        </Upload> */}
       </>
     );
 }

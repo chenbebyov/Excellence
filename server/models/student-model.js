@@ -14,7 +14,7 @@ const Student = new Schema(
         userId : { type: ObjectId , required : true , ref:"users"},
         attendance: {
             type:[{
-                date: { type: Date, required: true },
+                date: { type: Date, required: true, default:new Date() },
                 present:{ type: Boolean, required: true }
             }],
             required: false
