@@ -180,7 +180,7 @@ const AffiliationToGroup = (props) => {
                             layout="vertical"
                         >
                             <Form.Item
-                                label="group name"
+                                label="שם הקבוצה"
                                 name="group name"
                                 onChange={(e) => {setGroupName(e.target.value)}}
                                 rules={[
@@ -192,30 +192,30 @@ const AffiliationToGroup = (props) => {
                             >
                                 <Input defaultValue={groupName}/>
                             </Form.Item>
-                            <Form.Item label="teacher name" name="teacher name">     
+                            <Form.Item label="שם המורה" name="teacher name">     
                                 <AutoComplete
                                     style={{
                                         width: 200,
                                     }}
                                     options={teacherList}
                                     defaultValue={teacherDefaultValue}
-                                    placeholder="teacher name"
+                                    placeholder="שם המורה"
                                     onSelect={handleSelectTeacher}
                                     filterOption={filterAutoComplete}
                                 />
                             </Form.Item>
 
-                            <Form.Item label="add a new student" name="add a new student"> 
+                            <Form.Item label="הוספת תלמידים חדשים" name="add a new student"> 
                             <AutoComplete
                                 style={{width: 200}}
                                 options={studentList}
-                                placeholder="add student"
+                                placeholder="הוסף תלמידים"
                                 onSelect={handleSelectStudent}
                                 filterOption={filterAutoComplete}
                                 notFoundContent="No student found"
                                 value={currentStudent !== null? `${currentStudent.firstName} ${currentStudent.lastName}` : ""}
                             />
-                            <Button disabled={currentStudent=== null} onClick={addNewStudentToList}>Add Student</Button>
+                            <Button disabled={currentStudent=== null} onClick={addNewStudentToList}>הוסף תלמידים</Button>
                             </Form.Item>
                         <div>
                         </div>
@@ -244,7 +244,7 @@ const AffiliationToGroup = (props) => {
                 {viewMode === 'edit' && <Button loading={loading} onClick={save}>שמור שינויים</Button>}
                 {viewMode === 'read' && 
                     <>
-                        <Button loading={loading} onClick={editGroup}>יציאה</Button>
+                        <Button loading={loading} onClick={editGroup}>עריכה</Button>
                     </>
                 }
                 

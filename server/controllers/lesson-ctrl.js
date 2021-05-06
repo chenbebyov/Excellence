@@ -50,7 +50,6 @@ createLesson = async (req, res) => {
 }
 
 getLessons = async (req, res) => {
-    // console.log(req);
     await Lesson.find({}, (err, lesson) => {
 
         if (err) {

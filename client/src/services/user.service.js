@@ -14,6 +14,7 @@ export const setRole = (userId, role) => api.post(`/user/role`, {userId, role}).
 export const getTeachers = () => api.get(`/teachers`);
 export const getStudents = () => api.get(`/students`);
 export const createMessage = (message, usersIds) => api.post(`/messages/add`, {message, usersIds});
+// export const setAttendance = (studentId,attendance) => api.post(`/student/attendance`, {studentId,attendance}).then(response => response.data);
 
 
 const apis = {
@@ -23,7 +24,8 @@ const apis = {
     setRole,
     getTeachers,
     getStudents,
-    createMessage
+    createMessage,
+    // setAttendance
 }
 
 export default apis;

@@ -121,7 +121,7 @@ const CreateHierarchy = (props) => {
 
             <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit"  loading={loading}>
-                    add
+                    הוסף
                 </Button>
             </Form.Item>
         </Form>

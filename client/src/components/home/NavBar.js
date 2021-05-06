@@ -30,6 +30,7 @@ const pathPermissions = new Map([
     ['/users', new Array('admin','secretary')],
     ['/users/:id', new Array('admin','secretary','teacher', 'student')],
     ['/lessons/add', new Array('admin')],
+    ['/lessons', new Array('admin','secretary','teacher')],
     ['/layers', new Array('admin','secretary','teacher')],
     ['/calendar', new Array('admin','secretary','teacher', 'student')],
     ['/grade', new Array('admin','secretary','teacher')],
@@ -45,6 +46,7 @@ const navBarItems = new Map([
     ['/users','משתמשים'],
     ['/users/:id','פרטי משתמש'],
     ['/lessons/add','הוספת שיעור חדש'],
+    ['/lessons','מערכי שיעורים'],
     ['/layers','שכבות'],
     ['/calendar','לוח שנה']
 ]);
@@ -94,7 +96,9 @@ const NavBar = (props) => {
                 <Menu.Item key="/lessons/add" role={['admin']}>
                     <Link to="/lessons/add">הוספת שיעור חדש</Link>
                 </Menu.Item>
-                <Menu.Item key="setting:2" role={['admin','secretary','teacher']}>רשימת שיעורים</Menu.Item>
+                <Menu.Item key="/lessons" role={['admin','secretary','teacher']}>
+                       <Link to="/lessons">מערכי שיעורים</Link> 
+                </Menu.Item>
             </Menu.ItemGroup>
             </SubMenu>
             <MenuItem route="/calendar" key='/calendar' roles={['admin','secretary','teacher', 'student']} icon={<CalendarOutlined />}>לוח שנה</MenuItem>
@@ -124,7 +128,7 @@ const NavBar = (props) => {
                     key="signIn" 
                     onClick={handleShowSignIn}
             >
-                <span style={{padding:"8px"}}>כניסה</span> 
+                <span style={{padding:"8px"}}>כניסה/הרשמה</span> 
                 <LogoutOutlined />
             </Menu.Item>
         }

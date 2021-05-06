@@ -106,7 +106,7 @@ const CreateLesson = () => {
             onFinish={save} 
             onFinishFailed={onFinishFailed}
         >
-            <label>נושא השיעור</label>
+            <label>נושא השיעור:</label>
             <Form.Item
                 name="lessonSubject"
                 rules={[
@@ -120,7 +120,7 @@ const CreateLesson = () => {
             >
                 <Input onChange={updateLessonSubject}/>
             </Form.Item>
-            <label>בחר לאילו רמות יתווסף השיעור</label>
+            <label>בחר לאילו רמות יתווסף השיעור:</label>
             <Form.Item
                 name="lessonSubject"
                 rules={[

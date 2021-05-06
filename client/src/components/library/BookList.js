@@ -36,7 +36,6 @@ const BookList = () => {
     }
 
     useEffect(() => {
-        debugger
         if(books == null) {
             dispatch(getBooks())
             .catch(error => {

@@ -74,11 +74,9 @@ const CreateBorrow = (props) => {
     const dispatch = useDispatch();
 
     const save = (borrow) => {
-        debugger
         let newBorrow = {...borrow, endDate: moment(borrow.endDate).format('YYYY/MM/DD')};
         setLoading(true)
         dispatch(setNewBorrow(newBorrow)).then(response => {
-            debugger
             setLoading(false);
             message.success('ההשאלה נשמרה בהצלחה');
             history.push({

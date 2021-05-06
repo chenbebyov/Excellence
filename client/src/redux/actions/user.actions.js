@@ -40,3 +40,9 @@ export const enterUser = (email, password) => (dispatch) => {
     }).catch(error => error)
 }
 
+
+// export const updateAttendance=(studentId,attendance)=>{
+//     return (dispatch) => {
+//         return setAttendance(studentId,attendance);
+//     }
+// }
