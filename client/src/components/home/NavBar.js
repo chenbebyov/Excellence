@@ -55,16 +55,17 @@ const navBarItems = new Map([
 const NavBar = (props) => {
 
     const [current, setCurrent] = useState('/');
-    const { user, loggedIn } = useSelector(state => state.userReducer);
+    const { user } = useSelector(state => state.userReducer);
     const dispatch = useDispatch();
     const [showSignIn, setShowSignIn] = useState(false);
     const [userRole, setUserRole] = useState(user && user.role ? user.role : 'guest');
 
     useEffect(() => {
-        if(loggedIn){
+        debugger
+        if(user != null ){
             hideSignIn();
         }
-    }, [loggedIn]);
+    }, [user]);
 
     const handleClick = e => {
         setCurrent(e.key);
@@ -82,13 +83,13 @@ const NavBar = (props) => {
         setShowSignIn(false);
     }
     const getMessagesCount = () => {
-        return 1;
+        return user && user.message ? user.messages.filter(message => !message.isRead).length : 0 ;
     }
 
 
     return (
         <>
-        <Menu style={{lineHeight: '5vh'}}  onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
             <MenuItem route="/" key='/' icon={<HomeOutlined />}>בית</MenuItem>
             <MenuItem route="/layers" key='/layers' roles={['admin','secretary','teacher']} icon={<ApartmentOutlined />}>קבוצות</MenuItem>
             <SubMenu key="lessons and tasks" roles={['admin','secretary','teacher']} icon={<ReadOutlined />} title="שיעורים ומשימות">
@@ -115,14 +116,14 @@ const NavBar = (props) => {
                     </Badge> 
                 }>
                 <Menu.ItemGroup>
-                    <Menu.Item key="messeges" icon={<WechatOutlined />}>הודעות</Menu.Item>
+                    <Menu.Item key="messeges" icon={<WechatOutlined />}><Link to="/messages">הודעות</Link></Menu.Item>
                     <Menu.Item key="profile" icon={<IdcardOutlined />}>פרופיל</Menu.Item>
                     <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={handleLogout}>יציאה</Menu.Item>
                 </Menu.ItemGroup>
             </SubMenu>
         }
 
-        {!user &&
+        {user == null &&
             <Menu.Item
                     style={{float: 'left'}} 
                     key="signIn" 

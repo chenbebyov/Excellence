@@ -20,6 +20,13 @@ const tailLayout = {
     },
 };
 
+const hierarchyNames = new Map([
+    ['layer', 'שכבה'],
+    ['grade', 'כתה'],
+    ['level', 'רמת למידה'],
+    ['group', 'קבוצה'],
+])
+
 const CreateHierarchy = (props) => {
 
     const {hideCreateHierarchy , type, layerId, gradeId , levelId} = props;
@@ -105,9 +112,9 @@ const CreateHierarchy = (props) => {
 
     return (
     <>
-        <Form {...layout} form={form} name={`Add ${type}`} initialValues={{ remember: true }} onFinish={save} >
+        <Form {...layout} form={form} name={`הוסף ${hierarchyNames.get(type)}`} initialValues={{ remember: true }} onFinish={save} >
             <Form.Item
-                label={`${type} Name`}
+                label={` שם ${hierarchyNames.get(type)}`}
                 name="name"
                 rules={[
                     {

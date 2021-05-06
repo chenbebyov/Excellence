@@ -56,7 +56,7 @@ getAccessToken = (userId) => {
 
 login = async (req, res) => {
 
-    await Student.findOne({ email: req.params.email, password : req.params.password }).lean().exec((err, student) => {
+    await Student.findOne({ email: req.params.email, password : req.params.password }).populate('messages.publisher').lean().exec((err, student) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -69,7 +69,7 @@ login = async (req, res) => {
             });
         }
 
-        Staff.findOne({"email": req.params.email, "password" : req.params.password }).lean().exec((err, staff) => {
+        Staff.findOne({"email": req.params.email, "password" : req.params.password }).populate('messages.publisher').lean().exec((err, staff) => {
             if (err) {
                 return res.status(400).json({ success: false, error: err })
             }

@@ -10,11 +10,11 @@ import '../src/css/App.less';
 
 ReactDOM.render(
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      {/* <PersistGate loading={null} persistor={persistor}> */}
         <ConfigProvider direction="rtl">
           <App />
         </ConfigProvider>
-      </PersistGate>
+      {/* </PersistGate> */}
     </Provider>,
   document.getElementById('root')
 );

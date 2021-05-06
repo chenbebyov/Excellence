@@ -18,6 +18,7 @@ import AddMessage from './components/messages/AddMessage';
 import ListMassage from './components/messages/ListMassage';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import EditorialBoard from './components/lessonsAndTasks/EditorialBoard';
+import LessonView from './components/lessonsAndTasks/LessonView';
 
 
 const { Header, Content, Footer } = Layout;
@@ -90,7 +91,7 @@ function App (props) {
                         <AuthorizedRoute path="/message/add" requires={['teacher','admin', 'student', 'secritary']}>
                             {({ isAuthorized }) => (isAuthorized ? <AddMessage/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        <AuthorizedRoute path="/message" requires={['teacher','admin', 'student', 'secritary']}>
+                        <AuthorizedRoute path="/messages" requires={['teacher','admin', 'student', 'secritary']}>
                             {({ isAuthorized }) => (isAuthorized ? <ListMassage/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <Route path="/" component={Home}>

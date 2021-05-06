@@ -39,6 +39,8 @@ const steps = [
 const CreateLesson = () => {
 
     const dispatch = useDispatch();
+    const [form] = Form.useForm();
+
     const {layers} = useSelector(store => store.layerReducer);
     const [currentStep, setCurrentStep] = useState(0);
     const [lesson, setLesson] = useState({
@@ -53,7 +55,11 @@ const CreateLesson = () => {
     };
 
     const next = () => {
-        setCurrentStep(currentStep + 1);
+        form.submit();
+        debugger
+        if(form.isFieldValidating()){
+            setCurrentStep(currentStep + 1);
+        }
     };
     
     const prev = () => {
@@ -102,9 +108,10 @@ const CreateLesson = () => {
 
 
     const LessonDeltailsForm = (
-        <Form
-            onFinish={save} 
+        <Form 
+            id='lessonDatailsForm'
             onFinishFailed={onFinishFailed}
+            form={form}
         >
             <label>נושא השיעור:</label>
             <Form.Item
@@ -172,7 +179,7 @@ const CreateLesson = () => {
                             </Button>
                         )}
                         {currentStep < 2 && (
-                            <Button type="primary" onClick={() => next()}>
+                            <Button onClick={() => next()}>
                                 הבא
                             </Button>
                         )}

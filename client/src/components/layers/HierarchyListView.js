@@ -80,10 +80,10 @@ const HierarchyListView = (props) => {
         
             <div className="hierarchy-header">
                 <Breadcrumb>
-                    {['layer', 'grade', 'level', 'group' ].includes(type) && <Breadcrumb.Item>Layers</Breadcrumb.Item>}
-                    {['grade', 'level', 'group' ].includes(type) && <Breadcrumb.Item>Grades</Breadcrumb.Item>}
-                    {['level', 'group' ].includes(type) && <Breadcrumb.Item>Levels</Breadcrumb.Item>}
-                    {['group' ].includes(type) && <Breadcrumb.Item>Groups</Breadcrumb.Item>}
+                    {['layer', 'grade', 'level', 'group' ].includes(type) && <Breadcrumb.Item>שכבות</Breadcrumb.Item>}
+                    {['grade', 'level', 'group' ].includes(type) && <Breadcrumb.Item>כיתות</Breadcrumb.Item>}
+                    {['level', 'group' ].includes(type) && <Breadcrumb.Item>רמות למידה</Breadcrumb.Item>}
+                    {['group' ].includes(type) && <Breadcrumb.Item>קבוצות</Breadcrumb.Item>}
                 </Breadcrumb>
 
                 <Button htmlType="submit" type="primary" onClick={handleAddNewLayer}>{`add new ${type}`}</Button>

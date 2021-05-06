@@ -7,6 +7,7 @@ import BookList from './BookList';
 import CreateBorrow from './CreateBorrow';
 import CreateNewBook from './CreateNewBook';
 import BorrowBookList from './BorrowBookList';
+import BookStatistic from './BookStatistic';
 import { Route, Link} from "react-router-dom";
 
 const { SubMenu } = Menu;
@@ -51,7 +52,7 @@ const Library = () => {
                             </Menu.Item>
                         </SubMenu>
                         <Menu.Item key="statistics" icon={<BarChartOutlined />}>
-                            <label>סטטיסטיקה</label>
+                            <Link to='/library/statistics'>סטטיסטיקה</Link>
                         </Menu.Item>
                     </Menu>
                 </Sider>
@@ -62,6 +63,7 @@ const Library = () => {
                         <Route path='/library/books/add' component={CreateNewBook} exact />
                         <Route path='/library/borrows' component={BorrowBookList} exact/>
                         <Route path='/library/borrows/add' component={CreateBorrow} exact/>
+                        <Route path='/library/statistics' component={BookStatistic} exact/>
                     </Content>
                 </Layout>
             </Layout>

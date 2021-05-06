@@ -1,8 +1,7 @@
 import {SET_USER, LOGOUT} from '../actions/user.actions'
 
 const InitialSatate = {
-    user: {},
-    loggedIn : false
+    user: null,
 }
 
 export default function reducer(state = InitialSatate, action){
@@ -10,13 +9,11 @@ export default function reducer(state = InitialSatate, action){
         case SET_USER:
             return {...state, 
                 user : action.payload,
-                loggedIn : true
             };
         case LOGOUT: 
             return {
                 ...state,
                 user : null,
-                loggedIn : false
             }
     
         default:

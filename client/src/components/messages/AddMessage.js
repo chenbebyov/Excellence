@@ -25,7 +25,7 @@ const AddMessage = (props) => {
         let newMessage = {
             subject,
             messageContent,
-            publisher: user._id
+            publisher: user.userId
         }
 
         createMessage(newMessage, toUsers).then(response => {

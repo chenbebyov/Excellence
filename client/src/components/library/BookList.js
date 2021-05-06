@@ -40,7 +40,7 @@ const BookList = () => {
             dispatch(getBooks())
             .catch(error => {
                 console.log(error);
-                message.error('Failed to get books from server')
+                message.error('טעינת הספרים נכשלה')
             });
         }
         else {

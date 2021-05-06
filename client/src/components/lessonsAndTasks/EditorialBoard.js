@@ -20,10 +20,10 @@ const EditorialBoard = (props) => {
             .catch(error=> message.error('שגיאה בהצגת השיעורים'));
     }, []);
 
-    const navigate = (lessons) => {
+    const navigate = (lesson) => {
         history.push({
-            pathname: `/lessons/${lessons._id}`,
-            state: { lessons },
+            pathname: `/lesson/${lesson._id}`,
+            state: { lesson },
         });
     }
 
