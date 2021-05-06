@@ -5,6 +5,7 @@ const config = require("../config/auth.config");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 var generator = require('generate-password');
+const ObjectId = require('mongoose/lib/types/objectid')
 
 
 setUserRole = (req, res) => {
@@ -116,10 +117,44 @@ getStaff = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
+setAttendence = async (req, res) => {
+
+    try {
+        const { body } = req;
+        
+        if(!body){
+            return res.status(400).json({
+                success: false,
+                error: 'Failed to set attendence, details are empty.',
+            })
+        }
+        
+        const {userAttendance} = body;
+
+        let bulkArr = [];
+
+        for (const item of userAttendance) {
+            bulkArr.push({
+                updateOne: {
+                    "filter": { "_id": new ObjectId(item.studentId) },
+                    "update": { $push: { attendance: {present : item.present} } }
+                }
+            })
+        }
+
+        await Student.bulkWrite(bulkArr);
+        return res.status(200).json({ success: true })
+    }
+    catch(error) {
+        return res.status(400).json({ success: false, error: 'user id not found' });
+    }
+} 
+
 
 
 module.exports = {
     getStudent,
     getStaff,
-    setUserRole
+    setUserRole,
+    setAttendence
 }
