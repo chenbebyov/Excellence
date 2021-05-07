@@ -1,4 +1,4 @@
-import {addUser, getUser, setRole} from '../../services/user.service';
+import {addUser, getUser, setRole, setAttendance} from '../../services/user.service';
 export const SET_USER = 'SET USER'
 export const LOGOUT = 'LOGOUT'
 
@@ -40,8 +40,8 @@ export const enterUser = (email, password) => (dispatch) => {
     }).catch(error => error)
 }
 
-// export const updateAttendance=(studentId,attendance)=>{
-//     return (dispatch) => {
-//         return setAttendance(studentId,attendance);
-//     }
-// }
+export const updateAttendance=(studentId,attendance)=>{
+    return (dispatch) => {
+        return setAttendance(studentId,attendance);
+    }
+}

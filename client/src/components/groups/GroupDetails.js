@@ -3,7 +3,7 @@ import ViewUsers from '../../components/users/ViewUsers';
 import {Tabs, Drawer ,Button, Card,Radio } from 'antd';
 import LessonsInGroup from './LessonsInGroup';
 import AddLessonsToGroup from './AddLessonToGroup';
-// import Attendance from '../users/Attendance';
+import Attendance from '../users/Attendance';
 import {updateAttendance} from '../../redux/actions/user.actions';
 
 
@@ -68,12 +68,13 @@ const GroupDetails = (props) => {
                 <TabPane tab="נוכחות" key="3">
                     {/* <Radio.Group onChange={onChange}>
                        <Radio> */}
-                       <ViewUsers 
+                       <Attendance studentsInGroup={studentsInGroup}/>
+                       {/* <ViewUsers 
                         title="נוכחות:" 
                         userList={studentsInGroup} 
                         showSetRole={false}
                         showRemove={false}
-                       /> 
+                       />  */}
                        {/* </Radio>
                     </Radio.Group> */}
                 </TabPane>

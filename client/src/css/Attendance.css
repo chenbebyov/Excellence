@@ -1,0 +1,4 @@
+.ant-checkbox-disabled + span {
+    color: rgb(0 0 0 / 96%);
+    cursor: not-allowed;
+}
