@@ -3,15 +3,32 @@ import {Card,List, Avatar} from 'antd';
 import {useSelector} from 'react-redux';
 import { MailOutlined } from '@ant-design/icons';
 import Moment from 'moment';
+import '../../css/Home.css';
+// import image3 from '../../assests/images/image3';
 
+// const slideImages = [
+//     image3
+// ];
 
+// const Slideshow = () => {
+//     return (
+//       <div className="slide-container">
+//         <Slide>
+//           <div className="each-slide">
+//             <div className="slide-show-image" style={{'backgroundImage': `url(${slideImages[0]})`}}>
+//             </div>
+//           </div>
+//         </Slide>
+//       </div>
+//     )
+// }
 const ListMassage = () => {
 
     const { user } = useSelector(state => state.userReducer);
     
     return (
         <>
-            {/* <Card type="inner"> */}
+        {/* <Slideshow/> */}
                 <List
                     style={{margin: '25px'}}
                     dataSource={user.messages}
@@ -32,23 +49,10 @@ const ListMassage = () => {
                                     description={item.messageContent}
                                     style={{width:'100%'}}
                                     />
-                                
-                                    {/* <label>הודעה מאת: {`${item.publisher.firstName} ${item.publisher.lastName}`}</label>
-                                    <h3>{item.subject} {item.dateMessage}</h3>
-                                    <div>{item.messageContent}</div>
-                                    <div style={{fontSize:'small'}}>{item.publisher}</div> */}
-{/*                            
-                           <List.Item.Meta 
-                                title={<div>{item.subject} {item.dateMessage}</div>}
-                                footer={item.publisher}
-                                dataSource={item.messageContent}
-                                style={ item.isRead ? {background:'gray'} : {background:'white'}}
-                                /> */}
                         </List.Item>
                     )}
                 >
                 </List>
-            {/* </Card> */}
         </>
     )
 }

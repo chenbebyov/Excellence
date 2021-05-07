@@ -7,17 +7,13 @@ import { useSelector } from 'react-redux';
 import { PermissionsProvider, AuthorizedRoute, AuthorizedSection } from '@tshio/react-router-permissions';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import UserDetails from './components/users/UserDetails';
-import CreateLesson from './components/lessonsAndTasks/CreateLesson';
-import NewPassword from './components/users/NewPassword';
 import AffiliationToGroup from './components/groups/AffiliationToGroup';
 import CalendarView from './components/general/CalendarView';
 import NavBar from './components/home/NavBar';
-import BookList from './components/library/BookList';
 import AddMessage from './components/messages/AddMessage';
 import ListMassage from './components/messages/ListMassage';
 import { Layout, Menu, Breadcrumb } from 'antd';
-import EditorialBoard from './components/lessonsAndTasks/EditorialBoard';
-import LessonView from './components/lessonsAndTasks/LessonView';
+import LessonAndTasks from './components/lessonsAndTasks/LessonAndTasks';
 
 
 const { Header, Content, Footer } = Layout;
@@ -45,15 +41,11 @@ function App (props) {
             >
                 <Router>
                     <NavBar/>
-                
+                <div style={{padding:'15px'}}>
                     <Switch>
-                        <AuthorizedRoute path="/lessons/add"  requires={['teacher','admin']}>
-                            {({ isAuthorized }) => (isAuthorized ? <CreateLesson /> : <Redirect to="/" />)}
-                        </AuthorizedRoute>
                         <AuthorizedRoute path="/lessons"  requires={['admin','secretary','teacher']}>
-                            {({ isAuthorized }) => (isAuthorized ? <EditorialBoard /> : <Redirect to="/" />)}
+                            {({ isAuthorized }) => (isAuthorized ? <LessonAndTasks/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                      
                         <AuthorizedRoute path="/library" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <Library />: <Redirect to="/" />)}
                         </AuthorizedRoute>
@@ -94,6 +86,7 @@ function App (props) {
                             <Home />
                         </Route>
                     </Switch>
+                    </div>
                 </Router>
             </PermissionsProvider>
 

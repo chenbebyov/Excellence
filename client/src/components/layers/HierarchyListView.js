@@ -90,6 +90,7 @@ const HierarchyListView = (props) => {
 
     const handleAddNewLayer = () => {
         setshowAddNewHierarchy(true);
+        showModal();
     }
 
     const hideCreateHierarchy = () => {
@@ -98,7 +99,6 @@ const HierarchyListView = (props) => {
 
     return (
         <>      
-        
             <div className="hierarchy-header">
                 <Breadcrumb>
                     {['layer', 'grade', 'level', 'group' ].includes(type) && <Breadcrumb.Item>שכבות</Breadcrumb.Item>}
@@ -109,16 +109,26 @@ const HierarchyListView = (props) => {
 
                 <Button htmlType="submit" type="primary" onClick={handleAddNewLayer}>{`הוסף ${hierarchyNames.get(type)} חדשה`}</Button>
             </div>
-              <Modal title={`הוסף ${hierarchyNames.get(type)} חדשה`} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-               {showAddNewHierarchy && 
+            {showAddNewHierarchy && 
+              <Modal title={`הוסף ${hierarchyNames.get(type)} חדשה`}
+               visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}
+               footer={[
+                <Button form="createHierarchy" key="submit" htmlType="submit" type="primary">
+                   הוסף
+                </Button>
+                ]}
+                >
+               
                 <CreateHierarchy 
                     hideCreateHierarchy={hideCreateHierarchy} 
                     type={type} 
                     layerId={getHierarchyItemId()}
                     gradeId={getHierarchyItemId()}
-                    levelId={getHierarchyItemId()}
-                />}
+                    levelId={getHierarchyItemId()} 
+                />
                 </Modal>
+                }
+               
                <div>
                 <div className="site-card-wrapper">
                     <Row gutter={16}>
@@ -132,7 +142,6 @@ const HierarchyListView = (props) => {
                     </Row>
                 </div>
                </div>
-      
         </>
     )
 }

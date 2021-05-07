@@ -111,7 +111,7 @@ const CreateHierarchy = (props) => {
 
     return (
     <>
-        <Form {...layout} form={form} name={`הוסף ${hierarchyNames.get(type)}`} initialValues={{ remember: true }} onFinish={save} >
+        <Form id="createHierarchy" {...layout} form={form} name={`הוסף ${hierarchyNames.get(type)}`} initialValues={{ remember: true }} onFinish={save} >
             <Form.Item
                 label={` שם ${hierarchyNames.get(type)}`}
                 name="name"
@@ -125,11 +125,11 @@ const CreateHierarchy = (props) => {
                 <Input />
             </Form.Item>
 
-            <Form.Item {...tailLayout}>
+            {/* <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit"  loading={loading}>
                     הוסף
                 </Button>
-            </Form.Item>
+            </Form.Item> */}
         </Form>
     </>
 )

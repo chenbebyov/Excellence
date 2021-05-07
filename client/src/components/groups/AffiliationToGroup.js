@@ -161,7 +161,8 @@ const AffiliationToGroup = (props) => {
         justifyContent: "space-between"
     }
     const style2 = {
-        width: "-webkit-fill-available"
+        width: "-webkit-fill-available",
+        direction:"rtl"
     }
 
     return (
@@ -179,6 +180,7 @@ const AffiliationToGroup = (props) => {
                             <Form.Item
                                 label="שם הקבוצה"
                                 name="group name"
+                                style={{direction:'rtl'}}
                                 onChange={(e) => {setGroupName(e.target.value)}}
                                 rules={[
                                     {
@@ -189,7 +191,7 @@ const AffiliationToGroup = (props) => {
                             >
                                 <Input defaultValue={groupName}/>
                             </Form.Item>
-                            <Form.Item label="שם המורה" name="teacher name">     
+                            <Form.Item label="שם המורה" name="teacher name"   style={{direction:'rtl'}}>     
                                 <AutoComplete
                                     style={{
                                         width: 200,

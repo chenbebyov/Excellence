@@ -15,25 +15,6 @@ const GroupDetails = (props) => {
 
     const {group, teacherName, studentsInGroup} = props;
     const [viewDrawer, setViewDrawer] = useState(false);
-    // const [attendance, setAttendance] = useState();
-    // const [loading, setLoading] = useState(false);
-    // const dispatch = useDispatch();
-
-    // const onChange = e => {
-    //     console.log('radio checked', e.target.value);
-    //     setAttendance(e.target.value);
-    // };
-
-    // const save=()=>{
-    //     setLoading(true);
-    //     dispatch(updateAttendance(studentId,attendance)).then(response => {
-    //       message.success('attendance was set successfully');
-    //       setLoading(false);
-    //     }).catch(error => {
-    //       setLoading(false);
-    //       message.error('set attendance failed');
-    //     });  
-    // }
 
     return (
         <>
@@ -66,17 +47,7 @@ const GroupDetails = (props) => {
                     </>
                 </TabPane>
                 <TabPane tab="נוכחות" key="3">
-                    {/* <Radio.Group onChange={onChange}>
-                       <Radio> */}
                        <Attendance studentsInGroup={studentsInGroup}/>
-                       {/* <ViewUsers 
-                        title="נוכחות:" 
-                        userList={studentsInGroup} 
-                        showSetRole={false}
-                        showRemove={false}
-                       />  */}
-                       {/* </Radio>
-                    </Radio.Group> */}
                 </TabPane>
             </Tabs>
         </>

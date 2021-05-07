@@ -49,13 +49,6 @@ const AddLessonsToGroup = (props) => {
         setStartDate(date);
     }
 
-    // lessonId: { type: ObjectId, required: true },
-    // remarks: { type: String, required: false },
-    // // date: { type: Date, required: true },
-    // comments: { type: Date, required: true },
-    // toAnHour: { type: Date, required: true },
-    // comments: { type: String, required: false },
-
     const filterAutoComplete = (inputValue, option) => {
         return option.lessonSubject.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1  
     }
@@ -80,7 +73,7 @@ const AddLessonsToGroup = (props) => {
     }
 
     const handleCancel = () => {
-        console.log("cancel");
+        setViewDrawer(false);
     }
 
     const handleSelectLesson = (value, lesson) => {

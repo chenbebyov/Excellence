@@ -45,8 +45,7 @@ const navBarItems = new Map([
     ['/library','ספריה'],
     ['/users','משתמשים'],
     ['/users/:id','פרטי משתמש'],
-    ['/lessons/add','הוספת שיעור חדש'],
-    ['/lessons','מערכי שיעורים'],
+    ['/lessons','שיעורים ומשימות'],
     ['/layers','שכבות'],
     ['/calendar','לוח שנה']
 ]);
@@ -91,16 +90,7 @@ const NavBar = (props) => {
         <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
             <MenuItem route="/" key='/' icon={<HomeOutlined />}>בית</MenuItem>
             <MenuItem route="/layers" key='/layers' roles={['admin','secretary','teacher']} icon={<ApartmentOutlined />}>קבוצות</MenuItem>
-            <SubMenu key="lessons and tasks" roles={['admin','secretary','teacher']} icon={<ReadOutlined />} title="שיעורים ומשימות">
-            <Menu.ItemGroup>
-                <Menu.Item key="/lessons/add" role={['admin']}>
-                    <Link to="/lessons/add">הוספת שיעור חדש</Link>
-                </Menu.Item>
-                <Menu.Item key="/lessons" role={['admin','secretary','teacher']}>
-                       <Link to="/lessons">מערכי שיעורים</Link> 
-                </Menu.Item>
-            </Menu.ItemGroup>
-            </SubMenu>
+            <MenuItem route="/lessons" key='/lessons and tasks' roles={['admin','secretary','teacher']} icon={<ReadOutlined />}>שיעורים ומשימות</MenuItem>
             <MenuItem route="/calendar" key='/calendar' roles={['admin','secretary','teacher', 'student']} icon={<CalendarOutlined />}>לוח שנה</MenuItem>
             <MenuItem route="/library" key='/library' roles={['admin','teacher']} icon={<CalendarOutlined />}>ספריה</MenuItem>
             <MenuItem route="/users" key='/users' roles={['admin','secretary']} icon={<UsergroupAddOutlined />}>ניהול משתמשים</MenuItem>
