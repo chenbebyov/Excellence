@@ -15,13 +15,6 @@ const ViewUsers = (props) => {
         return stringToColor(userName);
     }
 
-    const navigate = (user) => {
-        history.push({
-            pathname: `/users/${user._id}`,
-            state: { user },
-        });
-    }
-
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const showModal = (e, userId) => {
@@ -46,7 +39,7 @@ const ViewUsers = (props) => {
                     dataSource={userList}
                     renderItem={item => (
                         // <List.Item key={item._id} >
-                        <List.Item key={item._id} onClick={()=> navigate(item)}>
+                        <List.Item key={item._id} >
                             <List.Item.Meta 
                                 avatar={
                                     <Avatar style={{ backgroundColor: getRandomColor(item.firstName),textTransform: 'uppercase', verticalAlign: 'middle' }} size="large">

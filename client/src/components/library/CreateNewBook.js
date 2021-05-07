@@ -6,6 +6,12 @@ import { Drawer, Form, Button, Input, Select ,message} from 'antd';
 
 const { Option } = Select;
 
+const statusName = new Map([
+  ["not borrowed", "לא מושאל"],
+  ["borrowed", "מושאל"],
+  ["in binding", "בתיקון"],
+])
+
 const CreateNewBook = (props) => {
 
     const [loading, setLoading] = useState(false)
@@ -13,6 +19,7 @@ const CreateNewBook = (props) => {
     const dispatch = useDispatch();
 
     const save = (book) => {
+      book.status=statusName.get(book.status);
       setLoading(true)
       dispatch(setNewBook(book)).then(response => {
         setLoading(false);
@@ -25,26 +32,6 @@ const CreateNewBook = (props) => {
   
     return (
         <>
-        {/* <Drawer
-          title="Create a new book"
-          onClose={onClose}
-          visible={true}
-          bodyStyle={{ paddingBottom: 80 }}
-          footer={
-            <div
-              style={{
-                textAlign: 'right',
-              }}
-            >
-              <Button onClick={onClose} style={{ marginRight: 8 }}>
-                Cancel
-              </Button>
-              <Button loading={loading}  type="primary" htmlType="submit" form="newBookForm" key="submit">
-                Save
-              </Button>
-            </div>
-          }
-        > */}
           <Form id="newBookForm" layout="vertical" hideRequiredMark onFinish={save}>
 
                 <Form.Item
@@ -77,9 +64,9 @@ const CreateNewBook = (props) => {
                   rules={[{ required: true, message: 'Please select status' }]}
                 >
                   <Select placeholder="Please select status book">
-                    <Option value="not borrowed">לא מושאל</Option>
-                    <Option value="borrowed">מושאל</Option>
-                    <Option value="in binding">בתיקון</Option>
+                    <Option value="לא מושאל"></Option>
+                    <Option value="מושאל"></Option>
+                    <Option value="בתיקון"></Option>
                   </Select>
                 </Form.Item>
                 <Form.Item>

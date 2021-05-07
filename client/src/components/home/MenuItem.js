@@ -29,13 +29,4 @@ const MenuItem = ({key, route, icon, children, roles, ...props}) => {
 }
 
 export default MenuItem;
-// const MenuItem = (props) => {
-//     const {roles, children} = props;
-//     const { user } = useSelector(state => state.userReducer);
-//     const [userRole, setUserRole] = useState(user && user.role ? user.role : 'guest');
 
-//     debugger;
-//     return (!roles || roles.includes(userRole)) ? children : <></>;
-// }
-
-// export default MenuItem;

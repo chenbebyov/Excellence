@@ -37,7 +37,6 @@ const AffiliationToGroup = (props) => {
     }, [group]);
 
     useEffect(() => {
-        debugger
         for(let layer of layers) {
             for(let grade of layer.grades) {
                 for(let level of grade.levels) {
@@ -67,10 +66,10 @@ const AffiliationToGroup = (props) => {
                 setTeacherList(result);
             }
             else {
-                message.error('Faild to load teacher list')
+                message.error('טעינת רשימת המורים נכשלה')
             }
             console.log(response);
-        }).catch(error => message.error('Faild to load teacher list'));
+        }).catch(error => message.error('טעינת רשימת המורים נכשלה'));
     }
     const getPicklistItem = (student) => {
         let value = `${student.firstName} ${student.lastName}`;
@@ -84,7 +83,6 @@ const AffiliationToGroup = (props) => {
     const initStudentList = () => {
         getStudents().then(resopnse => resopnse.data).then(response => {
             if (response.success) {
-                debugger
                 let result = response.data.map(student => 
                     ({...student,
                         key:student._id, 
@@ -100,10 +98,10 @@ const AffiliationToGroup = (props) => {
             }
             
             else {
-                message.error('Faild to load student list')
+                message.error('טעינת רשימת התלמידים נכשלה')
             }
             console.log(response);
-        }).catch(error => message.error('Faild to load student list'));
+        }).catch(error => message.error('טעינת רשימת התלמידים נכשלה'));
     }
 
     const handleSelectTeacher = (value, teacher) => {
@@ -139,13 +137,12 @@ const AffiliationToGroup = (props) => {
         dispatch(updateGroup(data)).then((response) => {
             setLoading(false);
             if(response.success){
-                debugger
                 setGroup(response.group);
-                message.success(`group updated sucessfuly`);
+                message.success(`השינויים התעדכנו בהצלחה!`);
             }
             setViewMode('read');
         }).catch(error => {
-            message.error(`Filed to update group`);
+            message.error(`נפילה בעדכון הקבוצה`);
         });  
     }
     const removeStudent = (studentId) => {
@@ -186,7 +183,7 @@ const AffiliationToGroup = (props) => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: `Please input group name!`
+                                        message: `הכנס שם קבוצה!`
                                     },
                                 ]}
                             >

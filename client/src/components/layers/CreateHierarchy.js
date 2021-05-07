@@ -98,15 +98,14 @@ const CreateHierarchy = (props) => {
             setLoading(false);
             if(response.success){
                 form.resetFields()
-                message.success(`${type} created sucessfuly`);
+                message.success(`ה${hierarchyNames.get(type)} נוצרה בהצלחה!`);
                 hideCreateHierarchy();
             }
             else {
                 message.error(response.error.response.data.error);
             }
         }).catch(error => {
-            debugger;
-            message.error(`Filed to create ${type}, error message: ${error}`);
+            message.error(`נפל ביצירת ה${hierarchyNames.get(type)}, הודעת שגיאה: ${error}`);
         });  
     }
 
@@ -119,7 +118,7 @@ const CreateHierarchy = (props) => {
                 rules={[
                     {
                         required: true,
-                        message: `Please input ${type} name !`
+                        message: `הכנס שם ${hierarchyNames.get(type)}!`
                     },
                 ]}
             >

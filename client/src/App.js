@@ -9,7 +9,6 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-ro
 import UserDetails from './components/users/UserDetails';
 import CreateLesson from './components/lessonsAndTasks/CreateLesson';
 import NewPassword from './components/users/NewPassword';
-import ViewGroupsDetails from './components/layers/ViewGroupsDetails';
 import AffiliationToGroup from './components/groups/AffiliationToGroup';
 import CalendarView from './components/general/CalendarView';
 import NavBar from './components/home/NavBar';
@@ -76,9 +75,6 @@ function App (props) {
                         <AuthorizedRoute path="/group" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <HierarchyListView type="group" nextHierarchy="viewGroupDetails"/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        {/* <AuthorizedRoute path="/viewGroupDetails" requires={['teacher','admin']}>
-                            {({ isAuthorized }) => (isAuthorized ? <ViewGroupsDetails/> : <Redirect to="/" />)}
-                        </AuthorizedRoute> */}
                         <AuthorizedRoute path="/viewGroupDetails" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <AffiliationToGroup mode="read"/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
@@ -101,7 +97,7 @@ function App (props) {
                 </Router>
             </PermissionsProvider>
 
-            <Footer style={{ textAlign: 'center' }}>Excellence ©2021</Footer>
+            {/* <Footer style={{ textAlign: 'center' }}>Excellence ©2021</Footer> */}
 
             {/* </Layout> */}
         </>

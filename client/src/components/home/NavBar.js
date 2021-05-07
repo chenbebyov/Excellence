@@ -61,7 +61,6 @@ const NavBar = (props) => {
     const [userRole, setUserRole] = useState(user && user.role ? user.role : 'guest');
 
     useEffect(() => {
-        debugger
         if(user != null ){
             hideSignIn();
         }
