@@ -56,10 +56,7 @@ const CreateLesson = () => {
 
     const next = () => {
         form.submit();
-        debugger
-        if(form.isFieldValidating()){
-            setCurrentStep(currentStep + 1);
-        }
+        setCurrentStep(currentStep + 1);
     };
     
     const prev = () => {
@@ -88,11 +85,13 @@ const CreateLesson = () => {
     }
 
     const addFileToLesson = (linkToFile, fileName) => {
-        setLesson({...lesson, filesToLesson: [...lesson.filesToLesson, {linkToFile,fileName}]})
+        lesson.filesToLesson.push({linkToFile,fileName});
+        setLesson({...lesson})
     }
 
     const addFileToTask = (linkToTask, taskName) => {
-        setLesson({...lesson, taskToLesson: [...lesson.taskToLesson, {linkToTask,taskName}]})
+        lesson.taskToLesson.push({linkToTask,taskName});
+        setLesson({...lesson})
     }
 
     const save = () => {
@@ -157,24 +156,33 @@ const CreateLesson = () => {
         <br/>
             <Row>
                 <Col span={12} offset={6}>
+                    <br/>
+                    <br/>
                     <Steps current={currentStep}>
                         <Step title="פרטי השיעור" icon={<FormOutlined />}/>
                         <Step title="קבצי השיעור" icon={<DiffOutlined />}/>
                         <Step title="קבצי שיעורי בית" icon={<SnippetsOutlined />}/>
                     </Steps>
 
-                    {currentStep === 0 && LessonDeltailsForm}
-                    {currentStep === 1 && uploadLessonFiles}
-                    {currentStep === 2 && uploadTaskFiles}
+                    <br/>
+                    <br/>
+
+                    <div style={{height:'70%'}}>
+                        {currentStep === 0 && LessonDeltailsForm}
+                        {currentStep === 1 && uploadLessonFiles}
+                        {currentStep === 2 && uploadTaskFiles}
+                    </div>
+
+                    <br/>
                     
-                    <div className="steps-action">
+                    <div className="steps-action" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
                         {currentStep > 0 && (
                             <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
                                 הקודם
                             </Button>
                         )}
                         {currentStep === 2 && (
-                            <Button type="primary" onClick={save}>
+                            <Button onClick={save} type='primary'>
                                 שמירה
                             </Button>
                         )}

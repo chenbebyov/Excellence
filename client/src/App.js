@@ -14,6 +14,7 @@ import AddMessage from './components/messages/AddMessage';
 import ListMassage from './components/messages/ListMassage';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import LessonAndTasks from './components/lessonsAndTasks/LessonAndTasks';
+import LessonView from './components/lessonsAndTasks/LessonView';
 
 
 const { Header, Content, Footer } = Layout;
@@ -51,6 +52,9 @@ function App (props) {
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/users/:id" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <UserDetails /> : <Redirect to="/" />)}
+                        </AuthorizedRoute>
+                        <AuthorizedRoute path="/lesson/:id" requires={['teacher','admin']}>
+                            {({ isAuthorized }) => (isAuthorized ? <LessonView /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/users" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <ManageUsers/>: <Redirect to="/" />)}

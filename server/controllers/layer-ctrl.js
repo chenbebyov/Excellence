@@ -6,45 +6,51 @@ var bcrypt = require("bcryptjs");
 const { updateOne } = require('../models/layer-model');
 
 
-createLayer = (req, res) => {
-    const body = req.body
+createLayer = async (req, res) => {
 
-    if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'Failed to create user, details are empty.',
-        })
-    }
+    try {
 
-    const layer = new Layer(body);
+        const body = req.body
 
-    if (!layer) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    Layer.findOne({name : body.name }).then(layer => {
-        if (layer) {
+        if (!body) {
             return res.status(400).json({
                 success: false,
-                error: 'Layer name already exist.',
+                error: 'Failed to create user, details are empty.',
             })
         }
-        
-    }).catch(err => res.status(400).json({ success: false, error: err }));
 
-    layer.save().then(() => {
-            return res.status(200).json({
-                success: true,
-                layer: layer,
-                message: 'layer created!',
-            })
-        })
-        .catch(error => {
+        const layer = new Layer(body);
+
+        if (!layer) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        let exsistLayer = await Layer.findOne({name : body.name });
+        if(exsistLayer) {
             return res.status(400).json({
-                error,
-                message: 'layer not created!',
+                    success: false,
+                    error: 'Layer name already exist.',
+            });
+        }
+
+        layer.save().then(() => {
+                return res.status(200).json({
+                    success: true,
+                    layer: layer,
+                    message: 'layer created!',
+                })
             })
-    })
+            .catch(error => {
+                return res.status(400).json({
+                    error,
+                    message: 'layer not created!',
+                })
+        })
+
+    }
+    catch(err) {
+        res.status(400).json({ success: false, error: err })
+    }
 }
 
 createGrade = (req, res) => {

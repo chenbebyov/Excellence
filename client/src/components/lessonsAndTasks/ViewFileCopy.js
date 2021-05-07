@@ -14,7 +14,7 @@ const ViewFileCopy  = (props) => {
 
     useEffect(() => {
         debugger
-        if(componentRef.current.state.loading == false){
+        if(componentRef.current.state.loading === false){
             const elFromLibraryComponent = componentRef.current.querySelector('audio');
 
             if (elFromLibraryComponent) {
@@ -41,12 +41,13 @@ const ViewFileCopy  = (props) => {
     }
 
     return (
-        <div onContextMenu={preventDownloading}>
-        <FileViewer
-            ref={componentRef}
-            fileType={type}
-            filePath={file}
-            onError={onError}/>
+        <div onContextMenu={preventDownloading} >
+            <FileViewer
+                ref={componentRef}
+                fileType={type}
+                filePath={file}
+                onError={onError} 
+                style={{ width:'1000px' }}/>
         </div>
     );
 }

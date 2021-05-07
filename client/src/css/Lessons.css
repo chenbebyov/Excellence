@@ -1,14 +1,23 @@
-.parent {
-/* display: grid;
-grid-template-columns: repeat(5, 1fr);
-grid-template-rows: repeat(6, 1fr);
-grid-column-gap: 0px;
-grid-row-gap: 0px; */
+[title='Remove file'] {
+    display: none !important;
 }
 
-/* .div1 { grid-area: 1 / 2 / 2 / 5; }
-.div2 { grid-area: 2 / 2 / 3 / 5; }
-.div3 { grid-area: 3 / 2 / 4 / 5; }
-.div4 { grid-area: 4 / 2 / 5 / 5; }
-.div5 { grid-area: 5 / 2 / 6 / 5; }
-.div6 { grid-area: 6 / 3 / 7 / 4; } */
+.pg-viewer-wrapper {
+    overflow-y: scroll;
+}
+  
+.pg-viewer-wrapper #docx {
+      width: 100%;
+      height: 100%;
+    }
+    
+.pg-viewer-wrapper .document-container {
+    padding: 30px;
+    width: 700px;
+    background: white;
+    margin: auto;
+}
+
+video {
+    width: 100%;
+}
