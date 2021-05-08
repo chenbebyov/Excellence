@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ViewUsers from './ViewUsers';
 import {getAllUsers, getTeachers, getStudents} from '../../services/user.service';
 import { Tabs } from 'antd';
+import _ from 'lodash';
 
 const { TabPane } = Tabs;
 
@@ -16,15 +17,15 @@ const ManageUsers = () => {
         }, [])
     }, []);
 
-    const getStudents = () => {
+    const getStudents = (students) => {
         
     }
 
-    const getStaff = () => {
-
+    const getStaff = (teachers) => {
+      
     }
 
-    const getNewUsers = () => {
+    const getNewUsers = (users) => {
 
     }
 

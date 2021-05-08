@@ -34,7 +34,7 @@ function App (props) {
 
     return (
         <>
-          {/* <Layout className="layout"> */}
+ 
 
             <PermissionsProvider
                 permissions={user ? user.role : 'guest'}
@@ -94,9 +94,8 @@ function App (props) {
                 </Router>
             </PermissionsProvider>
 
-            {/* <Footer style={{ textAlign: 'center' }}>Excellence ©2021</Footer> */}
+            <Footer style={{ textAlign: 'center' ,top: '0px'}}>Excellence ©2021</Footer>
 
-            {/* </Layout> */}
         </>
     );
 }

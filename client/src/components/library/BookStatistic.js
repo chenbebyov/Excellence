@@ -1,12 +1,9 @@
-// import React, { useState } from 'react';
-// import ReactApexCharts from 'react-apexcharts'
 import React, { Component, useEffect, useState } from "react";
 import Chart from "react-apexcharts";
-import { useDispatch, useSelector } from 'react-redux';
 import {message} from 'antd';
 import _ from 'lodash';
 import {getAllBorrows} from '../../services/book.service';
-import {getBooks} from '../../redux/actions/book.actions'
+
 
 
 const BookStatistic = () => {

@@ -6,11 +6,11 @@ import { Drawer, Form, Button, Input, Select ,message} from 'antd';
 
 const { Option } = Select;
 
-const statusName = new Map([
-  ["not borrowed", "לא מושאל"],
-  ["borrowed", "מושאל"],
-  ["in binding", "בתיקון"],
-])
+// const statusName = new Map([
+//   ["not borrowed", "לא מושאל"],
+//   ["borrowed", "מושאל"],
+//   ["in binding", "בתיקון"],
+// ])
 
 const CreateNewBook = (props) => {
 
@@ -19,7 +19,7 @@ const CreateNewBook = (props) => {
     const dispatch = useDispatch();
 
     const save = (book) => {
-      book.status=statusName.get(book.status);
+      // book.status=statusName.get(book.status);
       setLoading(true)
       dispatch(setNewBook(book)).then(response => {
         setLoading(false);
@@ -37,38 +37,27 @@ const CreateNewBook = (props) => {
                 <Form.Item
                   name="barcode"
                   label="ברקוד"
-                  rules={[{ required: true, message: 'Please enter a barcode' }]}
+                  rules={[{ required: true, message: 'הכנס ברקוד' }]}
                 >
-                  <Input placeholder="Please enter a barcode" />
+                  <Input placeholder="הכנס ברקוד" />
                 </Form.Item>
 
                 <Form.Item
                   name="name"
                   label="שם"
-                  rules={[{ required: true, message: 'Please enter book name' }]}
+                  rules={[{ required: true, message: 'הכנס שם ספר' }]}
                 >
-                  <Input placeholder="Please enter book name" />
+                  <Input placeholder="הכנס שם ספר" />
                 </Form.Item>
 
                 <Form.Item
                   name="writer"
                   label="סופר/ת"
-                  rules={[{ required: true, message: 'Please enter writer name' }]}
+                  rules={[{ required: true, message: 'הכנס שם מחבר' }]}
                 >
-                  <Input placeholder="Please enter writer name" />
+                  <Input placeholder="הכנס שם מחבר" />
                 </Form.Item>
-         
-                <Form.Item
-                  name="status"
-                  label="סטטוס"
-                  rules={[{ required: true, message: 'Please select status' }]}
-                >
-                  <Select placeholder="Please select status book">
-                    <Option value="לא מושאל"></Option>
-                    <Option value="מושאל"></Option>
-                    <Option value="בתיקון"></Option>
-                  </Select>
-                </Form.Item>
+
                 <Form.Item>
                   <Button loading={loading} type="primary" htmlType="submit">
                     שמור

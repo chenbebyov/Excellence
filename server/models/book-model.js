@@ -6,7 +6,7 @@ const Book = new Schema(
         barcode: { type: String, required: true },
         name: { type: String, required: true },
         writer: { type: String, required: true },
-        status: { type: String, enum:['not borrowed','borrowed','in binding'], required: true },
+        status: { type: String, enum:['not borrowed','borrowed','in binding'], default:'not borrowed', required: true },
     },
     { timestamps: true },
 )
