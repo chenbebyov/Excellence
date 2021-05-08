@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getLayers} from '../../redux/actions/layer.actions';
 import { Button, Card, Col, Row, Breadcrumb,Modal } from 'antd';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import AttedanceStatistic from '../users/AttedanceStatistic';
 
 import CreateHierarchy from './CreateHierarchy';
 
@@ -98,7 +99,8 @@ const HierarchyListView = (props) => {
     }
 
     return (
-        <>      
+        <>     
+            <Link to='/attedance/statistic'>סטיסטיקת נוכחות</Link>
             <div className="hierarchy-header">
                 <Breadcrumb>
                     {['layer', 'grade', 'level', 'group' ].includes(type) && <Breadcrumb.Item>שכבות</Breadcrumb.Item>}

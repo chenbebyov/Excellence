@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import {message} from 'antd';
+import {getStudents} from '../../services/user.service';
 import _ from 'lodash';
-import {getAllAttendance} from '../../services/layer.service';
 
 const AttedanceStatistic = () => {
+    
     const [options, setOptions] = useState({
         chart: {
             id: "basic-bar"
@@ -18,20 +19,33 @@ const AttedanceStatistic = () => {
 
     useEffect(() => {
 
-        getAllAttendance()
-            .then(response => response.data)
-            .then(response => response.data)
-            .then(attendance => {
-                calcStatistics(attendance);
-            }).catch(error => message.error('שגיאה'));
+        getStudents().then(resopnse => resopnse.data).then(response => {
+            if (response.success) {
+                debugger
+                let result = response.data.map(student => student.attendance).flat();
+                calcStatistics(result);
 
+            }
+            else {
+                message.error('טעינת רשימת התלמידים נכשלה')
+            }
+            console.log(response);
+        }).catch(error => {
+
+            console.log(error);
+            message.error('טעינת רשימת התלמידים נכשלה')
+        }
+        );
+    
     }, []);
 
 
     const calcStatistics = (attendance) => {
 
-        let attendanceGroupedByGroup = _.groupBy(attendance, 'groupId');
-        let chartData = new Map(sortedResult.map(arr => [arr[0].bookName, arr.length]))
+        let attendanceByGroup = Object.values(_.groupBy(attendance, 'groupId._id'));
+        let chartData = new Map(attendanceByGroup.map(arr => 
+            [arr[0].groupId.name, arr.length]
+        ))
 
         let newOptions = {...options, xaxis:{...options.xaxis, categories: [...chartData.keys()]}}
 

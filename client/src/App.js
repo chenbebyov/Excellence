@@ -14,7 +14,8 @@ import AddMessage from './components/messages/AddMessage';
 import ListMassage from './components/messages/ListMassage';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import LessonAndTasks from './components/lessonsAndTasks/LessonAndTasks';
-import LessonView from './components/lessonsAndTasks/LessonView';
+import AttedanceStatistic from './components/users/AttedanceStatistic';
+// import LessonView from './components/lessonsAndTasks/LessonView';
 
 
 const { Header, Content, Footer } = Layout;
@@ -42,7 +43,7 @@ function App (props) {
             >
                 <Router>
                     <NavBar/>
-                <div style={{padding:'15px'}}>
+                <div style={{padding:'15px', minHeight:'90vh'}}>
                     <Switch>
                         <AuthorizedRoute path="/lessons"  requires={['admin','secretary','teacher']}>
                             {({ isAuthorized }) => (isAuthorized ? <LessonAndTasks/> : <Redirect to="/" />)}
@@ -53,8 +54,8 @@ function App (props) {
                         <AuthorizedRoute path="/users/:id" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <UserDetails /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        <AuthorizedRoute path="/lesson/:id" requires={['teacher','admin']}>
-                            {({ isAuthorized }) => (isAuthorized ? <LessonView /> : <Redirect to="/" />)}
+                        <AuthorizedRoute path="/attedance/statistic" requires={['teacher','admin']}>
+                            {({ isAuthorized }) => (isAuthorized ? <AttedanceStatistic /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/users" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <ManageUsers/>: <Redirect to="/" />)}

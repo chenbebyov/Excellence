@@ -38,6 +38,16 @@ const Home = () => {
     return (
         <>
             <Slideshow/>
+            <p style={{textAlign:'center', direction:'rtl'}}>
+            אנו ב Excellence מאמינים בכמה ערכים חשובים:
+            </p>
+            <ul style={{textAlign:'right', direction:'rtl'}}>
+              <li>הנגשת החומר למורים בצורה מסודרת, כדי שידעו בדיוק היכן הכתה אוחזת ולהיכן צריך להתקדם</li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
             <Image
               width={1000}
               height={700}

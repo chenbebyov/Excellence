@@ -14,6 +14,7 @@ const Student = new Schema(
         userId : { type: ObjectId , required : true , ref:"users"},
         attendance: {
             type:[{
+                groupId: {type: ObjectId, required:true, ref:'groups'},
                 date: { type: Date, required: true, default:new Date() },
                 present:{ type: Boolean, required: true }
             }],
@@ -21,9 +22,10 @@ const Student = new Schema(
         }, 
         taskSubmission: {
             type:[{
-               taskCodeStudent: { type: Number, required: true },
+               taskCodeStudent: { type: ObjectId, required: true, ref:'lessons' },
                linkToFile: { type: String, required: true },
-               dateSubmission: { type: Date, required: true }
+               fileName: { type: String, required: true },
+               dateSubmission: { type: Date, required: true, default:new Date() }
             }],
             required: false
         }, 

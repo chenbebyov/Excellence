@@ -1,6 +1,7 @@
 import React from 'react';
 import EditorialBoard from './EditorialBoard';
 import CreateLesson from './CreateLesson';
+import LessonView from './LessonView';
 import { Menu,Layout } from 'antd';
 import { DiffOutlined,SnippetsOutlined } from '@ant-design/icons';
 import { Route, Link} from "react-router-dom";
@@ -37,9 +38,10 @@ const LessonAndTasks = () => {
                     </Menu>
                 </Sider>
                 <Layout>
-                    <Content style={{float: 'right', background: 'transparent', padding: '30px'}}>
+                    <Content style={{float: 'right', background: 'white', padding: '30px'}}>
                         <Route path='/lessons/newlesson' component={CreateLesson} exact />
                         <Route path='/lessons/lessons' component={EditorialBoard} exact />
+                        <Route path='/lessons/lesson/:id' component={LessonView} exact />
                     </Content>
                 </Layout>
             </Layout>

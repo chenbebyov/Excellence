@@ -209,7 +209,7 @@ getBorrows = async (req, res) => {
     try {
 
         let borrowsResult = [];
-        const students = await Student.find({}).populate('borrowingBooks.bookId').exec();;
+        const students = await Student.find({}).populate('borrowingBooks.bookId').exec();
     
         students.forEach(student => {
             if(student.borrowingBooks) {

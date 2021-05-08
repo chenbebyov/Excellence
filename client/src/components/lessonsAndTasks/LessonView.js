@@ -90,12 +90,18 @@ const LessonView = () => {
         return icon;
     };
 
+    const preventDownloading = (e) => {
+        debugger
+        e.preventDefault()
+    }
+
     //TODO: student upload files
 
     return (
         <>
 
-        <Content style={{ padding: '50px 50px', textAlign:'right' }}>
+        {lessonFiles.length && <a href={lessonFiles[1].url} target='blank' download>Click to download</a>}
+        <Content style={{ padding: '50px 50px', textAlign:'right', background:'white' }}>
             <Divider orientation="right">פרטי השיעור</Divider>
             <label>:שם השיעור</label>
             <h2>{lesson.lessonSubject}</h2>
@@ -106,7 +112,7 @@ const LessonView = () => {
             <label>קבצים להצגה בשיעור</label>
             <br/>
             <br/>
-            <Upload
+            <Upload 
                 listType="picture-card"
                 fileList={lessonFiles}
                 onPreview={handlePreview}
@@ -156,6 +162,7 @@ const LessonView = () => {
         </Content>
 
             <Modal 
+
                 visible={previewVisible} 
                 footer={null} 
                 onCancel={handleCancel} 
@@ -163,7 +170,7 @@ const LessonView = () => {
                 bodyStyle={{minHeight: '250px'}} 
                 style={{minHeight: '500px'}}
             >
-                <ViewFileCopy2 key={Math.random()} url={previewImage}/>
+                <ViewFileCopy2 key={Math.random()} url={previewImage} onContextMenu={(e)=> e.preventDefault()}/>
             </Modal>
         </>
     )

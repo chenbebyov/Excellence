@@ -22,7 +22,7 @@ const EditorialBoard = (props) => {
 
     const navigate = (lesson) => {
         history.push({
-            pathname: `/lesson/${lesson._id}`,
+            pathname: `/lessons/lesson/${lesson._id}`,
             state: { lesson },
         });
     }

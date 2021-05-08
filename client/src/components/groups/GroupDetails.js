@@ -47,7 +47,7 @@ const GroupDetails = (props) => {
                     </>
                 </TabPane>
                 <TabPane tab="נוכחות" key="3">
-                       <Attendance studentsInGroup={studentsInGroup}/>
+                       <Attendance studentsInGroup={studentsInGroup} groupId={group._id}/>
                 </TabPane>
             </Tabs>
         </>

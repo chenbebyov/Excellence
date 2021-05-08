@@ -136,19 +136,20 @@ getTeachers = (req, res) => {
     .catch(err => console.log(err));
 }
 
-getStudents = (req, res) => {
-    Student.find((err,students) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
+getStudents = async (req, res) => {
+
+    try{
+        const students = await Student.find({}).populate('attendance.groupId').exec();
+
         if (!students.length) {
-            return res
-                .status(404)
-                .json({ success: false, error: `There are no students` })
+            return res.status(404).json({ success: false, error: `There are no students` })
         }
+
         return res.status(200).json({ success: true, data: students })
-    })
-    .catch(err => console.log(err));
+    }
+    catch(err) {
+        return res.status(404).json({ success: false, error: err });
+    }
 }
 
 async function createMessages(req, res){

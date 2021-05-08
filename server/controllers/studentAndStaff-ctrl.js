@@ -137,7 +137,7 @@ setAttendence = async (req, res) => {
             bulkArr.push({
                 updateOne: {
                     "filter": { "_id": new ObjectId(item.studentId) },
-                    "update": { $push: { attendance: {present : item.present} } }
+                    "update": { $push: { attendance: {present : item.present, groupId: new ObjectId(item.groupId)} } }
                 }
             })
         }

@@ -8,7 +8,7 @@ import '../../css/Attendance.css';
  
 const Attendance = (props) => {
 
-    const {studentsInGroup} = props;
+    const {studentsInGroup, groupId} = props;
     const [loading, setLoading] = useState(false);
     const [editable, setEditable] = useState(true);
 
@@ -16,7 +16,11 @@ const Attendance = (props) => {
         debugger
         setLoading(true);
         setEditable(false);
-        let attendence =  Object.entries(values).map(item => ({studentId: item[0], present: !!item[1]}));
+        let attendence =  Object.entries(values).map(item => ({
+            studentId: item[0], 
+            present: !!item[1], 
+            groupId: groupId
+        }));
 
         setAttendance(attendence).then(response => {
             message.success('עודכן בהצלחה!')
