@@ -81,7 +81,8 @@ const NavBar = (props) => {
         setShowSignIn(false);
     }
     const getMessagesCount = () => {
-        return user && user.message ? user.messages.filter(message => !message.isRead).length : 0 ;
+        debugger
+        return user && user.messages ? user.messages.filter(message => !message.isRead).length : 0 ;
     }
 
 

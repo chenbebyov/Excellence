@@ -79,7 +79,7 @@ function App (props) {
                             {({ isAuthorized }) => (isAuthorized ? <CalendarView/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/message/add" requires={['teacher','admin', 'student']}>
-                            {({ isAuthorized }) => (isAuthorized ? <AddMessage/> : <Redirect to="/" />)}
+                            {({ isAuthorized }) => (isAuthorized ? <AddMessage fromRoute={true}/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/messages" requires={['teacher','admin', 'student']}>
                             {({ isAuthorized }) => (isAuthorized ? <ListMassage/> : <Redirect to="/" />)}

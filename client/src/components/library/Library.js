@@ -57,7 +57,7 @@ const Library = () => {
                     </Menu>
                 </Sider>
                 <Layout>
-                    <Content style={{float: 'right', background: 'transparent', padding: '30px'}}>
+                    <Content style={{float: 'right', background: 'white', padding: '30px 10px'}}>
 
                         <Route path='/library/books' component={BookList} exact />
                         <Route path='/library/books/add' component={CreateNewBook} exact />

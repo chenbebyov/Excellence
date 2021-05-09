@@ -63,6 +63,19 @@ const LessonView = () => {
             url: file.linkToFile
         }));
         setLessonFiles(filesOfLesson);
+
+        if(user.role === 'student') {
+            let filesOfStudent = user.taskSubmission
+                .filter(task => task.lessonId === lesson._id)
+                .map(file => ({
+                    ...file,
+                    name: file.fileName,
+                    status: 'done',
+                    url: file.linkToFile
+                })
+            );
+            setStudentFiles(filesOfStudent);
+        }
     }, [lesson])
 
     const [previewVisible, setPreviewVisible] = useState(false);
@@ -137,29 +150,35 @@ const LessonView = () => {
             <h2>{lesson.lessonSubject}</h2>
             <br/>
 
+            {
+                ['admin','teacher'].includes(user.role) && 
 
-            <Divider orientation="right">קבצי השיעור</Divider>
-            { lessonFiles.length > 0 ? 
-                <label>קבצים להצגה במהלך השיעור:</label> :
-                <label>אין שיעורי בית בשיעור זה.</label>
+                <>
+                    <Divider orientation="right">קבצי השיעור</Divider>
+                    { lessonFiles.length > 0 ? 
+                        <label>קבצים להצגה במהלך השיעור:</label> :
+                        <label>אין שיעורי בית בשיעור זה.</label>
+                    }
+                    <br/>
+                    <br/>
+                    <Upload 
+                        listType="picture-card"
+                        fileList={lessonFiles}
+                        onPreview={handlePreview}
+                        iconRender={handleIconRender}
+                    >
+                    </Upload>
+                    <br/>
+                    <br/>
+                </>
             }
-            <br/>
-            <Upload 
-                listType="picture-card"
-                fileList={lessonFiles}
-                onPreview={handlePreview}
-                iconRender={handleIconRender}
-            >
-            </Upload>
-            <br/>
-            <br/>
-
 
             <Divider orientation="right">קבצי שיעורי בית</Divider>
             { taskFiles.length > 0 ? 
                 <label>יש למלא את המשימות המצורפות ולהעלות את התשובות לבדיקה ע"י המורה</label> :
                 <label>אין שיעורי בית  עבור שיעור זה.</label>
             }
+            <br/>
             <br/>
 
             <Upload
@@ -175,26 +194,38 @@ const LessonView = () => {
             <br/>
 
             <Divider orientation="right">תשובות לשיעורי בית</Divider>
-            <label>צרף תשובות לשיעורי הבית</label>
             <br/>
 
-            {/* <Upload
-                listType="picture-card"
-                fileList={taskFiles}
-                onPreview={handlePreview}
-                iconRender={handleIconRender}
-            >
-                {uploadButton}
-            </Upload> */}
+            {user.role === 'student' ? 
+                
+                <>
+                    <label>צרף תשובות לשיעורי הבית</label>
+                    <br/>
+                    <br/>
+                    <UploadFiles 
+                        uploadType='picture-card'
+                        fileList={studentFiles}
+                        onPreview={handlePreview}
+                        iconRender={handleIconRender}
+                        actionOnUploadCompleted={studentUploadFiles}
+                    >
+                    </UploadFiles>
+                </> :
 
-            <UploadFiles 
-                uploadType='picture-card'
-                fileList={studentFiles}
-                onPreview={handlePreview}
-                iconRender={handleIconRender}
-                actionOnUploadCompleted={studentUploadFiles}
-            >
-            </UploadFiles>
+                <>
+                    <label>תשובות שיעורי הבית של התלמידים:</label>
+                    <br/>
+                    <br/>
+                    <Upload
+                        listType="picture-card"
+                        fileList={studentFiles}
+                        onPreview={handlePreview}
+                        iconRender={handleIconRender}
+                    >
+                    </Upload>
+                </>
+            }
+
 
             <br/>
             <br/>

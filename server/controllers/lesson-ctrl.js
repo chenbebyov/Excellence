@@ -4,6 +4,7 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 const Layers = require('../models/layer-model');
 const User = require('../models/user-model');
+const Student = require('../models/student-model');
 
 createLesson = async (req, res) => {
 
@@ -77,7 +78,7 @@ uploadStudentTaskResults = async(req, res) => {
         }
         const {taskSubmission, studentId} = body;
 
-        const student = await User.findById(studentId);
+        const student = await Student.findById(studentId);
         student.taskSubmission.push(taskSubmission);
         await student.save();
 

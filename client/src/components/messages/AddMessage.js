@@ -13,8 +13,9 @@ const { TextArea } = Input;
 
 const AddMessage = (props) => {
 
+    const {fromRoute, navigateAfterSave} = props;
     const history = useHistory();
-    const {toUsers, sentToAlias = 'משתמש'} = history.location.state;
+    const {toUsers, sentToAlias = 'משתמש'} = fromRoute ? history.location.state : props;
     const [loading, setLoading] = useState(false);
     const {user} = useSelector(state => state.userReducer);
 
@@ -32,7 +33,7 @@ const AddMessage = (props) => {
             message.success('ההודעה נשלחה');
             debugger
             setLoading(false);
-            history.goBack();
+            close()
         }).catch(e=> {
             setLoading(false);
             message.error('ההודעה לא נשלחה, נסה שנית')
@@ -40,8 +41,13 @@ const AddMessage = (props) => {
 
     }
     
-    const onClose = () => {
-
+    const close = () => {
+        if(fromRoute) {
+            history.goBack();
+        }
+        else {
+            navigateAfterSave();
+        }
     }
 
     return (
@@ -72,7 +78,7 @@ const AddMessage = (props) => {
             </Form.Item>
 
             <Form.Item>
-                <Button onClick={onClose} style={{ marginRight: 8 }}>
+                <Button onClick={close} style={{ marginRight: 8 }}>
                     ביטול
             </Button>
                 <Button loading={loading} type="primary" htmlType="submit">

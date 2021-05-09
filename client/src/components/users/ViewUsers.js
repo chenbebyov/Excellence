@@ -51,10 +51,10 @@ const ViewUsers = (props) => {
 
                                 />
                                 {showSetRole && 
-                                    <Button type="primary" onClick={(e) =>showModal(e,item._id)}>Set User Role</Button>
+                                    <Button type="primary" onClick={(e) =>showModal(e,item._id)}>הגדרת פרופיל משתמש</Button>
                                 }
                                 {showRemove && 
-                                    <Button type="primary" onClick={()=>removeStudent(item._id)}>Remove Student</Button>
+                                    <Button type="primary" onClick={()=>removeStudent(item._id)}>הסרה</Button>
                                 }
                         </List.Item>
                     )}

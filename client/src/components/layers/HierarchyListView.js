@@ -124,7 +124,7 @@ const HierarchyListView = (props) => {
                 user.role === 'student' ?
                 <h3>הקבוצות שלי:</h3>:
                 <>
-                <Link to='/attedance/statistic'>סטיסטיקת נוכחות</Link>
+                {user.role === 'admin' && <Button htmlType="submit" type="primary" onClick={handleAddNewLayer}>{`הוסף ${hierarchyNames.get(type)} חדשה`}</Button>}
                 <Breadcrumb>
                     {['layer', 'grade', 'level', 'group' ].includes(type) && <Breadcrumb.Item>שכבות</Breadcrumb.Item>}
                     {['grade', 'level', 'group' ].includes(type) && <Breadcrumb.Item>כיתות</Breadcrumb.Item>}
@@ -132,7 +132,7 @@ const HierarchyListView = (props) => {
                     {['group' ].includes(type) && <Breadcrumb.Item>קבוצות</Breadcrumb.Item>}
                 </Breadcrumb>
 
-                <Button htmlType="submit" type="primary" onClick={handleAddNewLayer}>{`הוסף ${hierarchyNames.get(type)} חדשה`}</Button>
+                {user.role === 'admin' && <Link to='/attedance/statistic'>סטיסטיקת נוכחות</Link>}
                 </>
             }
             </div>
