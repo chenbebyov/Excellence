@@ -25,19 +25,19 @@ import {
 const { SubMenu } = Menu;
 
 const pathPermissions = new Map([
-    ['/', new Array('guest','admin','secretary','teacher', 'student')],
-    ['/library', new Array('admin','secretary','teacher', 'student')],
-    ['/users', new Array('admin','secretary')],
-    ['/users/:id', new Array('admin','secretary','teacher', 'student')],
+    ['/', new Array('guest','admin','teacher', 'student')],
+    ['/library', new Array('admin','teacher')],
+    ['/users', new Array('admin')],
+    ['/users/:id', new Array('admin','teacher', 'student')],
     ['/lessons/add', new Array('admin')],
-    ['/lessons', new Array('admin','secretary','teacher')],
-    ['/layers', new Array('admin','secretary','teacher')],
-    ['/calendar', new Array('admin','secretary','teacher', 'student')],
-    ['/grade', new Array('admin','secretary','teacher')],
-    ['/level', new Array('admin','secretary','teacher')],
-    ['/group', new Array('admin','secretary','teacher')],
-    ['/viewGroupDetails', new Array('admin','secretary','teacher', 'student')],
-    ['/viewGroupDetails', new Array('admin','secretary','teacher', 'student')]
+    ['/lessons', new Array('admin','teacher')],
+    ['/layers', new Array('admin','teacher')],
+    ['/calendar', new Array('admin','teacher', 'student')],
+    ['/grade', new Array('admin','teacher')],
+    ['/level', new Array('admin','teacher')],
+    ['/group', new Array('admin','teacher')],
+    ['/viewGroupDetails', new Array('admin','teacher', 'student')],
+    ['/viewGroupDetails', new Array('admin','teacher', 'student')]
 ]);
 
 const navBarItems = new Map([
@@ -89,11 +89,11 @@ const NavBar = (props) => {
         <>
         <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
             <MenuItem route="/" key='/' icon={<HomeOutlined />}>בית</MenuItem>
-            <MenuItem route="/layers" key='/layers' roles={['admin','secretary','teacher']} icon={<ApartmentOutlined />}>קבוצות</MenuItem>
-            <MenuItem route="/lessons" key='/lessons and tasks' roles={['admin','secretary','teacher']} icon={<ReadOutlined />}>שיעורים ומשימות</MenuItem>
-            <MenuItem route="/calendar" key='/calendar' roles={['admin','secretary','teacher', 'student']} icon={<CalendarOutlined />}>לוח שנה</MenuItem>
+            <MenuItem route="/layers" key='/layers' roles={['admin','teacher']} icon={<ApartmentOutlined />}>קבוצות</MenuItem>
+            <MenuItem route="/lessons" key='/lessons and tasks' roles={['admin','teacher']} icon={<ReadOutlined />}>שיעורים ומשימות</MenuItem>
+            <MenuItem route="/calendar" key='/calendar' roles={['admin','teacher', 'student']} icon={<CalendarOutlined />}>לוח שנה</MenuItem>
             <MenuItem route="/library" key='/library' roles={['admin','teacher']} icon={<CalendarOutlined />}>ספריה</MenuItem>
-            <MenuItem route="/users" key='/users' roles={['admin','secretary']} icon={<UsergroupAddOutlined />}>ניהול משתמשים</MenuItem>
+            <MenuItem route="/users" key='/users' roles={['admin']} icon={<UsergroupAddOutlined />}>ניהול משתמשים</MenuItem>
             <MenuItem route="/group" key='/group' roles={['student']} icon={<ApartmentOutlined />}>הקבוצות שלי</MenuItem>
 
         {user && 

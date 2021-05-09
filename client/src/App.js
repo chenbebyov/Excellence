@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import ManageUsers from './components/users/ManageUsers';
 import HierarchyListView from './components/layers/HierarchyListView';
 import { useSelector } from 'react-redux';
-import { PermissionsProvider, AuthorizedRoute, AuthorizedSection } from '@tshio/react-router-permissions';
+import { PermissionsProvider, AuthorizedRoute } from '@tshio/react-router-permissions';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import UserDetails from './components/users/UserDetails';
 import AffiliationToGroup from './components/groups/AffiliationToGroup';
@@ -45,7 +45,7 @@ function App (props) {
                     <NavBar/>
                 <div style={{padding:'15px', minHeight:'90vh'}}>
                     <Switch>
-                        <AuthorizedRoute path="/lessons"  requires={['admin','secretary','teacher', 'student']}>
+                        <AuthorizedRoute path="/lessons"  requires={['admin','teacher', 'student']}>
                             {({ isAuthorized }) => (isAuthorized ? <LessonAndTasks/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/library" requires={['teacher','admin']}>
@@ -54,10 +54,10 @@ function App (props) {
                         <AuthorizedRoute path="/users/:id" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <UserDetails /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        <AuthorizedRoute path="/attedance/statistic" requires={['teacher','admin']}>
+                        <AuthorizedRoute path="/attedance/statistic" requires={['admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <AttedanceStatistic /> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        <AuthorizedRoute path="/users" requires={['teacher','admin']}>
+                        <AuthorizedRoute path="/users" requires={['admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <ManageUsers/>: <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/layers" requires={['teacher','admin']}>
@@ -75,16 +75,13 @@ function App (props) {
                         <AuthorizedRoute path="/viewGroupDetails" requires={['teacher','admin', 'student']}>
                             {({ isAuthorized }) => (isAuthorized ? <AffiliationToGroup mode="read"/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        {/* <AuthorizedRoute path="/newPassword" >
-                            {({ isAuthorized }) => (isAuthorized ? <NewPassword/> : <Redirect to="/" />)}
-                        </AuthorizedRoute> */}
                         <AuthorizedRoute path="/calendar"  requires={['teacher','admin', 'student']}>
                             {({ isAuthorized }) => (isAuthorized ? <CalendarView/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        <AuthorizedRoute path="/message/add" requires={['teacher','admin', 'student', 'secritary']}>
+                        <AuthorizedRoute path="/message/add" requires={['teacher','admin', 'student']}>
                             {({ isAuthorized }) => (isAuthorized ? <AddMessage/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        <AuthorizedRoute path="/messages" requires={['teacher','admin', 'student', 'secritary']}>
+                        <AuthorizedRoute path="/messages" requires={['teacher','admin', 'student']}>
                             {({ isAuthorized }) => (isAuthorized ? <ListMassage/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <Route path="/" component={Home}>

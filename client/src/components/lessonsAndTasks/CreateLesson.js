@@ -152,10 +152,9 @@ const CreateLesson = () => {
 
     return (
         <>
-        <br/>
-        <br/>
+
             <Row>
-                <Col span={12} offset={6}>
+                <Col span={18} offset={3}>
                     <br/>
                     <br/>
                     <Steps current={currentStep}>
@@ -165,9 +164,9 @@ const CreateLesson = () => {
                     </Steps>
 
                     <br/>
-                    <br/>
 
-                    <div style={{minHeight:'70%'}}>
+
+                    <div style={{minHeight:'50%'}}>
                         {currentStep === 0 && LessonDeltailsForm}
                         {currentStep === 1 && uploadLessonFiles}
                         {currentStep === 2 && uploadTaskFiles}
