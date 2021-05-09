@@ -6,6 +6,8 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 var generator = require('generate-password');
 const ObjectId = require('mongoose/lib/types/objectid')
+const {getRegisteredMessage} = require('../general/email-templates');
+const sendEmailJoining = require('../general/emails-ctrl');
 
 
 setUserRole = (req, res) => {
@@ -72,7 +74,21 @@ createStaff = (user, role) => {
     staff.password = getRandomPassword();
     staff.userId = user._id;
     staff.role = role;
-    return staff.save();
+    staff.save().then(() => {
+        let template = getRegisteredMessage(staff.firstName);
+        sendEmailJoining(staff.email, 'הצטרפת כצוות ל Excellence', template, false,staff.password);
+        return res.status(200).json({
+            success: true,
+            staff: staff,
+            message: 'staff created',
+        })
+    })
+    .catch(error => {
+        return res.status(400).json({
+            error,
+            message: 'staff not created!',
+        })
+    })
 }
 
 createStudent = (user) => {
@@ -83,7 +99,21 @@ createStudent = (user) => {
     student.lastName = user.lastName;
     student.password = getRandomPassword();
     student.userId = user._id;
-    return student.save();
+    student.save().then(() => {
+        let template = getRegisteredMessage(student.firstName);
+        sendEmailJoining(student.email, 'הצטרפת כתלמיד ל Excellence', template, false,student.password);
+        return res.status(200).json({
+            success: true,
+            student: student,
+            message: 'student created',
+        })
+    })
+    .catch(error => {
+        return res.status(400).json({
+            error,
+            message: 'student not created!',
+        })
+    })
 };
 
 
