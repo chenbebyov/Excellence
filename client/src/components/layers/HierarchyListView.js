@@ -4,6 +4,10 @@ import {getLayers} from '../../redux/actions/layer.actions';
 import { Button, Card, Col, Row, Breadcrumb,Modal } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import AttedanceStatistic from '../users/AttedanceStatistic';
+import {getUserGroups} from '../../services/layer.service';
+import '../../css/HierarchyListView.css';
+import { ApartmentOutlined } from '@ant-design/icons'
+
 
 import CreateHierarchy from './CreateHierarchy';
 
@@ -19,8 +23,10 @@ const HierarchyListView = (props) => {
     const { type, layerId, gradeId, nextHierarchy } = props;
     const [showAddNewHierarchy, setshowAddNewHierarchy] = useState(false);
     const  { layers } = useSelector(state => state.layerReducer);
+    const {user} = useSelector(state => state.userReducer);
     const history = useHistory(); 
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [hierarchyList, setHierarchyList] = useState([]);
     // const {hierarchyItem} = history.location.state;
 
     const dispatch = useDispatch();
@@ -29,7 +35,8 @@ const HierarchyListView = (props) => {
         if(layers == null){
             dispatch(getLayers());
         }
-    }, [dispatch, layers]);
+        else setData();
+    }, [dispatch, layers, type]);
 
 
     const showModal = () => {
@@ -50,7 +57,7 @@ const HierarchyListView = (props) => {
         return null;
     }
 
-    const getData = () => {
+    const setData = () => {
         let data;
         switch (type) {
             case 'layer':
@@ -67,19 +74,30 @@ const HierarchyListView = (props) => {
                 ).levels;
                 break;
             case 'group':
-                layers.forEach(layer => {
-                    layer.grades.forEach(grade => {
-                        grade.levels.forEach(level => {
-                            if(level._id === getHierarchyItemId())
-                                data = level.groups;
+                if(user.role === 'student') {
+                    getUserGroups(user._id)
+                    .then(response => response.data).then(response => {
+                        if(response.success) {
+                            setHierarchyList(response.groups);
+                        }
+                    })
+                    .catch(error => console.log(error));
+                }
+                else {
+                    layers.forEach(layer => {
+                        layer.grades.forEach(grade => {
+                            grade.levels.forEach(level => {
+                                if(level._id === getHierarchyItemId())
+                                    data = level.groups;
+                            })
                         })
                     })
-                })
+                }
                 break;
             default:
                 return [];
         }
-        return data ? data : [];
+        setHierarchyList(data ? data : []);
     }
 
     const showDetails = (item) => {
@@ -100,8 +118,13 @@ const HierarchyListView = (props) => {
 
     return (
         <>     
-            <Link to='/attedance/statistic'>סטיסטיקת נוכחות</Link>
-            <div className="hierarchy-header">
+            <br/>
+            <div className="hierarchy-header" style={{textAlign:'right', direction:'rtl'}}>
+            {
+                user.role === 'student' ?
+                <h3>הקבוצות שלי:</h3>:
+                <>
+                <Link to='/attedance/statistic'>סטיסטיקת נוכחות</Link>
                 <Breadcrumb>
                     {['layer', 'grade', 'level', 'group' ].includes(type) && <Breadcrumb.Item>שכבות</Breadcrumb.Item>}
                     {['grade', 'level', 'group' ].includes(type) && <Breadcrumb.Item>כיתות</Breadcrumb.Item>}
@@ -110,7 +133,11 @@ const HierarchyListView = (props) => {
                 </Breadcrumb>
 
                 <Button htmlType="submit" type="primary" onClick={handleAddNewLayer}>{`הוסף ${hierarchyNames.get(type)} חדשה`}</Button>
+                </>
+            }
             </div>
+            <br/>
+            <br/>
             {showAddNewHierarchy && 
               <Modal title={`הוסף ${hierarchyNames.get(type)} חדשה`}
                visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}
@@ -134,10 +161,12 @@ const HierarchyListView = (props) => {
                <div>
                 <div className="site-card-wrapper">
                     <Row gutter={16}>
-                        {getData().map(item =>
-                            <Col key={item._id} span={8}>
-                                <Card  title={item.name} bordered={true} >
-                                    <Button type="primary" onClick={() => showDetails(item)}>הצגת פרטים</Button>
+                        {hierarchyList.map(item =>
+                            <Col key={item._id} span={6}>
+                                <Card bordered={true}  onClick={() => showDetails(item)} className='hierarchy-card'>
+                                    <ApartmentOutlined />
+                                    <br/>
+                                    {item.name}
                                 </Card>
                             </Col>
                         )}

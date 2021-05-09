@@ -158,11 +158,13 @@ const AffiliationToGroup = (props) => {
 
     const style = {
         display : "flex",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        flexDirection: 'row-reverse'
+
     }
     const style2 = {
         width: "-webkit-fill-available",
-        direction:"rtl"
+        direction:"rtl",
     }
 
     return (
@@ -180,7 +182,7 @@ const AffiliationToGroup = (props) => {
                             <Form.Item
                                 label="שם הקבוצה"
                                 name="group name"
-                                style={{direction:'rtl'}}
+                                style={{direction:'rtl', width: 200}}
                                 onChange={(e) => {setGroupName(e.target.value)}}
                                 rules={[
                                     {

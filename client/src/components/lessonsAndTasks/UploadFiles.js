@@ -15,7 +15,7 @@ const config = {
 
 const UploadFiles  = (props) => {
 
-    const { actionOnUploadCompleted } = props;
+    const { actionOnUploadCompleted, uploadType,handleIconRender, fileList, handlePreview } = props;
     const [selectedFileList, setSelectedFileList] = useState([]);
 
     const uploadFileToS3 = ({ file, onSuccess, onError }) => {
@@ -67,6 +67,19 @@ const UploadFiles  = (props) => {
 
     return (
       <>
+      {
+        uploadType === 'picture-card' ? 
+        <Upload
+            customRequest={uploadFileToS3}
+            listType="picture-card"
+            fileList={fileList}
+            onPreview={handlePreview}
+            iconRender={handleIconRender}
+            onChange={upload}
+        >
+        {uploadButton}
+        </Upload>
+        :
         <Dragger {...daraggerProps}>
             <p className="ant-upload-drag-icon">
             <InboxOutlined />
@@ -76,6 +89,8 @@ const UploadFiles  = (props) => {
             ניתן לעלות קובץ בודד או קבצים מרובים
             </p>
         </Dragger>
+                  
+      }
 
         {/* <Upload
             // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"

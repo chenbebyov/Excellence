@@ -3,6 +3,7 @@ const config = require("../config/auth.config");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 const Layers = require('../models/layer-model');
+const User = require('../models/user-model');
 
 createLesson = async (req, res) => {
 
@@ -64,7 +65,31 @@ getLessons = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
+uploadStudentTaskResults = async(req, res) => {
+    try {
+        const body = req.body;
+    
+        if (!body) {
+            return res.status(400).json({
+                success: false,
+                error: 'Failed to save, details are empty.',
+            })
+        }
+        const {taskSubmission, studentId} = body;
+
+        const student = await User.findById(studentId);
+        student.taskSubmission.push(taskSubmission);
+        await student.save();
+
+        return res.status(200).json({ success: true })
+    }
+    catch(error) {
+        return res.status(500).json({ success: false, error })
+    }
+}
+
 module.exports = {
     createLesson,
-    getLessons
+    getLessons,
+    uploadStudentTaskResults
 }

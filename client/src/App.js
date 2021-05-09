@@ -45,7 +45,7 @@ function App (props) {
                     <NavBar/>
                 <div style={{padding:'15px', minHeight:'90vh'}}>
                     <Switch>
-                        <AuthorizedRoute path="/lessons"  requires={['admin','secretary','teacher']}>
+                        <AuthorizedRoute path="/lessons"  requires={['admin','secretary','teacher', 'student']}>
                             {({ isAuthorized }) => (isAuthorized ? <LessonAndTasks/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/library" requires={['teacher','admin']}>
@@ -69,16 +69,16 @@ function App (props) {
                         <AuthorizedRoute path="/level" requires={['teacher','admin']}>
                             {({ isAuthorized }) => (isAuthorized ? <HierarchyListView type="level" nextHierarchy="group"/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        <AuthorizedRoute path="/group" requires={['teacher','admin']}>
+                        <AuthorizedRoute path="/group" requires={['teacher','admin', 'student']}>
                             {({ isAuthorized }) => (isAuthorized ? <HierarchyListView type="group" nextHierarchy="viewGroupDetails"/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
-                        <AuthorizedRoute path="/viewGroupDetails" requires={['teacher','admin']}>
+                        <AuthorizedRoute path="/viewGroupDetails" requires={['teacher','admin', 'student']}>
                             {({ isAuthorized }) => (isAuthorized ? <AffiliationToGroup mode="read"/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         {/* <AuthorizedRoute path="/newPassword" >
                             {({ isAuthorized }) => (isAuthorized ? <NewPassword/> : <Redirect to="/" />)}
                         </AuthorizedRoute> */}
-                        <AuthorizedRoute path="/calendar"  requires={['teacher','admin']}>
+                        <AuthorizedRoute path="/calendar"  requires={['teacher','admin', 'student']}>
                             {({ isAuthorized }) => (isAuthorized ? <CalendarView/> : <Redirect to="/" />)}
                         </AuthorizedRoute>
                         <AuthorizedRoute path="/message/add" requires={['teacher','admin', 'student', 'secritary']}>

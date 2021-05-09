@@ -2,3 +2,17 @@
     display: flex;
     justify-content: space-between;
 }
+
+.hierarchy-card {
+    border-radius: 10px !important;
+    font-size: large;
+    font-weight: 400;
+    text-align: center;
+    cursor: pointer;
+    background: #f6f6f6 !important;
+    border: solid 1px #1890ff !important;
+}
+
+.hierarchy-card:hover {
+    box-shadow: 0 0 8px 0px #b3b3b3;
+}

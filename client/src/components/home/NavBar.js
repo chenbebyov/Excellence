@@ -94,6 +94,7 @@ const NavBar = (props) => {
             <MenuItem route="/calendar" key='/calendar' roles={['admin','secretary','teacher', 'student']} icon={<CalendarOutlined />}>לוח שנה</MenuItem>
             <MenuItem route="/library" key='/library' roles={['admin','teacher']} icon={<CalendarOutlined />}>ספריה</MenuItem>
             <MenuItem route="/users" key='/users' roles={['admin','secretary']} icon={<UsergroupAddOutlined />}>ניהול משתמשים</MenuItem>
+            <MenuItem route="/group" key='/group' roles={['student']} icon={<ApartmentOutlined />}>הקבוצות שלי</MenuItem>
 
         {user && 
             <SubMenu 
@@ -106,7 +107,7 @@ const NavBar = (props) => {
                 }>
                 <Menu.ItemGroup>
                     <Menu.Item key="messeges" icon={<WechatOutlined />}><Link to="/messages">הודעות</Link></Menu.Item>
-                    <Menu.Item key="profile" icon={<IdcardOutlined />}>פרופיל</Menu.Item>
+                    {/* <Menu.Item key="profile" icon={<IdcardOutlined />}>פרופיל</Menu.Item> */}
                     <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={handleLogout}>יציאה</Menu.Item>
                 </Menu.ItemGroup>
             </SubMenu>

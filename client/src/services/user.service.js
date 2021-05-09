@@ -15,6 +15,7 @@ export const getTeachers = () => api.get(`/teachers`);
 export const getStudents = () => api.get(`/students`);
 export const createMessage = (message, usersIds) => api.post(`/messages/add`, {message, usersIds});
 export const setAttendance = (attendance) => api.post(`/student/attendance`, {userAttendance:attendance}).then(response => response.data);
+export const uploadStudentTaskResults = (taskSubmission, studentId) => api.post(`/tasks/results/add`, {taskSubmission, studentId});
 
 
 const apis = {

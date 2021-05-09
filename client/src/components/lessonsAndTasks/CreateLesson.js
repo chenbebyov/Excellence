@@ -143,11 +143,11 @@ const CreateLesson = () => {
     
 
     const uploadLessonFiles = (
-        <UploadFiles actionOnUploadCompleted={addFileToLesson}/>
+        <UploadFiles actionOnUploadCompleted={addFileToLesson} uploadType='dragger'/>
     );
 
     const uploadTaskFiles = (
-        <UploadFiles actionOnUploadCompleted={addFileToTask}/>
+        <UploadFiles actionOnUploadCompleted={addFileToTask}  uploadType='dragger'/>
     )
 
     return (
@@ -167,7 +167,7 @@ const CreateLesson = () => {
                     <br/>
                     <br/>
 
-                    <div style={{height:'70%'}}>
+                    <div style={{minHeight:'70%'}}>
                         {currentStep === 0 && LessonDeltailsForm}
                         {currentStep === 1 && uploadLessonFiles}
                         {currentStep === 2 && uploadTaskFiles}

@@ -22,7 +22,7 @@ const Student = new Schema(
         }, 
         taskSubmission: {
             type:[{
-               taskCodeStudent: { type: ObjectId, required: true, ref:'lessons' },
+               lessonId: { type: ObjectId, required: true, ref:'lessons' },
                linkToFile: { type: String, required: true },
                fileName: { type: String, required: true },
                dateSubmission: { type: Date, required: true, default:new Date() }
