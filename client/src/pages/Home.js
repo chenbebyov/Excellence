@@ -55,7 +55,7 @@ const Home = () => {
             </div>
 
             <div className="site-card-wrapper" style={{textAlign:'center'}}>
-              <h1><b>אנשים מספרים</b></h1>
+              <h1><b>תגובות</b></h1>
               <Row gutter={16}>
                 <Col span={8}>
                   <Card title="שרה מימון מחדרה" bordered={false}>
