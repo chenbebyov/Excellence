@@ -24,6 +24,7 @@ const AffiliationToGroup = (props) => {
     const [loading, setLoading] = useState(false);
     const [viewMode, setViewMode] = useState(mode);
     const { layers } = useSelector(state => state.layerReducer);
+    const {user} = useSelector(state => state.userReducer);
 
     const dispatch = useDispatch();
 
@@ -243,7 +244,7 @@ const AffiliationToGroup = (props) => {
             </div>
             <div>
                 {viewMode === 'edit' && <Button loading={loading} onClick={save}>שמור שינויים</Button>}
-                {viewMode === 'read' && 
+                {viewMode === 'read' && user.role === 'admin' && 
                     <>
                         <Button loading={loading} onClick={editGroup}>עריכה</Button>
                     </>

@@ -31,6 +31,9 @@ const CreateNewBook = (props) => {
                   name="barcode"
                   label="ברקוד"
                   rules={[{ required: true, message: 'הכנס ברקוד' }]}
+                  style={{
+                    width: 300,
+                }}
                 >
                   <Input placeholder="הכנס ברקוד" />
                 </Form.Item>
@@ -39,6 +42,9 @@ const CreateNewBook = (props) => {
                   name="name"
                   label="שם"
                   rules={[{ required: true, message: 'הכנס שם ספר' }]}
+                  style={{
+                    width: 300,
+                }}
                 >
                   <Input placeholder="הכנס שם ספר" />
                 </Form.Item>
@@ -47,6 +53,9 @@ const CreateNewBook = (props) => {
                   name="writer"
                   label="סופר/ת"
                   rules={[{ required: true, message: 'הכנס שם מחבר' }]}
+                  style={{
+                    width: 300,
+                }}
                 >
                   <Input placeholder="הכנס שם מחבר" />
                 </Form.Item>

@@ -25,13 +25,14 @@ import '../../css/Home.css';
 const ListMassage = () => {
 
     const { user } = useSelector(state => state.userReducer);
+    debugger
     
     return (
         <>
         {/* <Slideshow/> */}
                 <List
                     style={{margin: '25px'}}
-                    dataSource={user.messages}
+                    dataSource={user.messages.sort((m1,m2) => (new Date(m1.dateMessage)) < (new Date(m2.dateMessage)))}
                     itemLayout="horizontal"
                     renderItem={item => (
                         <List.Item key={item._id} style={{padding: '25px' , background:item.isRead? 'white': '#f6f6f6'}}>

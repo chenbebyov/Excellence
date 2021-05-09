@@ -80,7 +80,7 @@ const BorrowBookList = () => {
                         !record.isReturned && 
                         <>
                             <Tooltip title={'החזרת ספר'}>
-                                <Button type="primary" icon={<RetweetOutlined />} onClick={() => returnBorrowedBook(record)}>החזרת ספר</Button>
+                                <Button type="primary" onClick={() => returnBorrowedBook(record)}>החזרת ספר</Button>
                             </Tooltip>
                             <Tooltip title={'שליחת הודעה לתלמיד'}>
                                 <Button icon={<MessageOutlined />} onClick={() => sendMessageToUser(record)}></Button>

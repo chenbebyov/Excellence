@@ -105,7 +105,7 @@ const CreateBorrow = (props) => {
                 >
                      <AutoComplete
                         style={{
-                            width: 200,
+                            width: 300,
                         }}
                         options={getBarcode()}
                         showSearch={ true }
@@ -123,7 +123,7 @@ const CreateBorrow = (props) => {
                 >
                     <AutoComplete
                         style={{
-                            width: 200,
+                            width: 300,
                         }}
                         options={studentOptions}
                         showSearch={ true }
@@ -142,6 +142,9 @@ const CreateBorrow = (props) => {
                 >
                     <DatePicker renderExtraFooter={() => 'extra footer'}
                         format="YYYY/MM/DD"
+                        style={{
+                            width: 300,
+                        }}
                     />
                 </Form.Item>
 
