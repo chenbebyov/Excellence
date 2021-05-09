@@ -57,13 +57,15 @@ const AttedanceStatistic = () => {
 
     return (
         <>
-            <h1>נתוני נוכחות התלמידים בקבוצות</h1>
+            <div> 
+            <div style={{direction:"center"}}><h1>נתוני נוכחות התלמידים בקבוצות</h1></div>
             <Chart
                 options={options}
                 series={series}
                 type="bar"
                 width="700"
             />
+            </div>
         </>
     )
 }

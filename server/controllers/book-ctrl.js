@@ -232,6 +232,7 @@ getBorrows = async (req, res) => {
         return res.status(200).json({ success: true, data: borrowsResult })
     }
     catch(error) {
+        console.log(error);
         return res.status(500).json({
             error,
             message: 'failed to retrive borrows',

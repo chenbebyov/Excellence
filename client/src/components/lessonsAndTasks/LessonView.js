@@ -131,7 +131,7 @@ const LessonView = () => {
     return (
         <>
 
-        <Content style={{ padding: '50px 50px', textAlign:'right', background:'white' }}>
+        <Content style={{ padding: '5px 5px', textAlign:'right', background:'white' }}>
             <Divider orientation="right">פרטי השיעור</Divider>
             <label>שם השיעור:</label>
             <h2>{lesson.lessonSubject}</h2>
@@ -144,8 +144,6 @@ const LessonView = () => {
                 <label>אין שיעורי בית בשיעור זה.</label>
             }
             <br/>
-            <br/>
-            <br/>
             <Upload 
                 listType="picture-card"
                 fileList={lessonFiles}
@@ -153,8 +151,6 @@ const LessonView = () => {
                 iconRender={handleIconRender}
             >
             </Upload>
-            <br/>
-            <br/>
             <br/>
             <br/>
 
@@ -174,9 +170,6 @@ const LessonView = () => {
             >
             </Upload>
 
-            <br/>
-            <br/>
-            <br/>
             <br/>
             <br/>
             <br/>

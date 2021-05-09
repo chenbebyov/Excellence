@@ -44,7 +44,7 @@ const CalendarFilters = (props) => {
 
     return (
         <>
-            
+{/*             
            <Select
                 mode="multiple"
                 allowClear
@@ -64,7 +64,7 @@ const CalendarFilters = (props) => {
             {groups.map(group => 
                 <Option value={group._id} label={group.name}>{group.name}</Option>
             )}
-            </Select> 
+            </Select>  */}
         </>
     )
 }

@@ -6,12 +6,6 @@ import { Drawer, Form, Button, Input, Select ,message} from 'antd';
 
 const { Option } = Select;
 
-// const statusName = new Map([
-//   ["not borrowed", "לא מושאל"],
-//   ["borrowed", "מושאל"],
-//   ["in binding", "בתיקון"],
-// ])
-
 const CreateNewBook = (props) => {
 
     const [loading, setLoading] = useState(false)
@@ -19,7 +13,6 @@ const CreateNewBook = (props) => {
     const dispatch = useDispatch();
 
     const save = (book) => {
-      // book.status=statusName.get(book.status);
       setLoading(true)
       dispatch(setNewBook(book)).then(response => {
         setLoading(false);

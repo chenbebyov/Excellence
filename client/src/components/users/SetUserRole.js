@@ -59,8 +59,6 @@ const SetUserRole = (props) => {
             <br />
             <Radio value={'teacher'}>מורה</Radio>
             <br />
-            <Radio value={'secretary'}>מזכיר/ה</Radio>
-            <br />
             { user.role === 'admin' && 
               <Radio value={'admin'}>מנהל</Radio>
             }
